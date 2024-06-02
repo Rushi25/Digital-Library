@@ -1,0 +1,69 @@
+.home-container {
+
+    .hero-section {
+        height: 275px;
+        text-align: center;
+        padding: 60px 20px;
+        background: linear-gradient(to right, #d594b2, #ca47e2); // Light purple gradient
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+
+        h1 {
+            margin-bottom: 20px;
+            font-weight: 500;
+            color: #383838;
+        }
+
+        p {
+            font-size: 1.5rem;
+            margin-bottom: 20px;
+            color: #ffffff; // White color
+        }
+
+        button {
+            font-size: 1.2rem;
+            background: linear-gradient(to right, #ff4081, #f50057); // Pink gradient
+            color: #ffffff; // White color
+            padding: 10px 20px;
+            border: none;
+            border-radius: 20px;
+            cursor: pointer;
+
+            &:hover {
+                background: linear-gradient(to right, #ff4081, #ff4081); // Same pink gradient on hover
+            }
+        }
+    }
+
+    .courses-section {
+        margin: 40px 0;
+
+        h2 {
+            text-align: center;
+            margin-bottom: 20px;
+            color: #9c27b0; // Purple color
+        }
+
+        // Add styles for courses section
+    }
+
+    .about-section {
+        text-align: center;
+        padding: 20px;
+        background: linear-gradient(to right, #eea1bc, #db3d9c); // Light pink gradient
+        border-radius: 0;
+
+        h2 {
+            margin-bottom: 10px;
+            color: #ffffff; // White color
+        }
+
+        p {
+            max-width: 600px;
+            margin: 0 auto;
+            color: #ffffff; // White color
+        }
+    }
+}

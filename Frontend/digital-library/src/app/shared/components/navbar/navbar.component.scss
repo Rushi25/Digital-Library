@@ -1,0 +1,31 @@
+.mat-toolbar {
+    background: linear-gradient(to right, #d594b2, #ca47e2); // Light purple gradient
+    font-family: 'Arial', sans-serif;
+
+    .app-title {
+        font-size: 1rem;
+        font-weight: 800;
+        color: #ffffff; // White color
+        text-transform: uppercase;
+
+        &:hover {
+            color: #ff4081; // Pink color on hover
+        }
+    }
+
+    .nav-link {
+        color: #ffffff; // White color
+        text-transform: uppercase;
+        font-size: 1rem;
+        font-weight: 500;
+        margin-left: 20px;
+
+        &:hover {
+            color: #ff4081; // Pink color on hover
+        }
+    }
+
+    .spacer {
+        flex: 1;
+    }
+}

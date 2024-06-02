@@ -1,0 +1,23 @@
+footer {
+    background: linear-gradient(to right, #d594b2, #ca47e2); // Light purple gradient
+    color: #ffffff; // White color
+    padding: 20px;
+    font-family: 'Arial', sans-serif;
+  
+    .footer-content {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      max-width: 1200px;
+      margin: 0 auto;
+  
+      span {
+        font-size: 0.9rem;
+      }
+  
+      .spacer {
+        flex: 1;
+      }
+    }
+  }
+  

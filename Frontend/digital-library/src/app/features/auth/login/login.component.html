@@ -1,0 +1,31 @@
+<mat-toolbar class="title">
+    <button mat-button routerLink="home" class="app-title"><mat-icon fontIcon="book"></mat-icon>Digital Library</button>
+</mat-toolbar>
+<div class="login-container">
+    <mat-card class="login-card">
+        <mat-card-header class="login-card-header">
+            <mat-card-title>Login</mat-card-title>
+        </mat-card-header>
+        <mat-card-content>
+            <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+                <mat-form-field appearance="outline" hideRequiredMarker="false" class="full-width">
+                    <input matInput placeholder="Username" formControlName="username">
+                    @if (loginForm.get('username')?.invalid && loginForm.get('username')?.touched) {
+                    <mat-error>
+                        *Username is required
+                    </mat-error>
+                    }
+                </mat-form-field>
+                <mat-form-field appearance="outline" hideRequiredMarker="false" color="primary" class="full-width">
+                    <input matInput type="password" placeholder="Password" formControlName="password">
+                    @if (loginForm.get('password')?.invalid && loginForm.get('password')?.touched) {
+                    <mat-error>
+                        *Password is required
+                    </mat-error>
+                    }
+                </mat-form-field>
+                <button mat-raised-button class="full-width login-button">Login</button>
+            </form>
+        </mat-card-content>
+    </mat-card>
+</div>
