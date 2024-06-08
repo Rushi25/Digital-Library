@@ -5,19 +5,16 @@ namespace DigitalLibrary.Modules.Authentication.Models
     public class RegisterModel
     {
         [Required]
-        [MaxLength(50)]
+        [StringLength(15, MinimumLength = 3, ErrorMessage = "First name must be at least {2}, and maximun {1} characters")]
         public string FirstName { get; set; }
         [Required]
-        [MaxLength(50)]
+        [StringLength(15, MinimumLength = 3, ErrorMessage = "Last name must be at least {2}, and maximun {1} characters")]
         public string LastName { get; set; }
         [Required]
         [EmailAddress]
         public string Email { get; set; }
         [Required]
-        [MaxLength(50)]
-        public string Username { get; set; }
-        [Required]
-        [MinLength(8)]
+        [StringLength(15, MinimumLength = 6, ErrorMessage = "Password must be at least {2}, and maximun {1} characters")]
         public string Password { get; set; }
 
     }
