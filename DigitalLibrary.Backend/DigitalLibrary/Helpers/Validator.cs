@@ -1,8 +1,10 @@
 ﻿using DigitalLibrary.Modules.Authentication.Entities;
 using DigitalLibrary.Modules.Authentication.Models;
 using DigitalLibrary.Modules.Authentication.Repositories.Interfaces;
+using System;
 using System.Text;
 using System.Text.RegularExpressions;
+using System.Threading.Tasks;
 
 namespace DigitalLibrary.Helpers
 {

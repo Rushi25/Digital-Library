@@ -2,6 +2,7 @@
 using DigitalLibrary.Modules.Authentication.Entities;
 using DigitalLibrary.Modules.Authentication.Repositories.Interfaces;
 using Microsoft.EntityFrameworkCore;
+using System.Threading.Tasks;
 
 namespace DigitalLibrary.Modules.Authentication.Repositories
 {

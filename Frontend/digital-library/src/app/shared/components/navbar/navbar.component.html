@@ -1,11 +1,11 @@
 <mat-toolbar color="primary">
-    <button mat-button routerLink="home" class="app-title"><mat-icon fontIcon="book"></mat-icon>Digital Library</button>
+    <button mat-button [routerLink]="['home']" class="app-title"><mat-icon fontIcon="book"></mat-icon>Digital Library</button>
     <span class="spacer"></span>
-    <button mat-button routerLink="/home" routerLinkActive="active" class="nav-link"><mat-icon fontIcon="home"></mat-icon>Home</button>
-    <button mat-button routerLink="/about" routerLinkActive="active" class="nav-link">About</button>
-    <button mat-button routerLink="/courses" routerLinkActive="active" class="nav-link">Courses</button>
-    <button mat-button routerLink="/privacy" routerLinkActive="active" class="nav-link">Privacy</button>
-    <button mat-button routerLink="/login" routerLinkActive="active" class="nav-link">Login</button>
-    <button mat-button routerLink="/signup" routerLinkActive="active" class="nav-link">Sign Up</button>
+    <button mat-button [routerLink]="['/home']" routerLinkActive="active" class="nav-link"><mat-icon fontIcon="home"></mat-icon>Home</button>
+    <button mat-button [routerLink]="['/about']" routerLinkActive="active" class="nav-link">About</button>
+    <button mat-button [routerLink]="['/courses']" routerLinkActive="active" class="nav-link">Courses</button>
+    <button mat-button [routerLink]="['/privacy']" routerLinkActive="active" class="nav-link">Privacy</button>
+    <button mat-button [routerLink]="['/login']" routerLinkActive="active" class="nav-link">Login</button>
+    <button mat-button [routerLink]="['/signup']" routerLinkActive="active" class="nav-link">Sign Up</button>
   </mat-toolbar>
   

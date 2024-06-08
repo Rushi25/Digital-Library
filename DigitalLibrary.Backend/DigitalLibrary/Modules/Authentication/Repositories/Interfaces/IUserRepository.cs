@@ -1,4 +1,5 @@
 ﻿using DigitalLibrary.Modules.Authentication.Entities;
+using System.Threading.Tasks;
 
 namespace DigitalLibrary.Modules.Authentication.Repositories.Interfaces
 {

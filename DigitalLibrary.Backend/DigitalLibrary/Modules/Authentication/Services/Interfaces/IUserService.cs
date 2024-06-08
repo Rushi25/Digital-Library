@@ -1,5 +1,6 @@
 ﻿using DigitalLibrary.Modules.Authentication.Entities;
 using DigitalLibrary.Modules.Authentication.Models;
+using System.Threading.Tasks;
 
 namespace DigitalLibrary.Modules.Authentication.Services.Interfaces
 {

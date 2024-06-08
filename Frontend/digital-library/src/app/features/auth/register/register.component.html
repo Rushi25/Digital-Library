@@ -1,0 +1,75 @@
+<mat-toolbar class="title">
+    <button mat-button routerLink="/home" class="app-title"><mat-icon fontIcon="book"></mat-icon>Digital
+        Library</button>
+    <span class="spacer"></span>
+    <button mat-button [routerLink]="['/login']" routerLinkActive="active" class="app-title">Log in</button>
+</mat-toolbar>
+<div class="login-container">
+    <mat-card class="login-card">
+        <mat-card-header class="login-card-header">
+            <mat-card-title>Login</mat-card-title>
+        </mat-card-header>
+        <mat-card-content>
+            <form [formGroup]="registerForm">
+                <mat-form-field appearance="outline" hideRequiredMarker="false" class="full-width">
+                    <input matInput placeholder="First name" formControlName="firstname">
+                    @if (registerForm.get('firstname')?.hasError('required') && registerForm.get('firstname')?.invalid)
+                    {
+                    <mat-error>*First name is required.</mat-error>
+                    }
+                    @if (registerForm.get('firstname')?.hasError('maxlength')) {
+                    <mat-error>*First name should be less than 50 charctors.</mat-error>
+                    }
+                </mat-form-field>
+                <mat-form-field appearance="outline" hideRequiredMarker="false" class="full-width">
+                    <input matInput placeholder="Last name" formControlName="lastname">
+                    @if (registerForm.get('lastname')?.hasError('required') && registerForm.get('lastname')?.invalid) {
+                    <mat-error>
+                        *Last name is required.
+                    </mat-error>
+                    }
+                    @if (registerForm.get('lastname')?.hasError('maxlength')) {
+                    <mat-error>*Last name should be less than 50 charctors.</mat-error>
+                    }
+                </mat-form-field>
+                <mat-form-field appearance="outline" hideRequiredMarker="false" class="full-width">
+                    <input matInput type="email" placeholder="Email" formControlName="email">
+                    @if (registerForm.get('email')?.hasError('required') && registerForm.get('email')?.invalid) {
+                    <mat-error>
+                        *Email is required.
+                    </mat-error>
+                    } 
+                    @if (registerForm.get('email')?.hasError('email')) {
+                    <mat-error>*Email is invalid.</mat-error>
+                    }
+                </mat-form-field>
+                <mat-form-field appearance="outline" hideRequiredMarker="false" class="full-width">
+                    <input matInput placeholder="Username" formControlName="username">
+                    @if (registerForm.get('username')?.hasError('required') && registerForm.get('username')?.invalid) {
+                    <mat-error>
+                        *Username is required.
+                    </mat-error>
+                    }
+                    @if (registerForm.get('username')?.hasError('maxlength')) {
+                    <mat-error>*Username should be less than 50 charctors.</mat-error>
+                    }
+                </mat-form-field>
+                <mat-form-field appearance="outline" hideRequiredMarker="false" color="primary" class="full-width">
+                    <input matInput [type]="hide ? 'password' : 'text'" placeholder="Password" formControlName="password">
+                    <button mat-icon-button matSuffix (click)="showHidePassword($event)">
+                        <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+                    </button>
+                    @if (registerForm.get('password')?.hasError('required') && registerForm.get('password')?.invalid) {
+                    <mat-error>
+                        *Password is required.
+                    </mat-error>
+                    } 
+                    @if (registerForm.get('password')?.hasError('minlength')) {
+                    <mat-error>*Password should be greater than 7 charctors.</mat-error>
+                    }
+                </mat-form-field>
+                <button mat-raised-button class="full-width login-button" (click)="registerUser()">Sign in</button>
+            </form>
+        </mat-card-content>
+    </mat-card>
+</div>
