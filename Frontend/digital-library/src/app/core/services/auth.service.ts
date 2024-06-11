@@ -1,69 +1,65 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { ApiClient, LoginModel, RegisterModel, TokenModel } from '../../api-client/api-client';
-import { AccessTokenKey, BaseUrl, RefreshTokenKey } from '../../app.constant';
-import { Observable } from 'rxjs';
+import { ApiClient, LoginModel, RegisterModel, UserModel } from '../../api-client/api-client';
+import { Observable, ReplaySubject } from 'rxjs';
 import { Router } from '@angular/router';
-import { JwtHelperService } from '@auth0/angular-jwt'
+import { environment } from '../../../environments/environment.development';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
   private apiClient: ApiClient;
+  private userSource = new ReplaySubject<UserModel | null>(1);
+  user$ = this.userSource.asObservable();
 
   constructor(private readonly http: HttpClient, private readonly router: Router) {
-    this.apiClient = new ApiClient(http, BaseUrl);
+    this.apiClient = new ApiClient(http, environment.baseUrl);
   }
 
   register(model: RegisterModel): Observable<string> {
     return this.apiClient.register(model);
   }
 
-  logIn(model: LoginModel): Observable<TokenModel> {
+  logIn(model: LoginModel): Observable<UserModel> {
     return this.apiClient.login(model);
   }
 
-  refresh(model: TokenModel): Observable<TokenModel> {
-    return this.apiClient.refresh(model);
+  setUser(user: UserModel) {
+    localStorage.setItem(environment.userKey, JSON.stringify(user));
+    this.userSource.next(user);
   }
 
-  signOut(){
-    localStorage.clear();
-    this.router.navigate(['login'])
-  }
-
-  storeToken(tokenValue: string){
-    localStorage.setItem(AccessTokenKey, tokenValue)
-  }
-
-  storeRefreshToken(tokenValue: string){
-    localStorage.setItem(RefreshTokenKey, tokenValue)
-  }
-
-  getToken(){
-    return localStorage.getItem(AccessTokenKey)
-  }
-
-  getRefreshToken(){
-    return localStorage.getItem(RefreshTokenKey)
-  }
-
-  isLoggedIn(): boolean{
-    return !!localStorage.getItem(AccessTokenKey)
-  }
-
-  decodedToken(): any{
-    const jwtHelper = new JwtHelperService();
-    const token = this.getToken()!;
-    const decoded = jwtHelper.decodeToken(token);
-    console.log(decoded);
-    if(decoded != null) {
-      return decoded;
+  getJwt(): string | undefined {
+    const userJson = localStorage.getItem(environment.userKey);
+    if(userJson){
+      const user: UserModel = JSON.parse(userJson);
+      return user.jwt;
+    }
+    else {
+      return undefined;
     }
   }
 
-  renewToken(model : TokenModel): Observable<TokenModel>{
-    return this.apiClient.refresh(model);
+  refreshUser() {
+    return this.apiClient.refresh();
+  }
+
+  isLoggedIn(): boolean {
+    this.user$.subscribe({
+      next: (res) => {
+        if(res !== null) {
+          return true;
+        }
+        return false;
+      }
+    })
+    return false;
+  }
+
+  logout(){
+    localStorage.clear();
+    this.userSource.next(null);
+    this.router.navigate(['/auth/login']);
   }
 }

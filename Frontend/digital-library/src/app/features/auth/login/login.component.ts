@@ -5,7 +5,6 @@ import { RouterLink } from '@angular/router';
 import { LoginModel } from '../../../api-client/api-client';
 import { AuthService } from '../../../core/services/auth.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { UserStoreService } from '../../../core/services/user-store.service';
 
 @Component({
   selector: 'app-login',
@@ -20,8 +19,7 @@ export class LoginComponent {
 
   constructor(private readonly fb: FormBuilder, 
     private readonly authService: AuthService, 
-    private readonly _snackBar: MatSnackBar, 
-    private readonly userService: UserStoreService) { }
+    private readonly _snackBar: MatSnackBar) { }
 
   ngOnInit(): void {
     this.initLoginForm();
@@ -55,11 +53,7 @@ export class LoginComponent {
         this._snackBar.open("Login successful", 'OK', { duration: 3000 });
         if(res != null) {
           this.loginForm.reset();
-          this.authService.storeToken(res.accessToken);
-          this.authService.storeRefreshToken(res.refreshToken);
-          const tokenPayload = this.authService.decodedToken();
-          this.userService.setFullNameForStore(tokenPayload?.unique_name);
-          this.userService.setRoleForStore(tokenPayload?.role);
+          this.authService.setUser(res)
         };
       },
       error: (err) => {

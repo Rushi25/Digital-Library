@@ -28,7 +28,6 @@ export class RegisterComponent {
       firstname: new FormControl('', [Validators.required, Validators.maxLength(50)]),
       lastname: new FormControl('', [Validators.required, Validators.maxLength(50)]),
       email: new FormControl('', [Validators.required, Validators.email]),
-      username: new FormControl('', [Validators.required, Validators.maxLength(50)]),
       password: new FormControl('', [Validators.required, Validators.minLength(8)])
     });
   }

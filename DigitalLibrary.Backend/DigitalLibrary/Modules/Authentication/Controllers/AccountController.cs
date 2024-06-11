@@ -1,4 +1,4 @@
-﻿using DigitalLibrary.Modules.Authentication.Entities;
+﻿        using DigitalLibrary.Modules.Authentication.Entities;
 using DigitalLibrary.Modules.Authentication.Models;
 using DigitalLibrary.Modules.Authentication.Services.Interfaces;
 using Microsoft.AspNetCore.Authorization;
@@ -94,7 +94,7 @@ namespace DigitalLibrary.Modules.Authentication.Controllers
         [Authorize]
         [HttpGet("refresh")]
         [Produces("application/json")]
-        [ProducesResponseType<string>(200)]
+        [ProducesResponseType<UserModel>(200)]
         [ProducesResponseType<string>(400)]
         public async Task<ActionResult<UserModel>> Refresh()
         {
