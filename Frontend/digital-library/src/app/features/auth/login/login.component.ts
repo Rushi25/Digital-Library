@@ -1,10 +1,11 @@
 import { Component } from '@angular/core';
 import { MaterialModule } from '../../../modules/material.module';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
-import { RouterLink } from '@angular/router';
-import { LoginModel } from '../../../api-client/api-client';
+import { Router, RouterLink } from '@angular/router';
+import { LoginModel, UserModel } from '../../../api-client/api-client';
 import { AuthService } from '../../../core/services/auth.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { take } from 'rxjs';
 
 @Component({
   selector: 'app-login',
@@ -19,7 +20,16 @@ export class LoginComponent {
 
   constructor(private readonly fb: FormBuilder, 
     private readonly authService: AuthService, 
-    private readonly _snackBar: MatSnackBar) { }
+    private readonly _snackBar: MatSnackBar,
+    private readonly router: Router) { 
+      this.authService.user$.pipe(take(1)).subscribe({
+        next: (user: UserModel | null) => {
+          if(user){
+            this.router.navigate(['home']);
+          }
+        }
+      })
+    }
 
   ngOnInit(): void {
     this.initLoginForm();
@@ -54,6 +64,7 @@ export class LoginComponent {
         if(res != null) {
           this.loginForm.reset();
           this.authService.setUser(res)
+          this.router.navigate(['home']);
         };
       },
       error: (err) => {
