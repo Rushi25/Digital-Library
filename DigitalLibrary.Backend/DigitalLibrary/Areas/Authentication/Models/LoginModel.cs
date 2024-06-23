@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace DigitalLibrary.Modules.Authentication.Models
+namespace DigitalLibrary.Areas.Authentication.Models
 {
     public class LoginModel
     {

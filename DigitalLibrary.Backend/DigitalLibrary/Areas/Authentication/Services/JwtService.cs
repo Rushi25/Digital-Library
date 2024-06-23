@@ -1,5 +1,5 @@
 ﻿using DigitalLibrary.Context.Entities;
-using DigitalLibrary.Modules.Authentication.Services.Interfaces;
+using DigitalLibrary.Areas.Authentication.Services.Interfaces;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
 using System;
@@ -8,7 +8,7 @@ using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
 
-namespace DigitalLibrary.Modules.Authentication.Services
+namespace DigitalLibrary.Areas.Authentication.Services
 {
     public class JwtService : IJwtService
     {

@@ -72,4 +72,8 @@ export class AuthService {
     this.userSource.next(null);
     this.router.navigate(['/auth/login']);
   }
+
+  isAdminUser(): boolean {
+    return true;
+  }
 }

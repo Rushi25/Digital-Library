@@ -1,6 +1,6 @@
 ﻿using DigitalLibrary.Context.Entities;
-using DigitalLibrary.Modules.Authentication.Models;
-using DigitalLibrary.Modules.Authentication.Services.Interfaces;
+using DigitalLibrary.Areas.Authentication.Models;
+using DigitalLibrary.Areas.Authentication.Services.Interfaces;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -9,7 +9,7 @@ using System;
 using System.Security.Claims;
 using System.Threading.Tasks;
 
-namespace DigitalLibrary.Modules.Authentication.Controllers
+namespace DigitalLibrary.Areas.Authentication.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]

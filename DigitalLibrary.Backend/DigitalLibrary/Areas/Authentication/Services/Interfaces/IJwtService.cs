@@ -1,6 +1,6 @@
 ﻿using DigitalLibrary.Context.Entities;
 
-namespace DigitalLibrary.Modules.Authentication.Services.Interfaces
+namespace DigitalLibrary.Areas.Authentication.Services.Interfaces
 {
     public interface IJwtService
     {

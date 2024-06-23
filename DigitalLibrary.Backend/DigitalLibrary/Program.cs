@@ -1,7 +1,7 @@
 using DigitalLibrary.Context;
 using DigitalLibrary.Context.Entities;
-using DigitalLibrary.Modules.Authentication.Services;
-using DigitalLibrary.Modules.Authentication.Services.Interfaces;
+using DigitalLibrary.Areas.Authentication.Services;
+using DigitalLibrary.Areas.Authentication.Services.Interfaces;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Identity;
