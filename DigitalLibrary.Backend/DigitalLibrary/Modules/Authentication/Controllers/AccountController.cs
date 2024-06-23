@@ -1,4 +1,4 @@
-﻿        using DigitalLibrary.Modules.Authentication.Entities;
+﻿using DigitalLibrary.Context.Entities;
 using DigitalLibrary.Modules.Authentication.Models;
 using DigitalLibrary.Modules.Authentication.Services.Interfaces;
 using Microsoft.AspNetCore.Authorization;

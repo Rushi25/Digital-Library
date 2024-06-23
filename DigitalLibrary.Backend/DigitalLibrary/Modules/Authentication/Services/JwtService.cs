@@ -1,4 +1,4 @@
-﻿using DigitalLibrary.Modules.Authentication.Entities;
+﻿using DigitalLibrary.Context.Entities;
 using DigitalLibrary.Modules.Authentication.Services.Interfaces;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;

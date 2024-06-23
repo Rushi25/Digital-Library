@@ -1,4 +1,4 @@
-﻿using DigitalLibrary.Modules.Authentication.Entities;
+﻿using DigitalLibrary.Context.Entities;
 
 namespace DigitalLibrary.Modules.Authentication.Services.Interfaces
 {
