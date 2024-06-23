@@ -2,9 +2,10 @@ import { Component } from '@angular/core';
 import { MaterialModule } from '../../../modules/material.module';
 import { FormGroup, FormBuilder, FormControl, Validators } from '@angular/forms';
 import { AuthService } from '../../../core/services/auth.service';
-import { RegisterModel } from '../../../api-client/api-client';
+import { RegisterModel, UserModel } from '../../../api-client/api-client';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router, RouterLink } from '@angular/router';
+import { take } from 'rxjs';
 
 @Component({
   selector: 'app-register',
@@ -20,7 +21,15 @@ export class RegisterComponent {
   constructor(private fb: FormBuilder, 
     private readonly authService: AuthService, 
     private _snackBar: MatSnackBar, 
-    private router: Router) { }
+    private router: Router) { 
+      this.authService.user$.pipe(take(1)).subscribe({
+        next: (user: UserModel | null) => {
+          if(user){
+            this.router.navigate(['home']);
+          }
+        }
+      })
+    }
 
   ngOnInit(): void {
     this.initRegisterForm();
