@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { ApiClient, LoginModel, RegisterModel, UserModel } from '../../api-client/api-client';
-import { Observable, ReplaySubject } from 'rxjs';
+import { Observable, ReplaySubject, map, of } from 'rxjs';
 import { Router } from '@angular/router';
 import { environment } from '../../../environments/environment.development';
 
@@ -41,8 +41,18 @@ export class AuthService {
     }
   }
 
-  refreshUser() {
-    return this.apiClient.refresh();
+  refreshUser(jwt: string | undefined) {
+    if (jwt === undefined){
+      this.userSource.next(null);
+      return of(undefined);
+    }
+    return this.apiClient.refresh().pipe(
+      map((user: UserModel) => {
+        if(user) {
+          this.setUser(user);
+        }
+      })
+    );
   }
 
   isLoggedIn(): boolean {

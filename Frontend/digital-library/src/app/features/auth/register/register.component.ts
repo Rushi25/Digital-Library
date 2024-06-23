@@ -4,7 +4,7 @@ import { FormGroup, FormBuilder, FormControl, Validators } from '@angular/forms'
 import { AuthService } from '../../../core/services/auth.service';
 import { RegisterModel } from '../../../api-client/api-client';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { RouterLink } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-register',
@@ -17,7 +17,10 @@ export class RegisterComponent {
   registerForm!: FormGroup;
   hide = true;
 
-  constructor(private fb: FormBuilder, private readonly authService: AuthService, private _snackBar: MatSnackBar) { }
+  constructor(private fb: FormBuilder, 
+    private readonly authService: AuthService, 
+    private _snackBar: MatSnackBar, 
+    private router: Router) { }
 
   ngOnInit(): void {
     this.initRegisterForm();
@@ -51,6 +54,7 @@ export class RegisterComponent {
     this.authService.register(model).subscribe({
       next: (res) => {
         this._snackBar.open(res, 'OK', { duration: 3000 });
+        this.router.navigate(['auth/login']);
       },
       error: (err) => {
         this._snackBar.open(err, 'OK');

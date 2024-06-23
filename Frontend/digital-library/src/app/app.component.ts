@@ -3,7 +3,6 @@ import { Router, RouterOutlet } from '@angular/router';
 import { NavbarComponent } from "./shared/components/navbar/navbar.component";
 import { FooterComponent } from "./shared/components/footer/footer.component";
 import { AuthService } from './core/services/auth.service';
-import { HttpErrorResponse } from '@angular/common/http';
 import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
@@ -22,20 +21,16 @@ export class AppComponent implements OnInit {
   ngOnInit(): void {
     const jwt = this.authService.getJwt()
     if (jwt) {
-      this.authService.refreshUser().subscribe({
-        next: (res) => {
-          console.log(res);
-          this.authService.setUser(res);
-        },
-        error: (err) => {
-          if (err instanceof HttpErrorResponse) {
-            if (err.status === 401) {
-              this._snackBar.open('Session expired please login again.', 'OK');
-              this.router.navigate(['auth/login'])
-            }
-          }
+      this.authService.refreshUser(jwt).subscribe({
+        next: _ => {},
+        error: _ => {
+          this.authService.logout();
+          this._snackBar.open('Session expired please login again.', 'OK');
         }
       });
+    }
+    else{
+      this.authService.refreshUser(undefined).subscribe();
     }
   }
 }
