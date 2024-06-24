@@ -1,0 +1,25 @@
+<div class="wrapper">
+  @if (category) {
+  <div class="category-details-container">
+    <h2>{{ category.title }}</h2>
+    <div class="property">Description</div>
+    <p class="value">{{ category.description }}</p>
+    <div class="value">
+      <span class="property">Thumbnail Image Path:</span>
+      <span class="value"> {{ category.thumbnailImagePath }}</span>
+    </div>
+    <div class="property">Thumbnail Image</div>
+    <img
+      [src]="category.thumbnailImagePath"
+      alt="{{ category.title }}"
+      class="thumbnail"
+    />
+
+    <div>
+      <button mat-raised-button (click)="goBack()">
+        <mat-icon>keyboard_backspace</mat-icon>Back to Categories
+      </button>
+    </div>
+  </div>
+  }
+</div>

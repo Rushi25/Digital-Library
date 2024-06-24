@@ -1,0 +1,60 @@
+<div class="wrapper">
+  <div class="category-add">
+    <button mat-raised-button [routerLink]="['/admin/categories/add']">
+      <mat-icon>add</mat-icon>New Category
+    </button>
+  </div>
+  <div class="category-table">
+    <table mat-table [dataSource]="categories" class="mat-elevation-z8">
+      <!-- Title Column -->
+      <ng-container matColumnDef="title">
+        <th mat-header-cell *matHeaderCellDef>Title</th>
+        <td mat-cell *matCellDef="let category">{{ category.title }}</td>
+      </ng-container>
+
+      <!-- Description Column -->
+      <ng-container matColumnDef="description">
+        <th mat-header-cell *matHeaderCellDef>Description</th>
+        <td mat-cell *matCellDef="let category">{{ category.description }}</td>
+      </ng-container>
+
+      <!-- Thumbnail Image Path Column -->
+      <ng-container matColumnDef="thumbnailImagePath">
+        <th mat-header-cell *matHeaderCellDef>Thumbnail Image Path</th>
+        <td mat-cell *matCellDef="let category">
+          {{ category.thumbnailImagePath }}
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="action">
+        <th mat-header-cell *matHeaderCellDef>Action</th>
+        <td mat-cell *matCellDef="let category">
+          <button
+            mat-icon-button
+            class="edit-button"
+            routerLink="/admin/categories/edit/{{ category.id }}"
+          >
+            <mat-icon>edit</mat-icon>
+          </button>
+          <button
+            mat-icon-button
+            class="info-button"
+            routerLink="/admin/categories/details/{{ category.id }}"
+          >
+            <mat-icon>info</mat-icon>
+          </button>
+          <button
+            mat-icon-button
+            class="delete-button"
+            (click)="deleteCategory(category.id, category.title)"
+          >
+            <mat-icon>delete</mat-icon>
+          </button>
+        </td>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="columns"></tr>
+      <tr mat-row *matRowDef="let row; columns: columns"></tr>
+    </table>
+  </div>
+</div>
