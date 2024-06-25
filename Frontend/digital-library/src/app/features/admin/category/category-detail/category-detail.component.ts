@@ -1,5 +1,5 @@
 import { HttpErrorResponse } from '@angular/common/http';
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Category } from '../../../../api-client/api-client';
@@ -10,7 +10,7 @@ import { CategoryService } from '../services/category.service';
   templateUrl: './category-detail.component.html',
   styleUrl: './category-detail.component.scss',
 })
-export class CategoryDetailComponent {
+export class CategoryDetailComponent implements OnInit {
   category: Category | null = null;
 
   constructor(

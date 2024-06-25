@@ -1,5 +1,5 @@
 import { HttpErrorResponse } from '@angular/common/http';
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -11,10 +11,10 @@ import { CategoryService } from '../services/category.service';
   templateUrl: './category-add-edit.component.html',
   styleUrl: './category-add-edit.component.scss',
 })
-export class CategoryAddEditComponent {
+export class CategoryAddEditComponent implements OnInit {
   categoryForm!: FormGroup;
   categoryId!: number;
-  isEditMode: boolean = false;
+  isEditMode = false;
 
   constructor(
     private fb: FormBuilder,
@@ -65,7 +65,7 @@ export class CategoryAddEditComponent {
         this.categoryService
           .updateCategory(this.categoryId, category)
           .subscribe({
-            next: (_) => {
+            next: () => {
               this._snackBar.open('Category edited succesfully.', 'OK');
               this.router.navigate(['admin/category']);
             },
@@ -84,7 +84,7 @@ export class CategoryAddEditComponent {
           });
       } else {
         this.categoryService.createCategory(category).subscribe({
-          next: (_) => {
+          next: () => {
             this._snackBar.open('Category added succesfully.', 'OK');
             this.router.navigate(['admin/category']);
           },

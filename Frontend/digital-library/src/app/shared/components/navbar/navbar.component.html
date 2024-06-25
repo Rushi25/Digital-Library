@@ -17,7 +17,7 @@
   <ng-container *ngTemplateOutlet="adminMenu"></ng-container>
   } 
   
-  @if((authService.user$ | async) == null) {
+  @if((authService.user$ | async) === null) {
   <ng-container *ngTemplateOutlet="menu"></ng-container>
   } @else{
   <button

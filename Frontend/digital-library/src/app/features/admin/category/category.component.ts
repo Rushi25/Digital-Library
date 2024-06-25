@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Category } from '../../../api-client/api-client';
 import { MatDialog } from '@angular/material/dialog';
@@ -10,7 +10,7 @@ import { CategoryDeleteComponent } from './category-delete/category-delete.compo
   templateUrl: './category.component.html',
   styleUrl: './category.component.scss',
 })
-export class CategoryComponent {
+export class CategoryComponent implements OnInit {
   categories: Category[] = [];
   columns: string[] = ['title', 'description', 'thumbnailImagePath', 'action'];
   constructor(

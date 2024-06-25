@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { AccountService } from './shared/services/account.service';
 import { Router } from '@angular/router';
 import { MatSnackBar } from '@angular/material/snack-bar';
@@ -8,7 +8,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss',
 })
-export class AppComponent {
+export class AppComponent implements OnInit {
   title = 'digital-library';
   constructor(
     private authService: AccountService,
@@ -20,8 +20,7 @@ export class AppComponent {
     const jwt = this.authService.getJwt();
     if (jwt) {
       this.authService.refreshUser(jwt).subscribe({
-        next: (_) => {},
-        error: (_) => {
+        error: () => {
           this.authService.logout();
           this._snackBar.open('Session expired please login again.', 'OK');
         },

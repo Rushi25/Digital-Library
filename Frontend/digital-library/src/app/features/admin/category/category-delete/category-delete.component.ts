@@ -19,7 +19,7 @@ export class CategoryDeleteComponent {
 
   onDeleteClick(): void {
     this.categoryService.deleteCategory(this.data.id).subscribe({
-      next: (_) => {
+      next: () => {
         this._snackBar.open('Category deleted successfully.', 'OK');
         this.dialogRef.close(true);
       },
