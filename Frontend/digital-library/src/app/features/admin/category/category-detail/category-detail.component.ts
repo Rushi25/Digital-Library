@@ -1,16 +1,12 @@
+import { HttpErrorResponse } from '@angular/common/http';
 import { Component } from '@angular/core';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Category } from '../../../../api-client/api-client';
-import { CategoryService } from '../../../../core/services/category.service';
-import { error } from 'console';
-import { HttpErrorResponse } from '@angular/common/http';
-import { MatSnackBar } from '@angular/material/snack-bar';
-import { MaterialModule } from '../../../../modules/material.module';
+import { CategoryService } from '../services/category.service';
 
 @Component({
   selector: 'app-category-detail',
-  standalone: true,
-  imports: [MaterialModule],
   templateUrl: './category-detail.component.html',
   styleUrl: './category-detail.component.scss',
 })
@@ -30,21 +26,21 @@ export class CategoryDetailComponent {
       const categoryId = parseInt(idParam, 10);
       this.categoryService.getCategoryById(categoryId).subscribe({
         next: (category: Category) => {
-        this.category = category;
-      },
-      error: (error: HttpErrorResponse) => {
-        if (error.status === 404) {
-          this._snackBar.open('Category with given id not found.', 'OK');
-        } else {
-          this._snackBar.open('Something went wrong.', 'OK');
-        }
-        this.router.navigate(['/admin/categories']);
-      }
-    });
+          this.category = category;
+        },
+        error: (error: HttpErrorResponse) => {
+          if (error.status === 404) {
+            this._snackBar.open('Category with given id not found.', 'OK');
+          } else {
+            this._snackBar.open('Something went wrong.', 'OK');
+          }
+          this.router.navigate(['admin/category']);
+        },
+      });
     }
   }
 
   goBack(): void {
-    this.router.navigate(['/admin/categories']);
+    this.router.navigate(['admin/category']);
   }
 }

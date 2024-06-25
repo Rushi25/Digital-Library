@@ -1,20 +1,17 @@
-import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { ActivatedRoute, Router } from '@angular/router';
-import { CategoryService } from '../../../../core/services/category.service';
-import { Category } from '../../../../api-client/api-client';
 import { HttpErrorResponse } from '@angular/common/http';
+import { Component } from '@angular/core';
+import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { MaterialModule } from '../../../../modules/material.module';
+import { ActivatedRoute, Router } from '@angular/router';
+import { Category } from '../../../../api-client/api-client';
+import { CategoryService } from '../services/category.service';
 
 @Component({
   selector: 'app-category-add-edit',
-  standalone: true,
-  imports: [MaterialModule],
   templateUrl: './category-add-edit.component.html',
   styleUrl: './category-add-edit.component.scss',
 })
-export class CategoryAddEditComponent implements OnInit {
+export class CategoryAddEditComponent {
   categoryForm!: FormGroup;
   categoryId!: number;
   isEditMode: boolean = false;
@@ -70,7 +67,7 @@ export class CategoryAddEditComponent implements OnInit {
           .subscribe({
             next: (_) => {
               this._snackBar.open('Category edited succesfully.', 'OK');
-              this.router.navigate(['/admin/categories']);
+              this.router.navigate(['admin/category']);
             },
             error: (error: HttpErrorResponse) => {
               if (error.status === 404) {
@@ -89,7 +86,7 @@ export class CategoryAddEditComponent implements OnInit {
         this.categoryService.createCategory(category).subscribe({
           next: (_) => {
             this._snackBar.open('Category added succesfully.', 'OK');
-            this.router.navigate(['/admin/categories']);
+            this.router.navigate(['admin/category']);
           },
           error: (error: HttpErrorResponse) => {
             if (error.status === 400) {
@@ -104,6 +101,6 @@ export class CategoryAddEditComponent implements OnInit {
   }
 
   goBack(): void {
-    this.router.navigate(['/admin/categories']);
+    this.router.navigate(['admin/category']);
   }
 }

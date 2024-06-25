@@ -1,35 +1,32 @@
-import { Component, OnInit } from '@angular/core';
-import { Router, RouterOutlet } from '@angular/router';
-import { NavbarComponent } from "./shared/components/navbar/navbar.component";
-import { FooterComponent } from "./shared/components/footer/footer.component";
-import { AuthService } from './core/services/auth.service';
+import { Component } from '@angular/core';
+import { AccountService } from './shared/services/account.service';
+import { Router } from '@angular/router';
 import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-root',
-  standalone: true,
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss',
-  imports: [RouterOutlet, NavbarComponent, FooterComponent]
 })
-export class AppComponent implements OnInit {
+export class AppComponent {
   title = 'digital-library';
-  constructor(private authService: AuthService,
+  constructor(
+    private authService: AccountService,
     private readonly _snackBar: MatSnackBar,
-    private readonly router: Router) { }
+    private readonly router: Router
+  ) {}
 
   ngOnInit(): void {
-    const jwt = this.authService.getJwt()
+    const jwt = this.authService.getJwt();
     if (jwt) {
       this.authService.refreshUser(jwt).subscribe({
-        next: _ => {},
-        error: _ => {
+        next: (_) => {},
+        error: (_) => {
           this.authService.logout();
           this._snackBar.open('Session expired please login again.', 'OK');
-        }
+        },
       });
-    }
-    else{
+    } else {
       this.authService.refreshUser(undefined).subscribe();
     }
   }

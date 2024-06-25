@@ -1,0 +1,35 @@
+.login-container {
+    bottom: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 81vh;
+    background: linear-gradient(to right, #d8a1dc, #c76b8b);
+}
+
+.login-card {
+    max-width: 400px;
+    width: 100%;
+    padding: 20px;
+    border-radius: 8px;
+}
+
+.login-card-header {
+    padding-bottom: 16px;
+    font-weight: 400;
+}
+
+.full-width {
+    width: 100%;
+    margin-bottom: 10px;
+}
+
+.login-button {
+    background: linear-gradient(to right, #ff4081, #f50057);
+    color: #ffffff !important;
+    cursor: pointer;
+
+    &:hover {
+        background: linear-gradient(to right, #ff4081, #fb5089); // Same pink gradient on hover
+    }
+}

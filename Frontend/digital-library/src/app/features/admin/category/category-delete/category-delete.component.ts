@@ -1,14 +1,11 @@
-import { Component, Inject } from '@angular/core';
-import { MatDialogRef, MAT_DIALOG_DATA, MatDialogContent, MatDialogTitle, MatDialogActions, MatDialogClose } from '@angular/material/dialog';
-import { MaterialModule } from '../../../../modules/material.module';
-import { CategoryService } from '../../../../core/services/category.service';
-import { MatSnackBar } from '@angular/material/snack-bar';
 import { HttpErrorResponse } from '@angular/common/http';
+import { Component, Inject } from '@angular/core';
+import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { CategoryService } from '../services/category.service';
 
 @Component({
   selector: 'app-category-delete',
-  standalone: true,
-  imports: [MaterialModule, MatDialogActions, MatDialogClose, MatDialogTitle, MatDialogContent],
   templateUrl: './category-delete.component.html',
   styleUrl: './category-delete.component.scss',
 })
@@ -32,7 +29,7 @@ export class CategoryDeleteComponent {
         } else {
           this._snackBar.open('Something went wrong.', 'OK');
         }
-      }
+      },
     });
   }
 }

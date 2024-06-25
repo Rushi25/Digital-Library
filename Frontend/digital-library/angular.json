@@ -7,7 +7,14 @@
       "projectType": "application",
       "schematics": {
         "@schematics/angular:component": {
-          "style": "scss"
+          "style": "scss",
+          "standalone": false
+        },
+        "@schematics/angular:directive": {
+          "standalone": false
+        },
+        "@schematics/angular:pipe": {
+          "standalone": false
         }
       },
       "root": "",
@@ -32,7 +39,7 @@
               }
             ],
             "styles": [
-              "./node_modules/@angular/material/prebuilt-themes/rose-red.css",
+              "@angular/material/prebuilt-themes/rose-red.css",
               "src/styles.scss"
             ],
             "scripts": [],
@@ -111,6 +118,6 @@
     }
   },
   "cli": {
-    "analytics": "02a35bf1-02d0-4a0d-ac08-125ecda5de53"
+    "analytics": "edf6d0e1-e3ef-4775-a956-b82b2e26dbe4"
   }
 }

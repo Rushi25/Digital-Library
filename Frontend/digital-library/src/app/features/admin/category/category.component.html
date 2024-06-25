@@ -1,6 +1,6 @@
 <div class="wrapper">
   <div class="category-add">
-    <button mat-raised-button [routerLink]="['/admin/categories/add']">
+    <button mat-raised-button [routerLink]="['add']">
       <mat-icon>add</mat-icon>New Category
     </button>
   </div>
@@ -32,14 +32,14 @@
           <button
             mat-icon-button
             class="edit-button"
-            routerLink="/admin/categories/edit/{{ category.id }}"
+            routerLink="edit/{{ category.id }}"
           >
             <mat-icon>edit</mat-icon>
           </button>
           <button
             mat-icon-button
             class="info-button"
-            routerLink="/admin/categories/details/{{ category.id }}"
+            routerLink="details/{{ category.id }}"
           >
             <mat-icon>info</mat-icon>
           </button>

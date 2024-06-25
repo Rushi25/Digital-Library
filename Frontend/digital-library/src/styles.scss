@@ -1,23 +1,29 @@
 /* You can add global styles to this file, and also import other style files */
 
-html, body { height: 100%; width: 100%; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
-.wrapper{
-    height: 100%;
-    padding: 20px 50px;
+html,
+body {
+  height: 100%;
 }
-.edit-button{
-    color: orange !important;
+body {
+  margin: 0;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
 }
-.info-button{
-    color: black !important;
+.wrapper {
+  height: 100%;
+  padding: 20px 50px;
 }
-.delete-button{
-    color: red !important;
+.edit-button {
+  color: orange !important;
 }
-.property{
-    font-weight: 500;
+.info-button {
+  color: black !important;
 }
-.value{
-    margin-bottom: 20px !important;
+.delete-button {
+  color: red !important;
+}
+.property {
+  font-weight: 500;
+}
+.value {
+  margin-bottom: 20px !important;
 }

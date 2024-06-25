@@ -1,21 +1,16 @@
-import { Component, OnInit } from '@angular/core';
-import { MatTableModule } from '@angular/material/table';
-import { CategoryService } from '../../../core/services/category.service';
-import { Category } from '../../../api-client/api-client';
+import { Component } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { MaterialModule } from '../../../modules/material.module';
-import { RouterLink, RouterOutlet } from '@angular/router';
-import { CategoryDeleteComponent } from './category-delete/category-delete.component';
+import { Category } from '../../../api-client/api-client';
 import { MatDialog } from '@angular/material/dialog';
+import { CategoryService } from './services/category.service';
+import { CategoryDeleteComponent } from './category-delete/category-delete.component';
 
 @Component({
   selector: 'app-category',
-  standalone: true,
-  imports: [MatTableModule, MaterialModule, RouterOutlet, RouterLink],
   templateUrl: './category.component.html',
   styleUrl: './category.component.scss',
 })
-export class CategoryComponent implements OnInit {
+export class CategoryComponent {
   categories: Category[] = [];
   columns: string[] = ['title', 'description', 'thumbnailImagePath', 'action'];
   constructor(
@@ -33,18 +28,18 @@ export class CategoryComponent implements OnInit {
       next: (res: Category[]) => {
         this.categories = res;
       },
-      error: (err) => {
-        this._snackBar.open(err, 'OK');
+      error: (error) => {
+        this._snackBar.open(error, 'OK');
       },
     });
   }
 
   deleteCategory(id: number, title: string): void {
     const dialogRef = this.dialog.open(CategoryDeleteComponent, {
-      data: { id, title }
+      data: { id, title },
     });
 
-    dialogRef.afterClosed().subscribe(result => {
+    dialogRef.afterClosed().subscribe((result) => {
       if (result) {
         this.loadCategories();
       }

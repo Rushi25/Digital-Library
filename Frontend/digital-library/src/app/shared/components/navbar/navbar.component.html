@@ -1,11 +1,11 @@
 <mat-toolbar color="primary">
-  <button mat-button [routerLink]="['home']" class="app-title">
+  <button mat-button [routerLink]="['']" class="app-title">
     <mat-icon fontIcon="book"></mat-icon>Digital Library
   </button>
   <span class="spacer"></span>
   <button
     mat-button
-    [routerLink]="['/home']"
+    [routerLink]="['']"
     routerLinkActive="active"
     class="nav-link"
   >
@@ -15,13 +15,13 @@
   <!--If logged in user is admin-->
   @if(isAdmin){
   <ng-container *ngTemplateOutlet="adminMenu"></ng-container>
-  } @if((authService.user$ | async) == null) {
+  } 
+  
+  @if((authService.user$ | async) == null) {
   <ng-container *ngTemplateOutlet="menu"></ng-container>
   } @else{
   <button
     mat-button
-    [routerLink]="['/auth/signup']"
-    routerLinkActive="active"
     class="nav-link"
   >
     <mat-icon fontIcon="account_circle"></mat-icon
@@ -38,7 +38,7 @@
   <mat-menu #menu="matMenu">
     <button
       mat-menu-item
-      [routerLink]="['/admin/categories']"
+      [routerLink]="['admin/category']"
       routerLinkActive="active"
     >
       <mat-icon>category</mat-icon>
@@ -91,7 +91,7 @@
   </button>
   <button
     mat-button
-    [routerLink]="['/auth/login']"
+    [routerLink]="['/login']"
     routerLinkActive="active"
     class="nav-link"
   >
@@ -99,7 +99,7 @@
   </button>
   <button
     mat-button
-    [routerLink]="['/auth/signup']"
+    [routerLink]="['login/register']"
     routerLinkActive="active"
     class="nav-link"
   >
