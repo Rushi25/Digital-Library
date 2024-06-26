@@ -8,8 +8,6 @@ namespace DigitalLibrary.Context.Entities
 {
     public class CategoryItem
     {
-        //private DateTime _releaseDate = DateTime.MinValue;
-
         public int Id { get; set; }
         
         [Required]
@@ -20,25 +18,11 @@ namespace DigitalLibrary.Context.Entities
         
         public int CategoryId { get; set; }
         
-        //[Required(ErrorMessage = "Please select a valid item from the '{0}' dropdown list")]
-        //[Display(Name = "Media Type")]
+        [Required(ErrorMessage = "Please select a valid item from the '{0}' dropdown list")]
         public int MediaTypeId { get; set; }
-        
-        [NotMapped]
-        public virtual ICollection<SelectListItem> MediaTypes { get; set; }
-        //[DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}")]
-        //[Display(Name = "Release Date")]
+
         public DateTime DateTimeItemReleased { get; set; }
-        //{ 
-        //    get 
-        //    {
-        //        return (_releaseDate == DateTime.MinValue) ? DateTime.Now : _releaseDate;
-        //    }
-        //    set 
-        //    {
-        //        _releaseDate = value;
-        //    } 
-        //}
+
         //[NotMapped]
         //public int ContentId { get; set; }
     }
