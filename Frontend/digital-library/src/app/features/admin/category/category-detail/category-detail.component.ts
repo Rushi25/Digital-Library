@@ -8,7 +8,6 @@ import { CategoryService } from '../services/category.service';
 @Component({
   selector: 'app-category-detail',
   templateUrl: './category-detail.component.html',
-  styleUrl: './category-detail.component.scss',
 })
 export class CategoryDetailComponent implements OnInit {
   category: Category | null = null;
@@ -21,7 +20,7 @@ export class CategoryDetailComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    const idParam = this.route.snapshot.paramMap.get('id');
+    const idParam = this.route.snapshot.paramMap.get('categoryId');
     if (idParam) {
       const categoryId = parseInt(idParam, 10);
       this.categoryService.getCategoryById(categoryId).subscribe({
@@ -34,7 +33,7 @@ export class CategoryDetailComponent implements OnInit {
           } else {
             this._snackBar.open('Something went wrong.', 'OK');
           }
-          this.router.navigate(['admin/category']);
+          this.goBack();
         },
       });
     }

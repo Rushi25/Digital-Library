@@ -9,7 +9,6 @@ import { CategoryService } from '../services/category.service';
 @Component({
   selector: 'app-category-add-edit',
   templateUrl: './category-add-edit.component.html',
-  styleUrl: './category-add-edit.component.scss',
 })
 export class CategoryAddEditComponent implements OnInit {
   categoryForm!: FormGroup;
@@ -38,7 +37,7 @@ export class CategoryAddEditComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    const idParam = this.route.snapshot.paramMap.get('id');
+    const idParam = this.route.snapshot.paramMap.get('categoryId');
     if (idParam) {
       this.categoryId = parseInt(idParam, 10);
       this.isEditMode = true;
@@ -52,6 +51,7 @@ export class CategoryAddEditComponent implements OnInit {
           } else {
             this._snackBar.open('Something went wrong.', 'OK');
           }
+          this.goBack();
         },
       });
     }
@@ -67,7 +67,7 @@ export class CategoryAddEditComponent implements OnInit {
           .subscribe({
             next: () => {
               this._snackBar.open('Category edited succesfully.', 'OK');
-              this.router.navigate(['admin/category']);
+              this.goBack();
             },
             error: (error: HttpErrorResponse) => {
               if (error.status === 404) {
@@ -80,13 +80,14 @@ export class CategoryAddEditComponent implements OnInit {
               } else {
                 this._snackBar.open('Something went wrong.', 'OK');
               }
+              this.goBack();
             },
           });
       } else {
         this.categoryService.createCategory(category).subscribe({
           next: () => {
             this._snackBar.open('Category added succesfully.', 'OK');
-            this.router.navigate(['admin/category']);
+            this.goBack();
           },
           error: (error: HttpErrorResponse) => {
             if (error.status === 400) {
@@ -94,6 +95,7 @@ export class CategoryAddEditComponent implements OnInit {
             } else {
               this._snackBar.open('Something went wrong.', 'OK');
             }
+            this.goBack();
           },
         });
       }

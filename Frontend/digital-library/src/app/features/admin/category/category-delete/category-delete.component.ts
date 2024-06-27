@@ -7,7 +7,6 @@ import { CategoryService } from '../services/category.service';
 @Component({
   selector: 'app-category-delete',
   templateUrl: './category-delete.component.html',
-  styleUrl: './category-delete.component.scss',
 })
 export class CategoryDeleteComponent {
   constructor(

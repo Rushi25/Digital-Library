@@ -28,7 +28,7 @@
 
       <ng-container matColumnDef="action">
         <th mat-header-cell *matHeaderCellDef>Action</th>
-        <td mat-cell *matCellDef="let category">
+        <td mat-cell class="action-buttons" *matCellDef="let category">
           <button
             mat-icon-button
             class="edit-button"
@@ -49,6 +49,10 @@
             (click)="deleteCategory(category.id, category.title)"
           >
             <mat-icon>delete</mat-icon>
+          </button>
+          <button mat-stroked-button
+          routerLink="/admin/category-item/{{ category.id }}">
+          Update items
           </button>
         </td>
       </ng-container>
