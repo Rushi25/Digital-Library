@@ -1,0 +1,86 @@
+<div class="form-container">
+  <mat-card class="form-card">
+    <div>
+      <button mat-raised-button (click)="goBack()">
+        <mat-icon>keyboard_backspace</mat-icon>Back to Category Items
+      </button>
+    </div>
+    <mat-card-header class="form-card-header">
+      <mat-card-title>
+        <div class="header-title">Category - {{ category?.title }}</div>
+        <div>{{ isEditMode ? "Edit Category Item" : "Add Category Item" }}</div>
+      </mat-card-title>
+    </mat-card-header>
+
+    <mat-card-content>
+      <form [formGroup]="categoryItemForm" (ngSubmit)="onSubmit()">
+        <mat-form-field
+          appearance="outline"
+          hideRequiredMarker="false"
+          class="full-width"
+        >
+          <mat-label>Title</mat-label>
+          <input matInput formControlName="title" required />
+          @if (categoryItemForm.get('title')?.hasError('required')) {
+          <mat-error> Title is required </mat-error>
+          } @if (categoryItemForm.get('title')?.hasError('minlength')) {
+          <mat-error> Title must be at least 2 characters long </mat-error>
+          } @if(categoryItemForm.get('title')?.hasError('maxlength')){
+          <mat-error> Title cannot be more than 200 characters long </mat-error>
+          }
+        </mat-form-field>
+
+        <mat-form-field
+          appearance="outline"
+          hideRequiredMarker="false"
+          class="full-width"
+        >
+          <mat-label>Description</mat-label>
+          <textarea matInput formControlName="description"></textarea>
+        </mat-form-field>
+
+        <mat-form-field
+          appearance="outline"
+          hideRequiredMarker="false"
+          class="full-width"
+        >
+          <mat-label>Select Media Type</mat-label>
+          <mat-select formControlName="mediaTypeId" required>
+            @for (media of mediaTypes; track $index) {
+            <mat-option [value]="media.id">{{ media.title }}</mat-option>
+            }
+          </mat-select>
+          @if (categoryItemForm.get('mediaTypeId')?.hasError('required')) {
+          <mat-error> Thumbnail Image Path is required </mat-error>
+          }
+        </mat-form-field>
+
+        <mat-form-field
+          appearance="outline"
+          hideRequiredMarker="false"
+          class="full-width"
+        >
+          <mat-label>Choose release date</mat-label>
+          <input
+            matInput
+            formControlName="dateReleased"
+            [matDatepicker]="picker"
+          />
+          <mat-hint>MM/DD/YYYY</mat-hint>
+          <mat-datepicker-toggle
+            matIconSuffix
+            [for]="picker"
+          ></mat-datepicker-toggle>
+          <mat-datepicker #picker></mat-datepicker>
+          @if (categoryItemForm.get('dateReleased')?.hasError('required')) {
+          <mat-error> Release date required </mat-error>
+          }
+        </mat-form-field>
+
+        <button mat-raised-button color="primary" type="submit">
+          {{ isEditMode ? "Update" : "Add" }} Category Item
+        </button>
+      </form>
+    </mat-card-content>
+  </mat-card>
+</div>

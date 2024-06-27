@@ -1,0 +1,26 @@
+<div class="wrapper">
+  @if (categoryItem) {
+  <div class="details-container">
+    <h2 class="header-title">{{ categoryItem.title }}</h2>
+    <div class="property">Description</div>
+    <p class="value">{{ categoryItem.description }}</p>
+    <div class="value">
+      <span class="property">Media type:</span>
+      <span class="value">
+        {{ getMediaTypeTitle(categoryItem.mediaTypeId) }}</span
+      >
+    </div>
+    <div class="value">
+      <span class="property">Date Released:</span>
+      <span class="value">
+        {{ categoryItem.dateReleased?.toDateString() }}</span
+      >
+    </div>
+    <div>
+      <button mat-raised-button (click)="goBack()">
+        <mat-icon>keyboard_backspace</mat-icon>Back to Category Items
+      </button>
+    </div>
+  </div>
+  }
+</div>

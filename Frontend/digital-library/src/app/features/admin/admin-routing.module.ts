@@ -8,6 +8,21 @@ const routes: Routes = [
     path: 'category',
     loadChildren: () =>
       import('./category/category.module').then((m) => m.CategoryModule),
+    title: 'Categories',
+  },
+  {
+    path: 'category-item/:categoryId',
+    loadChildren: () =>
+      import('./category-item/category-item.module').then(
+        (m) => m.CategoryItemModule
+      ),
+    title: 'Category Items',
+  },
+  {
+    path: 'media-type',
+    loadChildren: () =>
+      import('./media-type/media-type.module').then((m) => m.MediaTypeModule),
+    title: 'Media Types',
   },
 ];
 

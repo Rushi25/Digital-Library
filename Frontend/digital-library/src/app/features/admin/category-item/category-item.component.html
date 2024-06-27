@@ -1,0 +1,76 @@
+<div class="wrapper">
+  <h3 class="header-title">Category - {{ category?.title }}</h3>
+  <div class="add">
+    <button mat-raised-button routerLink="add">
+      <mat-icon>add</mat-icon>New Category Item
+    </button>
+    <button mat-raised-button (click)="goBack()" style="margin-left: 10px;">
+      <mat-icon>keyboard_backspace</mat-icon>Back to Category
+    </button>
+  </div>
+  <div class="table">
+    <table mat-table [dataSource]="categoryItems" class="mat-elevation-z8">
+      <!-- Title Column -->
+      <ng-container matColumnDef="title">
+        <th mat-header-cell *matHeaderCellDef>Title</th>
+        <td mat-cell *matCellDef="let categoryItem">
+          {{ categoryItem.title }}
+        </td>
+      </ng-container>
+
+      <!-- Description Column -->
+      <ng-container matColumnDef="description">
+        <th mat-header-cell *matHeaderCellDef>Description</th>
+        <td mat-cell *matCellDef="let categoryItem">
+          {{ categoryItem.description }}
+        </td>
+      </ng-container>
+
+      <!-- Media type Column -->
+      <ng-container matColumnDef="mediaType">
+        <th mat-header-cell *matHeaderCellDef>Media Type</th>
+        <td mat-cell *matCellDef="let categoryItem">
+          {{ getMediaTypeTitle(categoryItem.mediaTypeId) }}
+        </td>
+      </ng-container>
+
+      <!-- Date release Column -->
+      <ng-container matColumnDef="dateReleased">
+        <th mat-header-cell *matHeaderCellDef>Date Release</th>
+        <td mat-cell *matCellDef="let categoryItem">
+          {{ categoryItem.dateReleased.toDateString() }}
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="action">
+        <th mat-header-cell *matHeaderCellDef>Action</th>
+        <td mat-cell class="action-buttons" *matCellDef="let categoryItem">
+          <button
+            mat-icon-button
+            class="edit-button"
+            routerLink="edit/{{ categoryItem.id }}"
+          >
+            <mat-icon>edit</mat-icon>
+          </button>
+          <button
+            mat-icon-button
+            class="info-button"
+            routerLink="details/{{ categoryItem.id }}"
+          >
+            <mat-icon>info</mat-icon>
+          </button>
+          <button
+            mat-icon-button
+            class="delete-button"
+            (click)="deleteCategoryItem(categoryItem.id, categoryItem.title)"
+          >
+            <mat-icon>delete</mat-icon>
+          </button>
+        </td>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="columns"></tr>
+      <tr mat-row *matRowDef="let row; columns: columns"></tr>
+    </table>
+  </div>
+</div>

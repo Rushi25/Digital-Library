@@ -6,9 +6,9 @@ import { CategoryDetailComponent } from './category-detail/category-detail.compo
 
 const routes: Routes = [
   { path: '', component: CategoryComponent },
-  { path: 'add', component: CategoryAddEditComponent },
-  { path: 'edit/:categoryId', component: CategoryAddEditComponent },
-  { path: 'details/:categoryId', component: CategoryDetailComponent },
+  { path: 'add', component: CategoryAddEditComponent, title: 'New Category' },
+  { path: 'edit/:categoryId', component: CategoryAddEditComponent, title: 'Edit Category' },
+  { path: 'details/:categoryId', component: CategoryDetailComponent, title: 'Category - Details' },
 ];
 
 @NgModule({

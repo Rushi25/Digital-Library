@@ -38,7 +38,7 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 81vh;
+  height: 100%;
   background: linear-gradient(to right, #d8a1dc, #c76b8b);
 
   .form-card {
@@ -72,4 +72,9 @@ body {
     height: auto;
     margin-bottom: 20px;
   }
+}
+
+.header-title {
+  font-weight: 500 !important;
+  margin-bottom: 10px;
 }
