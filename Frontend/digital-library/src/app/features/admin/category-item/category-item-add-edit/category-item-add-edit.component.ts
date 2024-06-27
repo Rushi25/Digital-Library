@@ -121,6 +121,7 @@ export class CategoryItemAddEditComponent implements OnInit {
 
       if (this.isEditMode && this.categoryItemId !== null) {
         categoryItem.id = this.categoryItemId;
+        categoryItem.categoryId = this.categoryId;
 
         this.categoryItemService
           .updateCategoryItem(this.categoryItemId, categoryItem)
@@ -160,7 +161,7 @@ export class CategoryItemAddEditComponent implements OnInit {
             }
           },
         });
-      }
+      } 
     }
   }
 
