@@ -21,7 +21,7 @@ namespace DigitalLibrary.Context.Entities
         [Required(ErrorMessage = "Please select a valid item from the '{0}' dropdown list")]
         public int MediaTypeId { get; set; }
 
-        public DateTime DateTimeItemReleased { get; set; }
+        public DateTime DateReleased { get; set; }
 
         //[NotMapped]
         //public int ContentId { get; set; }

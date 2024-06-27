@@ -12,18 +12,64 @@ body {
   height: 100%;
   padding: 20px 50px;
 }
-.edit-button {
-  color: orange !important;
-}
-.info-button {
-  color: black !important;
-}
-.delete-button {
-  color: red !important;
+
+.action-buttons {
+  display: flex;
+  padding: 6px 10px !important;
+  .edit-button {
+    color: orange !important;
+  }
+  .info-button {
+    color: black !important;
+  }
+  .delete-button {
+    color: red !important;
+  }
 }
 .property {
   font-weight: 500;
 }
 .value {
   margin-bottom: 20px !important;
+}
+
+.form-container {
+  bottom: 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 81vh;
+  background: linear-gradient(to right, #d8a1dc, #c76b8b);
+
+  .form-card {
+    max-width: 400px;
+    width: 100%;
+    padding: 20px;
+    border-radius: 8px;
+  }
+
+  .form-card-header {
+    padding-bottom: 16px;
+    font-weight: 400;
+  }
+
+  .full-width {
+    width: 100%;
+    margin-bottom: 10px;
+  }
+}
+
+.details-container {
+  max-width: 600px;
+  padding: 20px;
+
+  h1 {
+    margin-bottom: 20px;
+  }
+
+  .thumbnail {
+    max-width: 100%;
+    height: auto;
+    margin-bottom: 20px;
+  }
 }

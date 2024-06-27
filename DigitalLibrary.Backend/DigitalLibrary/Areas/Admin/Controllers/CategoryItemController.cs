@@ -25,7 +25,7 @@ namespace DigitalLibrary.Areas.Admin.Controllers
         ///     Get list of category item.
         /// </summary>
         /// <param name="categoryId"></param>
-        [HttpGet("{categoryId}")]
+        [HttpGet("items/{categoryId}")]
         [Produces("application/json")]
         [ProducesResponseType<IEnumerable<CategoryItem>>(200)]
         public async Task<ActionResult<IEnumerable<CategoryItem>>> Get(int categoryId)
