@@ -3,6 +3,8 @@ footer {
     color: #ffffff; // White color
     padding: 20px;
     font-family: 'Arial', sans-serif;
+    position: sticky;
+    top: 100vh;
   
     .footer-content {
       display: flex;

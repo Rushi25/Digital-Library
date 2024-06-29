@@ -8,9 +8,12 @@ body {
   margin: 0;
   font-family: Roboto, "Helvetica Neue", sans-serif;
 }
+.app {
+  max-width: 1200px;
+  margin: 0 auto;
+}
 .wrapper {
-  height: 100%;
-  padding: 20px 50px;
+  padding: 20px;
 }
 
 .action-buttons {
@@ -34,23 +37,22 @@ body {
 }
 
 .form-container {
-  bottom: 10px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 100%;
-  background: linear-gradient(to right, #d8a1dc, #c76b8b);
-
   .form-card {
-    max-width: 400px;
-    width: 100%;
     padding: 20px;
     border-radius: 8px;
   }
 
+  .form {
+    max-width: 400px;
+    width: 100%;
+  }
+
+  .back-button {
+    margin-bottom: 20px;
+  }
+
   .form-card-header {
-    padding-bottom: 16px;
-    font-weight: 400;
+    font-weight: 500;
   }
 
   .full-width {

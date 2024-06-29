@@ -1,19 +1,19 @@
-<div class="form-container">
-  <mat-card class="form-card">
-    <div>
+<div class="form-container app">
+  <div class="form-card">
+    <div class="back-button">
       <button mat-raised-button (click)="goBack()">
         <mat-icon>keyboard_backspace</mat-icon>Back to Category Items
       </button>
     </div>
-    <mat-card-header class="form-card-header">
-      <mat-card-title>
-        <div class="header-title">Category - {{ category?.title }}</div>
-        <div>{{ isEditMode ? "Edit Category Item" : "Add Category Item" }}</div>
-      </mat-card-title>
-    </mat-card-header>
+    <div class="form-card-header">
+      <ng-container>
+        <h3 class="header-title">Category - {{ category?.title }}</h3>
+        <h4>{{ isEditMode ? "Edit Category Item" : "Add Category Item" }}</h4>
+      </ng-container>
+    </div>
 
-    <mat-card-content>
-      <form [formGroup]="categoryItemForm" (ngSubmit)="onSubmit()">
+    <ng-container>
+      <form class="form" [formGroup]="categoryItemForm" (ngSubmit)="onSubmit()">
         <mat-form-field
           appearance="outline"
           hideRequiredMarker="false"
@@ -81,6 +81,6 @@
           {{ isEditMode ? "Update" : "Add" }} Category Item
         </button>
       </form>
-    </mat-card-content>
-  </mat-card>
+    </ng-container>
+  </div>
 </div>

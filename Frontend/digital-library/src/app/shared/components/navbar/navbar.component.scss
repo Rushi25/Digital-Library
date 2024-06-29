@@ -2,6 +2,19 @@
     background: linear-gradient(to right, #d594b2, #ca47e2); // Light purple gradient
     font-family: 'Arial', sans-serif;
 
+    button {
+        margin-left: 140px;
+    }
+
+    button {
+        &:first-child {
+            margin-left: 140px;
+        }
+        &:last-child {
+            margin-right: 140px;
+        }
+    }
+
     .app-title {
         font-size: 1rem;
         font-weight: 800;
