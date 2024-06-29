@@ -44,7 +44,7 @@ namespace DigitalLibrary.Context.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Category");
+                    b.ToTable("Category", (string)null);
                 });
 
             modelBuilder.Entity("DigitalLibrary.Context.Entities.CategoryItem", b =>
@@ -78,7 +78,7 @@ namespace DigitalLibrary.Context.Migrations
 
                     b.HasIndex("MediaTypeId");
 
-                    b.ToTable("CategoryItem");
+                    b.ToTable("CategoryItem", (string)null);
                 });
 
             modelBuilder.Entity("DigitalLibrary.Context.Entities.Content", b =>
@@ -107,7 +107,7 @@ namespace DigitalLibrary.Context.Migrations
 
                     b.HasIndex("CategoryItemId");
 
-                    b.ToTable("Content");
+                    b.ToTable("Content", (string)null);
                 });
 
             modelBuilder.Entity("DigitalLibrary.Context.Entities.MediaType", b =>
@@ -129,7 +129,7 @@ namespace DigitalLibrary.Context.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("MediaType");
+                    b.ToTable("MediaType", (string)null);
                 });
 
             modelBuilder.Entity("DigitalLibrary.Context.Entities.User", b =>
@@ -228,7 +228,7 @@ namespace DigitalLibrary.Context.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("UserCategory");
+                    b.ToTable("UserCategory", (string)null);
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>

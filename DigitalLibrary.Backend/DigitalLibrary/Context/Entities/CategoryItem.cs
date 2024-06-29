@@ -24,7 +24,7 @@ namespace DigitalLibrary.Context.Entities
 
         public DateTime DateReleased { get; set; }
 
-        //[NotMapped]
-        //public int ContentId { get; set; }
+        [NotMapped]
+        public int ContentId { get; set; }
     }
 }
