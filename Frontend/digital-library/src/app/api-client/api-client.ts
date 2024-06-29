@@ -4,6 +4,7 @@
 // </auto-generated>
 //----------------------
 
+/* tslint:disable */
 /* eslint-disable */
 // ReSharper disable InconsistentNaming
 
@@ -835,6 +836,199 @@ export class ApiClient {
     /**
      * @return Success
      */
+    contentGET(id: number): Observable<Content> {
+        let url_ = this.baseUrl + "/api/admin/Content/{id}";
+        if (id === undefined || id === null)
+            throw new Error("The parameter 'id' must be defined.");
+        url_ = url_.replace("{id}", encodeURIComponent("" + id));
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ : any = {
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Accept": "application/json"
+            })
+        };
+
+        return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processContentGET(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processContentGET(response_ as any);
+                } catch (e) {
+                    return _observableThrow(e) as any as Observable<Content>;
+                }
+            } else
+                return _observableThrow(response_) as any as Observable<Content>;
+        }));
+    }
+
+    protected processContentGET(response: HttpResponseBase): Observable<Content> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (response as any).error instanceof Blob ? (response as any).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result200 = Content.fromJS(resultData200);
+            return _observableOf(result200);
+            }));
+        } else if (status === 404) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            let result404: any = null;
+            let resultData404 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result404 = ProblemDetails.fromJS(resultData404);
+            return throwException("Not Found", status, _responseText, _headers, result404);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf(null as any);
+    }
+
+    /**
+     * @param body (optional) 
+     * @return No Content
+     */
+    contentPUT(id: number, body?: Content | undefined): Observable<void> {
+        let url_ = this.baseUrl + "/api/admin/Content/{id}";
+        if (id === undefined || id === null)
+            throw new Error("The parameter 'id' must be defined.");
+        url_ = url_.replace("{id}", encodeURIComponent("" + id));
+        url_ = url_.replace(/[?&]$/, "");
+
+        const content_ = JSON.stringify(body);
+
+        let options_ : any = {
+            body: content_,
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Content-Type": "application/json",
+            })
+        };
+
+        return this.http.request("put", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processContentPUT(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processContentPUT(response_ as any);
+                } catch (e) {
+                    return _observableThrow(e) as any as Observable<void>;
+                }
+            } else
+                return _observableThrow(response_) as any as Observable<void>;
+        }));
+    }
+
+    protected processContentPUT(response: HttpResponseBase): Observable<void> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (response as any).error instanceof Blob ? (response as any).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            return _observableOf(null as any);
+            }));
+        } else if (status === 400) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            let result400: any = null;
+            let resultData400 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result400 = ProblemDetails.fromJS(resultData400);
+            return throwException("Bad Request", status, _responseText, _headers, result400);
+            }));
+        } else if (status === 404) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            let result404: any = null;
+            let resultData404 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result404 = ProblemDetails.fromJS(resultData404);
+            return throwException("Not Found", status, _responseText, _headers, result404);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf(null as any);
+    }
+
+    /**
+     * @param body (optional) 
+     * @return Created
+     */
+    contentPOST(body?: Content | undefined): Observable<Content> {
+        let url_ = this.baseUrl + "/api/admin/Content";
+        url_ = url_.replace(/[?&]$/, "");
+
+        const content_ = JSON.stringify(body);
+
+        let options_ : any = {
+            body: content_,
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Content-Type": "application/json",
+                "Accept": "application/json"
+            })
+        };
+
+        return this.http.request("post", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processContentPOST(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processContentPOST(response_ as any);
+                } catch (e) {
+                    return _observableThrow(e) as any as Observable<Content>;
+                }
+            } else
+                return _observableThrow(response_) as any as Observable<Content>;
+        }));
+    }
+
+    protected processContentPOST(response: HttpResponseBase): Observable<Content> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (response as any).error instanceof Blob ? (response as any).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 201) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            let result201: any = null;
+            let resultData201 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result201 = Content.fromJS(resultData201);
+            return _observableOf(result201);
+            }));
+        } else if (status === 400) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            let result400: any = null;
+            let resultData400 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result400 = ProblemDetails.fromJS(resultData400);
+            return throwException("Bad Request", status, _responseText, _headers, result400);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf(null as any);
+    }
+
+    /**
+     * @return Success
+     */
     mediaTypesAll(): Observable<MediaType[]> {
         let url_ = this.baseUrl + "/api/MediaTypes";
         url_ = url_.replace(/[?&]$/, "");
@@ -1220,6 +1414,7 @@ export class CategoryItem implements ICategoryItem {
     categoryId?: number;
     mediaTypeId!: number;
     dateReleased?: Date;
+    contentId?: number;
 
     constructor(data?: ICategoryItem) {
         if (data) {
@@ -1238,6 +1433,7 @@ export class CategoryItem implements ICategoryItem {
             this.categoryId = _data["categoryId"];
             this.mediaTypeId = _data["mediaTypeId"];
             this.dateReleased = _data["dateReleased"] ? new Date(_data["dateReleased"].toString()) : <any>undefined;
+            this.contentId = _data["contentId"];
         }
     }
 
@@ -1256,6 +1452,7 @@ export class CategoryItem implements ICategoryItem {
         data["categoryId"] = this.categoryId;
         data["mediaTypeId"] = this.mediaTypeId;
         data["dateReleased"] = this.dateReleased ? this.dateReleased.toISOString() : <any>undefined;
+        data["contentId"] = this.contentId;
         return data;
     }
 }
@@ -1267,6 +1464,67 @@ export interface ICategoryItem {
     categoryId?: number;
     mediaTypeId: number;
     dateReleased?: Date;
+    contentId?: number;
+}
+
+export class Content implements IContent {
+    id?: number;
+    title!: string;
+    htmlContent?: string | undefined;
+    videoLink?: string | undefined;
+    categoryItem?: CategoryItem;
+    catItemId?: number;
+    categoryId?: number;
+
+    constructor(data?: IContent) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.id = _data["id"];
+            this.title = _data["title"];
+            this.htmlContent = _data["htmlContent"];
+            this.videoLink = _data["videoLink"];
+            this.categoryItem = _data["categoryItem"] ? CategoryItem.fromJS(_data["categoryItem"]) : <any>undefined;
+            this.catItemId = _data["catItemId"];
+            this.categoryId = _data["categoryId"];
+        }
+    }
+
+    static fromJS(data: any): Content {
+        data = typeof data === 'object' ? data : {};
+        let result = new Content();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["id"] = this.id;
+        data["title"] = this.title;
+        data["htmlContent"] = this.htmlContent;
+        data["videoLink"] = this.videoLink;
+        data["categoryItem"] = this.categoryItem ? this.categoryItem.toJSON() : <any>undefined;
+        data["catItemId"] = this.catItemId;
+        data["categoryId"] = this.categoryId;
+        return data;
+    }
+}
+
+export interface IContent {
+    id?: number;
+    title: string;
+    htmlContent?: string | undefined;
+    videoLink?: string | undefined;
+    categoryItem?: CategoryItem;
+    catItemId?: number;
+    categoryId?: number;
 }
 
 export class LoginModel implements ILoginModel {

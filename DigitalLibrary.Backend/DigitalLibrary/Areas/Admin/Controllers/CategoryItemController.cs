@@ -30,7 +30,22 @@ namespace DigitalLibrary.Areas.Admin.Controllers
         [ProducesResponseType<IEnumerable<CategoryItem>>(200)]
         public async Task<ActionResult<IEnumerable<CategoryItem>>> Get(int categoryId)
         {
-            return await _context.CategoryItem.Where(a => a.CategoryId == categoryId).ToListAsync();
+            return await (from categoryItems in _context.CategoryItem
+                     join contents in _context.Content
+                     on categoryItems.Id equals contents.CategoryItem.Id
+                     into groupedItems
+                     from sub in groupedItems.DefaultIfEmpty()
+                     where categoryItems.CategoryId == categoryId
+                     select new CategoryItem
+                     {
+                         Id = categoryItems.Id,
+                         CategoryId = categoryId,
+                         Title = categoryItems.Title,
+                         Description = categoryItems.Description,
+                         MediaTypeId = categoryItems.MediaTypeId,
+                         DateReleased = categoryItems.DateReleased,
+                         ContentId = (sub != null) ? sub.Id : 1
+                     }).ToListAsync();
         }
 
         /// <summary>

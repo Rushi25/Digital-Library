@@ -1,12 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
+﻿using DigitalLibrary.Context;
+using DigitalLibrary.Context.Entities;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using DigitalLibrary.Context;
-using DigitalLibrary.Context.Entities;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace DigitalLibrary.Areas.Admin.Controllers
 {
@@ -19,18 +16,6 @@ namespace DigitalLibrary.Areas.Admin.Controllers
         public ContentController(AppDbContext context)
         {
             _context = context;
-        }
-
-        // GET: api/Content
-        /// <summary>
-        ///     Get list of contents.
-        /// </summary>
-        [HttpGet]
-        [Produces("application/json")]
-        [ProducesResponseType<IEnumerable<Content>>(200)]
-        public async Task<ActionResult<IEnumerable<Content>>> GetContent()
-        {
-            return await _context.Content.ToListAsync();
         }
 
         // GET: api/Content/5
@@ -110,29 +95,6 @@ namespace DigitalLibrary.Areas.Admin.Controllers
             await _context.SaveChangesAsync();
 
             return CreatedAtAction("GetContent", new { id = content.Id }, content);
-        }
-
-        // DELETE: api/Content/5
-        /// <summary>
-        ///     Delete content of id.
-        /// </summary>
-        /// <param name="id"></param>
-        [HttpDelete("{id}")]
-        [Produces("application/json")]
-        [ProducesResponseType(204)]
-        [ProducesResponseType(404)]
-        public async Task<IActionResult> DeleteContent(int id)
-        {
-            var content = await _context.Content.FindAsync(id);
-            if (content == null)
-            {
-                return NotFound();
-            }
-
-            _context.Content.Remove(content);
-            await _context.SaveChangesAsync();
-
-            return NoContent();
         }
 
         private bool ContentExists(int id)
