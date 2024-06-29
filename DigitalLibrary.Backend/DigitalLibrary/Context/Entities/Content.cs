@@ -1,9 +1,10 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using DigitalLibrary.Interfaces;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace DigitalLibrary.Context.Entities
 {
-    public class Content
+    public class Content : IPrimaryProperties
     {
         public int Id { get; set; }
         
