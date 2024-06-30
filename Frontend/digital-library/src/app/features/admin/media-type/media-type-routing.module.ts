@@ -16,7 +16,7 @@ const routes: Routes = [
     title: 'Update Media type',
   },
   {
-    path: 'details',
+    path: 'details/:mediaTypeId',
     component: MediaTypeDetailComponent,
     title: 'Media type - Details',
   }

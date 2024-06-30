@@ -9,7 +9,6 @@ import { MatTableModule } from '@angular/material/table';
 import { CategoryAddEditComponent } from './category-add-edit/category-add-edit.component';
 import { CategoryDeleteComponent } from './category-delete/category-delete.component';
 import { CategoryDetailComponent } from './category-detail/category-detail.component';
-import { MatCardModule } from '@angular/material/card';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { ReactiveFormsModule } from '@angular/forms';
 import { MatInputModule } from '@angular/material/input';
@@ -26,10 +25,8 @@ import { MatDialogModule } from '@angular/material/dialog';
     CommonModule,
     CategoryRoutingModule,
     MatIconModule,
-    MatIconModule,
     MatButtonModule,
     MatTableModule,
-    MatCardModule,
     MatInputModule,
     MatFormFieldModule,
     ReactiveFormsModule,
