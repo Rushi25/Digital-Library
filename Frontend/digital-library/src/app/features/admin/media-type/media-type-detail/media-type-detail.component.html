@@ -1,1 +1,24 @@
-<p>media-type-detail works!</p>
+<div class="wrapper app">
+    @if (mediaType) {
+    <div class="details-container">
+      <h2 class="header-title">{{ mediaType.title }}</h2>
+      <div class="value">
+        <span class="property">Thumbnail Image Path:</span>
+        <span class="value"> {{ mediaType.thumbnailImagePath }}</span>
+      </div>
+      <div class="property">Thumbnail Image</div>
+      <img
+        [src]="mediaType.thumbnailImagePath"
+        alt="{{ mediaType.title }}"
+        class="thumbnail"
+      />
+  
+      <div>
+        <button mat-raised-button (click)="goBack()">
+          <mat-icon>keyboard_backspace</mat-icon>Back to Media types
+        </button>
+      </div>
+    </div>
+    }
+  </div>
+  
