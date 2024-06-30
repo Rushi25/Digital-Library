@@ -1,1 +1,51 @@
-<p>media-type-add-edit works!</p>
+<div class="form-container app">
+    <div class="form-card">
+      <div class="back-button">
+        <button mat-raised-button (click)="goBack()">
+          <mat-icon>keyboard_backspace</mat-icon>Back to Media types
+        </button>
+      </div>
+      <div class="form-card-header">
+        <h3>{{
+          isEditMode ? "Edit Media type" : "Add media type"
+        }}</h3>
+      </div>
+  
+      <ng-container>
+        <form class="form" [formGroup]="mediaTypeForm" (ngSubmit)="onSubmit()">
+          <mat-form-field
+            appearance="outline"
+            hideRequiredMarker="false"
+            class="full-width"
+          >
+            <mat-label>Title</mat-label>
+            <input matInput formControlName="title" required />
+            @if (mediaTypeForm.get('title')?.hasError('required')) {
+            <mat-error> Title is required </mat-error>
+            } @if (mediaTypeForm.get('title')?.hasError('minlength')) {
+            <mat-error> Title must be at least 2 characters long </mat-error>
+            } @if(mediaTypeForm.get('title')?.hasError('maxlength')){
+            <mat-error> Title cannot be more than 200 characters long </mat-error>
+            }
+          </mat-form-field>
+  
+          <mat-form-field
+            appearance="outline"
+            hideRequiredMarker="false"
+            class="full-width"
+          >
+            <mat-label>Thumbnail Image Path</mat-label>
+            <input matInput formControlName="thumbnailImagePath" required />
+            @if (mediaTypeForm.get('thumbnailImagePath')?.hasError('required')) {
+            <mat-error> Thumbnail Image Path is required </mat-error>
+            }
+          </mat-form-field>
+  
+          <button mat-raised-button color="primary" type="submit">
+            {{ isEditMode ? "Update" : "Add" }} Media type
+          </button>
+        </form>
+      </ng-container>
+    </div>
+  </div>
+  
