@@ -44,7 +44,7 @@ namespace DigitalLibrary.Areas.Admin.Controllers
                          Description = categoryItems.Description,
                          MediaTypeId = categoryItems.MediaTypeId,
                          DateReleased = categoryItems.DateReleased,
-                         ContentId = (sub != null) ? sub.Id : 1
+                         ContentId = (sub != null) ? sub.Id : 0
                      }).ToListAsync();
         }
 

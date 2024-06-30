@@ -66,6 +66,16 @@
           >
             <mat-icon>delete</mat-icon>
           </button>
+          <button
+            mat-stroked-button
+            [routerLink]="
+              categoryItem.contentId === 0
+                ? getContentAddLink(categoryItem.id)
+                : getContentEditLink(categoryItem.id, categoryItem.contentId)
+            "
+          >
+            {{ categoryItem.contentId === 0 ? "Add" : "Update" }} content
+          </button>
         </td>
       </ng-container>
 

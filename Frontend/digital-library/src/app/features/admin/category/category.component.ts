@@ -39,10 +39,12 @@ export class CategoryComponent implements OnInit {
       data: { id, title },
     });
 
-    dialogRef.afterClosed().subscribe((result) => {
-      if (result) {
-        this.loadCategories();
-      }
+    dialogRef.afterClosed().subscribe({
+      next: (result: boolean) => {
+        if (result) {
+          this.loadCategories();
+        }
+      },
     });
   }
 }

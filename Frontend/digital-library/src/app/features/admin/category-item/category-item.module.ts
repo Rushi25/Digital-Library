@@ -8,7 +8,6 @@ import { CategoryItemDeleteComponent } from './category-item-delete/category-ite
 import { CategoryItemDetailComponent } from './category-item-detail/category-item-detail.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
-import { MatCardModule } from '@angular/material/card';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
@@ -29,10 +28,8 @@ import { provideNativeDateAdapter } from '@angular/material/core';
     CommonModule,
     CategoryItemRoutingModule,
     MatIconModule,
-    MatIconModule,
     MatButtonModule,
     MatTableModule,
-    MatCardModule,
     MatInputModule,
     MatFormFieldModule,
     ReactiveFormsModule,

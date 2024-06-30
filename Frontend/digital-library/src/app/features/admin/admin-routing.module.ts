@@ -24,6 +24,13 @@ const routes: Routes = [
       import('./media-type/media-type.module').then((m) => m.MediaTypeModule),
     title: 'Media Types',
   },
+  {
+    path: 'content/:categoryId',
+    loadChildren: () =>
+      import('./content-add-edit/content-add-edit.module').then(
+        (m) => m.ContentAddEditModule
+      ),
+  },
 ];
 
 @NgModule({

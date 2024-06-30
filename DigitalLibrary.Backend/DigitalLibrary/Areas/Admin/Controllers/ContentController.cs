@@ -57,7 +57,7 @@ namespace DigitalLibrary.Areas.Admin.Controllers
             {
                 return BadRequest();
             }
-
+            content.CategoryItem = await _context.CategoryItem.FindAsync(content.CatItemId);
             _context.Entry(content).State = EntityState.Modified;
 
             try
@@ -91,6 +91,7 @@ namespace DigitalLibrary.Areas.Admin.Controllers
         [ProducesResponseType(400)]
         public async Task<ActionResult<Content>> PostContent(Content content)
         {
+            content.CategoryItem = await _context.CategoryItem.FindAsync(content.CatItemId);
             await _context.Content.AddAsync(content);
             await _context.SaveChangesAsync();
 

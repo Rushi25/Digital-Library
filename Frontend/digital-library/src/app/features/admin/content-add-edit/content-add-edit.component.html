@@ -1,0 +1,58 @@
+<div class="form-container app">
+    <div class="form-card">
+      <div class="back-button">
+        <button mat-raised-button (click)="goToCategoryItem()">
+          <mat-icon>keyboard_backspace</mat-icon>Back to Category Items
+        </button>
+      </div>
+      <div class="form-card-header">
+        <ng-container>
+          <h3 class="header-title">Category Item - {{ categoryItem?.title }}</h3>
+          <h4>{{ isEditMode ? "Edit Content" : "Add Content" }}</h4>
+        </ng-container>
+      </div>
+  
+      <ng-container>
+        <form class="form" [formGroup]="contentForm" (ngSubmit)="onSubmit()">
+          <mat-form-field
+            appearance="outline"
+            hideRequiredMarker="false"
+            class="full-width"
+          >
+            <mat-label>Title</mat-label>
+            <input matInput formControlName="title" required />
+            @if (contentForm.get('title')?.hasError('required')) {
+            <mat-error> Title is required </mat-error>
+            } @if (contentForm.get('title')?.hasError('minlength')) {
+            <mat-error> Title must be at least 2 characters long </mat-error>
+            } @if(contentForm.get('title')?.hasError('maxlength')){
+            <mat-error> Title cannot be more than 200 characters long </mat-error>
+            }
+          </mat-form-field>
+  
+          <mat-form-field
+            appearance="outline"
+            hideRequiredMarker="false"
+            class="full-width"
+          >
+            <mat-label>HTML Content</mat-label>
+            <textarea matInput formControlName="htmlContent"></textarea>
+          </mat-form-field>
+
+          <mat-form-field
+            appearance="outline"
+            hideRequiredMarker="false"
+            class="full-width"
+          >
+            <mat-label>Video link</mat-label>
+            <input matInput formControlName="videoLink"/>
+          </mat-form-field>
+  
+          <button mat-raised-button color="primary" type="submit">
+            {{ isEditMode ? "Update" : "Add" }} Content
+          </button>
+        </form>
+      </ng-container>
+    </div>
+  </div>
+  

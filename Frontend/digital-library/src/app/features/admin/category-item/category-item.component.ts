@@ -101,4 +101,12 @@ export class CategoryItemComponent implements OnInit {
   goBack() {
     this.router.navigate(['/admin/category']);
   }
+
+  getContentAddLink(categoryItemId: number): string {
+    return '/admin/content/' + this.categoryId + '/' + categoryItemId + '/add';
+  }
+
+  getContentEditLink(categoryItemId: number, contentId: number): string {
+    return '/admin/content/' + this.categoryId + '/' + categoryItemId + '/edit/' + contentId;
+  }
 }
