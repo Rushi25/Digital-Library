@@ -30,6 +30,7 @@ const routes: Routes = [
       import('./content-add-edit/content-add-edit.module').then(
         (m) => m.ContentAddEditModule
       ),
+    title: 'Content',
   },
 ];
 
