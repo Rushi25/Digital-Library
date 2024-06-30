@@ -10,8 +10,7 @@ import { HttpErrorResponse } from '@angular/common/http';
 
 @Component({
   selector: 'app-content-add-edit',
-  templateUrl: './content-add-edit.component.html',
-  styleUrl: './content-add-edit.component.scss',
+  templateUrl: './content-add-edit.component.html'
 })
 export class ContentAddEditComponent implements OnInit {
   contentForm!: FormGroup;
