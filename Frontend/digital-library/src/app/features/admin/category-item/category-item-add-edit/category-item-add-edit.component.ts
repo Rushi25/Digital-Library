@@ -48,7 +48,7 @@ export class CategoryItemAddEditComponent implements OnInit {
       ],
       description: [''],
       mediaTypeId: ['', [Validators.required]],
-      dateReleased: ['', [Validators.required]],
+      dateReleased: [new Date(), [Validators.required]],
     });
   }
 
