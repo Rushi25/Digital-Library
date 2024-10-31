@@ -7,10 +7,12 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using DigitalLibrary.Context;
 using DigitalLibrary.Context.Entities;
+using Microsoft.AspNetCore.Authorization;
 
 namespace DigitalLibrary.Areas.Admin.Controllers
 {
     [Route("api/[controller]")]
+    [Authorize(Roles = "Admin")]
     [ApiController]
     public class MediaTypesController : ControllerBase
     {
@@ -28,6 +30,7 @@ namespace DigitalLibrary.Areas.Admin.Controllers
         [HttpGet]
         [Produces("application/json")]
         [ProducesResponseType<IEnumerable<MediaType>>(200)]
+        [ProducesResponseType(401)]
         public async Task<ActionResult<IEnumerable<MediaType>>> GetMediaType()
         {
             return await _context.MediaType.ToListAsync();
@@ -42,6 +45,7 @@ namespace DigitalLibrary.Areas.Admin.Controllers
         [Produces("application/json")]
         [ProducesResponseType<MediaType>(200)]
         [ProducesResponseType(404)]
+        [ProducesResponseType(401)]
         public async Task<ActionResult<MediaType>> GetMediaType(int id)
         {
             var mediaType = await _context.MediaType.FindAsync(id);
@@ -65,6 +69,7 @@ namespace DigitalLibrary.Areas.Admin.Controllers
         [Produces("application/json")]
         [ProducesResponseType(204)]
         [ProducesResponseType(400)]
+        [ProducesResponseType(401)]
         [ProducesResponseType(404)]
         public async Task<IActionResult> PutMediaType(int id, MediaType mediaType)
         {
@@ -103,6 +108,7 @@ namespace DigitalLibrary.Areas.Admin.Controllers
         [HttpPost]
         [Produces("application/json")]
         [ProducesResponseType<MediaType>(201)]
+        [ProducesResponseType(401)]
         [ProducesResponseType(400)]
         public async Task<ActionResult<MediaType>> PostMediaType(MediaType mediaType)
         {
@@ -120,6 +126,7 @@ namespace DigitalLibrary.Areas.Admin.Controllers
         [HttpDelete("{id}")]
         [Produces("application/json")]
         [ProducesResponseType(204)]
+        [ProducesResponseType(401)]
         [ProducesResponseType(404)]
         public async Task<IActionResult> DeleteMediaType(int id)
         {

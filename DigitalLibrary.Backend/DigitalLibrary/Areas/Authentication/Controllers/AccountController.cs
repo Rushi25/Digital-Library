@@ -50,6 +50,8 @@ namespace DigitalLibrary.Areas.Authentication.Controllers
                 var result = await _signInManager.CheckPasswordSignInAsync(user, model.Password, false);
                 if (!result.Succeeded) return Unauthorized("Invalid username or password");
 
+                user.Role = await _userManager.IsInRoleAsync(user, "admin") ? Role.Admin : Role.User;
+
                 return CreateApplicationUserDto(user);
             }
             return Unauthorized("Invalid username or password");
@@ -72,15 +74,17 @@ namespace DigitalLibrary.Areas.Authentication.Controllers
 
             var userToAdd = new User
             {
-                FirstName = model.FirstName.ToLower(),
-                LastName = model.LastName.ToLower(),
-                UserName = model.Email.ToLower(),
-                Email = model.Email.ToLower(),
-                EmailConfirmed = true
+                FirstName = model.FirstName,
+                LastName = model.LastName,
+                UserName = model.Email.ToLowerInvariant(),
+                Email = model.Email.ToLowerInvariant(),
+                EmailConfirmed = true,
+                Role = Role.User
             };
 
             var result = await _userManager.CreateAsync(userToAdd, model.Password);
-            if (!result.Succeeded) return BadRequest(result.Errors);
+            var roleAdded = await _userManager.AddToRoleAsync(userToAdd, Role.User.ToString());
+            if (!result.Succeeded || !roleAdded.Succeeded) return BadRequest(result.Errors);
 
             return Ok("Your account has been created.");
         }
@@ -99,6 +103,7 @@ namespace DigitalLibrary.Areas.Authentication.Controllers
         public async Task<ActionResult<UserModel>> Refresh()
         {
             var user = await _userManager.FindByNameAsync(User.FindFirst(ClaimTypes.Email)?.Value);
+            user.Role = await _userManager.IsInRoleAsync(user, "admin") ? Role.Admin : Role.User;
             return CreateApplicationUserDto(user);
         }
 

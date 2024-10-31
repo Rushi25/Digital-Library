@@ -18,5 +18,8 @@ namespace DigitalLibrary.Context.Entities
         
         [ForeignKey("UserId")]
         public virtual ICollection<UserCategory> UserCategory { get; set; }
+
+        [NotMapped]
+        public Role Role { get; set; }
     }
 }

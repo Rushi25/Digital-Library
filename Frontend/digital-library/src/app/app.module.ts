@@ -17,6 +17,7 @@ import { MatGridListModule } from '@angular/material/grid-list';
 import { provideHttpClient, withInterceptors } from '@angular/common/http';
 import { httpInterceptor } from './shared/interceptors/http.interceptor';
 import { MatButtonModule } from '@angular/material/button';
+import { JWT_OPTIONS, JwtHelperService, JwtModule } from '@auth0/angular-jwt';
 
 @NgModule({
   declarations: [AppComponent, HomeComponent, NavbarComponent, FooterComponent],
@@ -30,10 +31,13 @@ import { MatButtonModule } from '@angular/material/button';
     MatCardModule,
     MatGridListModule,
     MatButtonModule,
+    JwtModule,
   ],
   providers: [
     provideAnimationsAsync(),
     provideHttpClient(withInterceptors([httpInterceptor])),
+    { provide: JWT_OPTIONS, useValue: JWT_OPTIONS },
+    JwtHelperService,
   ],
   bootstrap: [AppComponent],
 })

@@ -7,10 +7,7 @@ import { AccountService } from '../../services/account.service';
   styleUrl: './navbar.component.scss'
 })
 export class NavbarComponent {
-  isAdmin = false;
-
   constructor(public authService: AccountService) {
-    this.isAdmin = authService.isAdminUser();
   }
 
   logout() {

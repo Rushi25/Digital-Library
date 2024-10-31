@@ -28,7 +28,8 @@ namespace DigitalLibrary.Areas.Authentication.Services
                 new(ClaimTypes.NameIdentifier, user.Id),
                 new(ClaimTypes.Email, user.Email),
                 new(ClaimTypes.GivenName, user.FirstName),
-                new(ClaimTypes.Surname, user.LastName)
+                new(ClaimTypes.Surname, user.LastName),
+                new(ClaimTypes.Role, user.Role.ToString())
             };
 
             var cred = new SigningCredentials(_jwtKey, SecurityAlgorithms.HmacSha512Signature);

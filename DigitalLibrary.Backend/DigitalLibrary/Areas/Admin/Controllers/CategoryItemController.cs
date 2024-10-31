@@ -7,10 +7,12 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using DigitalLibrary.Context;
 using DigitalLibrary.Context.Entities;
+using Microsoft.AspNetCore.Authorization;
 
 namespace DigitalLibrary.Areas.Admin.Controllers
 {
     [Route("api/admin/[controller]")]
+    [Authorize(Roles = "Admin")]
     [ApiController]
     public class CategoryItemController : ControllerBase
     {
@@ -27,6 +29,7 @@ namespace DigitalLibrary.Areas.Admin.Controllers
         /// <param name="categoryId"></param>
         [HttpGet("items/{categoryId}")]
         [Produces("application/json")]
+        [ProducesResponseType(401)]
         [ProducesResponseType<IEnumerable<CategoryItem>>(200)]
         public async Task<ActionResult<IEnumerable<CategoryItem>>> Get(int categoryId)
         {
@@ -55,6 +58,7 @@ namespace DigitalLibrary.Areas.Admin.Controllers
         [HttpGet("{id}")]
         [Produces("application/json")]
         [ProducesResponseType<CategoryItem>(200)]
+        [ProducesResponseType(401)]
         [ProducesResponseType(404)]
         public async Task<ActionResult<CategoryItem>> GetCategoryItem(int id)
         {
@@ -76,6 +80,7 @@ namespace DigitalLibrary.Areas.Admin.Controllers
         [HttpPut("{id}")]
         [Produces("application/json")]
         [ProducesResponseType(204)]
+        [ProducesResponseType(401)]
         [ProducesResponseType(400)]
         [ProducesResponseType(404)]
         public async Task<IActionResult> PutCategoryItem(int id, CategoryItem categoryItem)
@@ -113,6 +118,7 @@ namespace DigitalLibrary.Areas.Admin.Controllers
         [HttpPost]
         [Produces("application/json")]
         [ProducesResponseType<CategoryItem>(201)]
+        [ProducesResponseType(401)]
         [ProducesResponseType(400)]
         public async Task<ActionResult<CategoryItem>> PostCategoryItem(CategoryItem categoryItem)
         {
@@ -129,6 +135,7 @@ namespace DigitalLibrary.Areas.Admin.Controllers
         [HttpDelete("{id}")]
         [Produces("application/json")]
         [ProducesResponseType(204)]
+        [ProducesResponseType(401)]
         [ProducesResponseType(404)]
         public async Task<IActionResult> DeleteCategoryItem(int id)
         {

@@ -13,17 +13,14 @@
   </button>
 
   <!--If logged in user is admin-->
-  @if(isAdmin){
+  @if(authService.isAdmin$ | async){
   <ng-container *ngTemplateOutlet="adminMenu"></ng-container>
   } 
   
   @if((authService.user$ | async) === null) {
   <ng-container *ngTemplateOutlet="menu"></ng-container>
   } @else{
-  <button
-    mat-button
-    class="nav-link"
-  >
+  <button mat-button class="nav-link">
     <mat-icon fontIcon="account_circle"></mat-icon
     >{{ (authService.user$ | async)?.firstname }}
   </button>

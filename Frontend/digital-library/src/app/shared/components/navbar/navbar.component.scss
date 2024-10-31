@@ -1,44 +1,46 @@
 .mat-toolbar {
-    background: linear-gradient(to right, #d594b2, #ca47e2); // Light purple gradient
-    font-family: 'Arial', sans-serif;
+  background: linear-gradient(
+    to right,
+    #d594b2,
+    #ca47e2
+  ); // Light purple gradient
+  font-family: "Arial", sans-serif;
 
-    button {
-        margin-left: 140px;
+  button {
+    margin-left: 140px;
+
+    &:first-child {
+      margin-left: 140px;
     }
-
-    button {
-        &:first-child {
-            margin-left: 140px;
-        }
-        &:last-child {
-            margin-right: 140px;
-        }
+    &:last-child {
+      margin-right: 140px;
     }
+  }
 
-    .app-title {
-        font-size: 1rem;
-        font-weight: 800;
-        color: #ffffff; // White color
-        text-transform: uppercase;
+  .app-title {
+    font-size: 1rem;
+    font-weight: 800;
+    color: #ffffff; // White color
+    text-transform: uppercase;
 
-        &:hover {
-            color: #ff4081; // Pink color on hover
-        }
+    &:hover {
+      color: #ff4081; // Pink color on hover
     }
+  }
 
-    .nav-link {
-        color: #ffffff; // White color
-        text-transform: uppercase;
-        font-size: 1rem;
-        font-weight: 500;
-        margin-left: 20px;
+  .nav-link {
+    color: #ffffff; // White color
+    text-transform: uppercase;
+    font-size: 1rem;
+    font-weight: 500;
+    margin-left: 20px;
 
-        &:hover {
-            color: #ff4081; // Pink color on hover
-        }
+    &:hover {
+      color: #ff4081; // Pink color on hover
     }
+  }
 
-    .spacer {
-        flex: 1;
-    }
+  .spacer {
+    flex: 1;
+  }
 }

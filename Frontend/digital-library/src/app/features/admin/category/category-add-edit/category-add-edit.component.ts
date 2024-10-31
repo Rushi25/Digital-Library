@@ -16,11 +16,11 @@ export class CategoryAddEditComponent implements OnInit {
   isEditMode = false;
 
   constructor(
-    private fb: FormBuilder,
-    private categoryService: CategoryService,
-    private route: ActivatedRoute,
-    private router: Router,
-    private _snackBar: MatSnackBar
+    private readonly fb: FormBuilder,
+    private readonly categoryService: CategoryService,
+    private readonly route: ActivatedRoute,
+    private readonly router: Router,
+    private readonly _snackBar: MatSnackBar
   ) {
     this.categoryForm = this.fb.group({
       title: [

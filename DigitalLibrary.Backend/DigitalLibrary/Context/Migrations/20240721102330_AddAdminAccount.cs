@@ -17,9 +17,9 @@ namespace DigitalLibrary.Context.Migrations
         private const string _admin_Username_Norm = "ADMIN@DIGITALLIBRARY.COM";
         private const string _admin_Email = "admin@digitallibrary.com";
         private const string _admin_Email_Norm = "ADMIN@DIGITALLIBRARY.COM";
+        private const string _admin_Password = "Admin@123";
         private const string _admin_User_Guid = "b98dadcf-4816-4f79-989e-2d31dfc6cd6f";
         private const string _admin_Role_Guid = "94d00790-d885-49de-8ad4-254ebbf007e4";
-        private const string _admin_Password = "Admin@123";
         private const string _admin_Role = "Admin";
         private const string _admin_Role_Norm = "ADMIN";
         private readonly DateTime _admin_Date_Created = DateTime.Now;

@@ -1,5 +1,6 @@
 ﻿using DigitalLibrary.Context;
 using DigitalLibrary.Context.Entities;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
@@ -9,6 +10,7 @@ using System.Threading.Tasks;
 namespace DigitalLibrary.Areas.Admin.Controllers
 {
     [Route("api/admin/[controller]")]
+    [Authorize(Roles = "Admin")]
     [ApiController]
     public class CategoryController : ControllerBase
     {
@@ -25,6 +27,7 @@ namespace DigitalLibrary.Areas.Admin.Controllers
         [HttpGet]
         [Produces("application/json")]
         [ProducesResponseType<IEnumerable<Category>>(200)]
+        [ProducesResponseType(401)]
         public async Task<ActionResult<IEnumerable<Category>>> GetCategory()
         {
             return await _context.Category.ToListAsync();
@@ -38,6 +41,7 @@ namespace DigitalLibrary.Areas.Admin.Controllers
         [Produces("application/json")]
         [ProducesResponseType<Category>(200)]
         [ProducesResponseType(404)]
+        [ProducesResponseType(401)]
         public async Task<ActionResult<Category>> GetCategory(int id)
         {
             var category = await _context.Category.FindAsync(id);
@@ -60,6 +64,7 @@ namespace DigitalLibrary.Areas.Admin.Controllers
         [ProducesResponseType(204)]
         [ProducesResponseType(400)]
         [ProducesResponseType(404)]
+        [ProducesResponseType(401)]
         public async Task<IActionResult> PutCategory(int id, Category category)
         {
             if (id != category.Id)
@@ -96,6 +101,7 @@ namespace DigitalLibrary.Areas.Admin.Controllers
         [Produces("application/json")]
         [ProducesResponseType<Category>(201)]
         [ProducesResponseType(400)]
+        [ProducesResponseType(401)]
         public async Task<ActionResult<Category>> PostCategory(Category category)
         {
             await _context.Category.AddAsync(category);
@@ -112,6 +118,7 @@ namespace DigitalLibrary.Areas.Admin.Controllers
         [Produces("application/json")]
         [ProducesResponseType(204)]
         [ProducesResponseType(404)]
+        [ProducesResponseType(401)]
         public async Task<IActionResult> DeleteCategory(int id)
         {
             var category = await _context.Category.FindAsync(id);
