@@ -1,5 +1,11 @@
-.wrapper{
-    .table{
-        padding-top: 20px;
-    }
+.wrapper {
+  .table {
+    padding-top: 20px;
+  }
+}
+
+::ng-deep .mat-mdc-cell {
+  min-width: 50px !important;
+  max-width: 350px !important;
+  white-space: nowrap !important;
 }
