@@ -20,7 +20,7 @@
         <mat-list>
           @for (categoryItem of category.items; track categoryItem.categoryItemId) {
             <mat-list-item>
-              <div matListItemAvatar></div>
+              <img matListItemAvatar [src]="categoryItem.mediaImagePath" alt="Media"/>
               <div matListItemTitle>
                 {{categoryItem.categoryItemTitle}}
               </div>
