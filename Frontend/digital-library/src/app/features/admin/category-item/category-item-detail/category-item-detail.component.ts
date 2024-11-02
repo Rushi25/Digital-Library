@@ -5,6 +5,7 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { CategoryItemService } from '../services/category-item.service';
 import { MediaTypeService } from '../../media-type/services/media-type.service';
+import { LoaderService } from '../../../../shared/services/loader.service';
 
 @Component({
   selector: 'app-category-item-detail',
@@ -16,14 +17,16 @@ export class CategoryItemDetailComponent implements OnInit {
   categoryId: number | undefined;
 
   constructor(
-    private route: ActivatedRoute,
-    private categoryItemService: CategoryItemService,
-    private mediaTypeService: MediaTypeService,
-    private router: Router,
-    private _snackBar: MatSnackBar
+    private readonly route: ActivatedRoute,
+    private readonly categoryItemService: CategoryItemService,
+    private readonly mediaTypeService: MediaTypeService,
+    private readonly router: Router,
+    private readonly _snackBar: MatSnackBar,
+    private readonly loaderService: LoaderService
   ) {}
 
   ngOnInit(): void {
+    this.loaderService.show();
     this.getMediaTypes();
     const categoryIdParam = this.route.snapshot.paramMap.get('categoryId');
     if(categoryIdParam) {
@@ -35,6 +38,7 @@ export class CategoryItemDetailComponent implements OnInit {
       this.categoryItemService.getCategoryItemById(categoryItemId).subscribe({
         next: (category: CategoryItem) => {
           this.categoryItem = category;
+          this.loaderService.hide();
         },
         error: (error: HttpErrorResponse) => {
           if (error.status === 404) {
@@ -57,6 +61,7 @@ export class CategoryItemDetailComponent implements OnInit {
   }
 
   goBack(): void {
+    this.loaderService.hide();
     this.router.navigate(['/admin/category-item/' + this.categoryId]);
   }
 

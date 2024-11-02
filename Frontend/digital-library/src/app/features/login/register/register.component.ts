@@ -10,6 +10,7 @@ import { Router } from '@angular/router';
 import { take } from 'rxjs';
 import { UserModel, RegisterModel } from '../../../api-client/api-client';
 import { AccountService } from '../../../shared/services/account.service';
+import { LoaderService } from '../../../shared/services/loader.service';
 
 @Component({
   selector: 'app-register',
@@ -21,10 +22,11 @@ export class RegisterComponent implements OnInit {
   hide = true;
 
   constructor(
-    private fb: FormBuilder,
+    private readonly fb: FormBuilder,
     private readonly authService: AccountService,
-    private _snackBar: MatSnackBar,
-    private router: Router
+    private readonly _snackBar: MatSnackBar,
+    private readonly router: Router,
+    private readonly loaderService: LoaderService
   ) {
     this.authService.user$.pipe(take(1)).subscribe({
       next: (user: UserModel | null) => {
@@ -72,14 +74,17 @@ export class RegisterComponent implements OnInit {
   }
 
   register(): void {
+    this.loaderService.show();
     const model: RegisterModel = this.registerForm.value;
     this.authService.register(model).subscribe({
       next: (res) => {
         this._snackBar.open(res, 'OK', { duration: 3000 });
         this.router.navigate(['login']);
+        this.loaderService.hide();
       },
       error: (err) => {
         this._snackBar.open(err, 'OK');
+        this.loaderService.hide();
       },
     });
   }

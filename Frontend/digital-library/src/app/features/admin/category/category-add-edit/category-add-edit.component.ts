@@ -5,6 +5,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Category } from '../../../../api-client/api-client';
 import { CategoryService } from '../services/category.service';
+import { LoaderService } from '../../../../shared/services/loader.service';
 
 @Component({
   selector: 'app-category-add-edit',
@@ -20,7 +21,8 @@ export class CategoryAddEditComponent implements OnInit {
     private readonly categoryService: CategoryService,
     private readonly route: ActivatedRoute,
     private readonly router: Router,
-    private readonly _snackBar: MatSnackBar
+    private readonly _snackBar: MatSnackBar,
+    private readonly loaderService: LoaderService
   ) {
     this.categoryForm = this.fb.group({
       title: [
@@ -39,11 +41,13 @@ export class CategoryAddEditComponent implements OnInit {
   ngOnInit(): void {
     const idParam = this.route.snapshot.paramMap.get('categoryId');
     if (idParam) {
+      this.loaderService.show();
       this.categoryId = parseInt(idParam, 10);
       this.isEditMode = true;
       this.categoryService.getCategoryById(this.categoryId).subscribe({
         next: (category: Category) => {
           this.categoryForm.patchValue(category);
+          this.loaderService.hide();
         },
         error: (err: HttpErrorResponse) => {
           if (err.status === 404) {
@@ -59,6 +63,7 @@ export class CategoryAddEditComponent implements OnInit {
 
   onSubmit(): void {
     if (this.categoryForm.valid) {
+      this.loaderService.show();
       const category: Category = this.categoryForm.value;
       if (this.isEditMode && this.categoryId !== null) {
         category.id = this.categoryId;
@@ -103,6 +108,7 @@ export class CategoryAddEditComponent implements OnInit {
   }
 
   goBack(): void {
+    this.loaderService.hide();
     this.router.navigate(['admin/category']);
   }
 }

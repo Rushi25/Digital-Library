@@ -7,6 +7,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { ContentService } from './content.service';
 import { CategoryService } from '../category/services/category.service';
 import { HttpErrorResponse } from '@angular/common/http';
+import { LoaderService } from '../../../shared/services/loader.service';
 
 @Component({
   selector: 'app-content-add-edit',
@@ -22,13 +23,14 @@ export class ContentAddEditComponent implements OnInit {
   category!: Category;
 
   constructor(
-    private fb: FormBuilder,
-    private categoryItemService: CategoryItemService,
-    private contentService: ContentService,
-    private categoryService: CategoryService,
-    private route: ActivatedRoute,
-    private router: Router,
-    private _snackBar: MatSnackBar
+    private readonly fb: FormBuilder,
+    private readonly categoryItemService: CategoryItemService,
+    private readonly contentService: ContentService,
+    private readonly categoryService: CategoryService,
+    private readonly route: ActivatedRoute,
+    private readonly router: Router,
+    private readonly _snackBar: MatSnackBar,
+    private readonly loaderService: LoaderService
   ) {
     this.initCategoryItemForm();
   }
@@ -49,6 +51,7 @@ export class ContentAddEditComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.loaderService.show();
     this.getQueryParam();
     this.getCategory();
     this.getCategoryItem();
@@ -91,6 +94,7 @@ export class ContentAddEditComponent implements OnInit {
     this.categoryItemService.getCategoryItemById(this.categoryItemId).subscribe({
       next: (categoryItem: CategoryItem) => {
         this.categoryItem = categoryItem;
+        this.loaderService.hide();
       },
       error: () => {
         this._snackBar.open('Invalid category item', 'OK');
@@ -113,6 +117,7 @@ export class ContentAddEditComponent implements OnInit {
 
   onSubmit() {
     if (this.contentForm.valid && this.categoryItemId !== null && this.categoryId !== null) {
+      this.loaderService.show();
       const content: Content = this.contentForm.value;
 
       if (this.isEditMode && this.contentId !== null) {
@@ -138,6 +143,7 @@ export class ContentAddEditComponent implements OnInit {
               } else {
                 this._snackBar.open('Something went wrong.', 'OK');
               }
+              this.loaderService.hide();
             },
           });
       } else {
@@ -157,6 +163,7 @@ export class ContentAddEditComponent implements OnInit {
             } else {
               this._snackBar.open('Something went wrong.', 'OK');
             }
+            this.loaderService.hide();
           },
         });
       } 
@@ -164,10 +171,12 @@ export class ContentAddEditComponent implements OnInit {
   }
 
   goToCategory() {
+    this.loaderService.hide();
     this.router.navigate(['/admin/category']);
   }
 
   goToCategoryItem() {
+    this.loaderService.hide();
     this.router.navigate(['/admin/category-item/' + this.categoryId]);
   }
 }

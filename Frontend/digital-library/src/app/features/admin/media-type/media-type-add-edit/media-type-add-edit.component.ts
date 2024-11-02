@@ -5,6 +5,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { MediaType } from '../../../../api-client/api-client';
 import { HttpErrorResponse } from '@angular/common/http';
+import { LoaderService } from '../../../../shared/services/loader.service';
 
 @Component({
   selector: 'app-media-type-add-edit',
@@ -16,11 +17,12 @@ export class MediaTypeAddEditComponent implements OnInit {
   isEditMode = false;
 
   constructor(
-    private fb: FormBuilder,
-    private mediaTypeService: MediaTypeService,
-    private route: ActivatedRoute,
-    private router: Router,
-    private _snackBar: MatSnackBar
+    private readonly fb: FormBuilder,
+    private readonly mediaTypeService: MediaTypeService,
+    private readonly route: ActivatedRoute,
+    private readonly router: Router,
+    private readonly _snackBar: MatSnackBar,
+    private readonly loaderService: LoaderService
   ) {
     this.mediaTypeForm = this.fb.group({
       title: [
@@ -36,6 +38,7 @@ export class MediaTypeAddEditComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.loaderService.show();
     const idParam = this.route.snapshot.paramMap.get('mediaTypeId');
     if (idParam) {
       this.mediaTypeId = parseInt(idParam, 10);
@@ -43,6 +46,7 @@ export class MediaTypeAddEditComponent implements OnInit {
       this.mediaTypeService.getMediaTypeById(this.mediaTypeId).subscribe({
         next: (mediaType: MediaType) => {
           this.mediaTypeForm.patchValue(mediaType);
+          this.loaderService.hide();
         },
         error: (err: HttpErrorResponse) => {
           if (err.status === 404) {
@@ -79,7 +83,7 @@ export class MediaTypeAddEditComponent implements OnInit {
               } else {
                 this._snackBar.open('Something went wrong.', 'OK');
               }
-              this.goBack();
+              this.loaderService.hide();
             },
           });
       } else {
@@ -94,7 +98,7 @@ export class MediaTypeAddEditComponent implements OnInit {
             } else {
               this._snackBar.open('Something went wrong.', 'OK');
             }
-            this.goBack();
+            this.loaderService.hide();
           },
         });
       }
@@ -102,6 +106,7 @@ export class MediaTypeAddEditComponent implements OnInit {
   }
 
   goBack(): void {
+    this.loaderService.hide();
     this.router.navigate(['admin/media-type']);
   }
 }

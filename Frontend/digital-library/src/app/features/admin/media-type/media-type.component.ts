@@ -4,6 +4,7 @@ import { MediaTypeService } from './services/media-type.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatDialog } from '@angular/material/dialog';
 import { MediaTypeDeleteComponent } from './media-type-delete/media-type-delete.component';
+import { LoaderService } from '../../../shared/services/loader.service';
 
 @Component({
   selector: 'app-media-type',
@@ -16,10 +17,12 @@ export class MediaTypeComponent implements OnInit {
   constructor(
     private readonly mediaTypeService: MediaTypeService,
     private readonly _snackBar: MatSnackBar,
-    public dialog: MatDialog
+    public dialog: MatDialog,
+    private readonly loaderService: LoaderService
   ) {}
 
   ngOnInit(): void {
+    this.loaderService.show();
     this.loadMediaTypes();
   }
 
@@ -27,9 +30,11 @@ export class MediaTypeComponent implements OnInit {
     this.mediaTypeService.getMediaTypes().subscribe({
       next: (res: MediaType[]) => {
         this.mediaTypes = res;
+        this.loaderService.hide();
       },
       error: (error) => {
         this._snackBar.open(error, 'OK');
+        this.loaderService.hide();
       },
     });
   }

@@ -4,6 +4,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Category } from '../../../../api-client/api-client';
 import { CategoryService } from '../services/category.service';
+import { LoaderService } from '../../../../shared/services/loader.service';
 
 @Component({
   selector: 'app-category-detail',
@@ -13,19 +14,22 @@ export class CategoryDetailComponent implements OnInit {
   category: Category | null = null;
 
   constructor(
-    private route: ActivatedRoute,
-    private categoryService: CategoryService,
-    private router: Router,
-    private _snackBar: MatSnackBar
+    private readonly route: ActivatedRoute,
+    private readonly categoryService: CategoryService,
+    private readonly router: Router,
+    private readonly _snackBar: MatSnackBar,
+    private readonly loaderService: LoaderService
   ) {}
 
   ngOnInit(): void {
     const idParam = this.route.snapshot.paramMap.get('categoryId');
     if (idParam) {
+      this.loaderService.show();
       const categoryId = parseInt(idParam, 10);
       this.categoryService.getCategoryById(categoryId).subscribe({
         next: (category: Category) => {
           this.category = category;
+          this.loaderService.hide();
         },
         error: (error: HttpErrorResponse) => {
           if (error.status === 404) {
@@ -40,6 +44,7 @@ export class CategoryDetailComponent implements OnInit {
   }
 
   goBack(): void {
+    this.loaderService.hide();
     this.router.navigate(['admin/category']);
   }
 }

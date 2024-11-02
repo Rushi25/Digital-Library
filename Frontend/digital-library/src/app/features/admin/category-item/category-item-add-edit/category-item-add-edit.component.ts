@@ -11,6 +11,7 @@ import {
 import { HttpErrorResponse } from '@angular/common/http';
 import { MediaTypeService } from '../../media-type/services/media-type.service';
 import { CategoryService } from '../../category/services/category.service';
+import { LoaderService } from '../../../../shared/services/loader.service';
 
 @Component({
   selector: 'app-category-item-add-edit',
@@ -25,13 +26,14 @@ export class CategoryItemAddEditComponent implements OnInit {
   category: Category | undefined;
 
   constructor(
-    private fb: FormBuilder,
-    private categoryItemService: CategoryItemService,
-    private categoryService: CategoryService,
-    private route: ActivatedRoute,
-    private router: Router,
-    private _snackBar: MatSnackBar,
-    private mediaTypeService: MediaTypeService
+    private readonly fb: FormBuilder,
+    private readonly categoryItemService: CategoryItemService,
+    private readonly categoryService: CategoryService,
+    private readonly route: ActivatedRoute,
+    private readonly router: Router,
+    private readonly _snackBar: MatSnackBar,
+    private readonly mediaTypeService: MediaTypeService,
+    private readonly loaderService: LoaderService
   ) {
     this.initCategoryItemForm();
   }
@@ -53,6 +55,7 @@ export class CategoryItemAddEditComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.loaderService.show();
     const idParam = this.route.snapshot.paramMap.get('itemId');
     const categoryIdParam = this.route.snapshot.paramMap.get('categoryId');
     if (categoryIdParam) {
@@ -103,6 +106,7 @@ export class CategoryItemAddEditComponent implements OnInit {
   getMediaTypes() {
     this.mediaTypeService.getMediaTypes().subscribe({
       next: (mediaTypes: MediaType[]) => {
+        this.loaderService.hide();
         this.mediaTypes = mediaTypes;
       },
       error: () => {
@@ -117,6 +121,7 @@ export class CategoryItemAddEditComponent implements OnInit {
 
   onSubmit(): void {
     if (this.categoryItemForm.valid && this.categoryId !== null) {
+      this.loaderService.show();
       const categoryItem: CategoryItem = this.categoryItemForm.value;
 
       if (this.isEditMode && this.categoryItemId !== null) {
@@ -141,6 +146,7 @@ export class CategoryItemAddEditComponent implements OnInit {
               } else {
                 this._snackBar.open('Something went wrong.', 'OK');
               }
+              this.loaderService.hide();
             },
           });
       } else {
@@ -159,6 +165,7 @@ export class CategoryItemAddEditComponent implements OnInit {
             } else {
               this._snackBar.open('Something went wrong.', 'OK');
             }
+            this.loaderService.hide();
           },
         });
       } 
@@ -166,10 +173,12 @@ export class CategoryItemAddEditComponent implements OnInit {
   }
 
   goBack(): void {
+    this.loaderService.hide();
     this.router.navigate(['admin/category-item/' + this.categoryId]);
   }
 
   goToCategories() {
+    this.loaderService.hide();
     this.router.navigate(['/admin/category']);
   }
 }

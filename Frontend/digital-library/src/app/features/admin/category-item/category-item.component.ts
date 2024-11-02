@@ -7,6 +7,7 @@ import { CategoryItemDeleteComponent } from './category-item-delete/category-ite
 import { ActivatedRoute, Router } from '@angular/router';
 import { MediaTypeService } from '../media-type/services/media-type.service';
 import { CategoryService } from '../category/services/category.service';
+import { LoaderService } from '../../../shared/services/loader.service';
 
 @Component({
   selector: 'app-category-item',
@@ -27,16 +28,18 @@ export class CategoryItemComponent implements OnInit {
   category: Category | undefined;
   
   constructor(
-    private categoryItemService: CategoryItemService,
-    private categoryService: CategoryService,
-    private _snackBar: MatSnackBar,
+    private readonly categoryItemService: CategoryItemService,
+    private readonly categoryService: CategoryService,
+    private readonly _snackBar: MatSnackBar,
     public dialog: MatDialog,
-    private route: ActivatedRoute,
-    private router: Router,
-    private mediaTypeService: MediaTypeService
+    private readonly route: ActivatedRoute,
+    private readonly router: Router,
+    private readonly mediaTypeService: MediaTypeService,
+    private readonly loaderService: LoaderService
   ) {}
 
   ngOnInit(): void {
+    this.loaderService.show();
     this.getMediaTypes();
     const idParam = this.route.snapshot.paramMap.get('categoryId');
     if (idParam) {
@@ -62,6 +65,7 @@ export class CategoryItemComponent implements OnInit {
     this.categoryItemService.getCategoryItems(categoryId).subscribe({
       next: (res: CategoryItem[]) => {
         this.categoryItems = res;
+        this.loaderService.hide();
       },
       error: (error) => {
         this._snackBar.open(error, 'OK');

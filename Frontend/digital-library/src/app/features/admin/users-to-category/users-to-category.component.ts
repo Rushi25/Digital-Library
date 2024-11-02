@@ -7,6 +7,7 @@ import {
 import { UsersToCategoryService } from './users-to-category.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatSelectionListChange } from '@angular/material/list';
+import { LoaderService } from '../../../shared/services/loader.service';
 
 @Component({
   selector: 'app-users-to-category',
@@ -22,10 +23,12 @@ export class UsersToCategoryComponent implements OnInit {
 
   constructor(
     private readonly usersToCategoryService: UsersToCategoryService,
-    private readonly _snackBar: MatSnackBar
+    private readonly _snackBar: MatSnackBar,
+    private readonly loaderService: LoaderService
   ) {}
 
   ngOnInit(): void {
+    this.loaderService.show();
     this.getUsersWithCategories();
     this.getUsers();
   }
@@ -44,6 +47,7 @@ export class UsersToCategoryComponent implements OnInit {
           'OK',
           { duration: 3000 }
         );
+        this.loaderService.hide();
       },
     });
   }
@@ -52,6 +56,7 @@ export class UsersToCategoryComponent implements OnInit {
     this.usersToCategoryService.getUsers().subscribe({
       next: (res: UserForAdminModel[]) => {
         this.users = res;
+        this.loaderService.hide();
       },
       error: () => {
         this._snackBar.open(
@@ -59,6 +64,7 @@ export class UsersToCategoryComponent implements OnInit {
           'OK',
           { duration: 3000 }
         );
+        this.loaderService.hide();
       },
     });
   }
@@ -85,6 +91,7 @@ export class UsersToCategoryComponent implements OnInit {
   }
 
   save() {
+    this.loaderService.show();
     const result: IUsersToCategoryModel = {
       categoryId: this.selectedCategoryId,
       categoryTitle: this.selectedCategoryTitle,
@@ -99,9 +106,11 @@ export class UsersToCategoryComponent implements OnInit {
         next: () => {
           this._snackBar.open('Changes applied successfully.', 'Ok', { duration: 3000 });
           this.getUsersWithCategories();
+          this.loaderService.hide();
         },
         error: (res: string) => {
           this._snackBar.open(res, 'Ok', { duration: 3000 });
+          this.loaderService.hide();
         },
       });
   }

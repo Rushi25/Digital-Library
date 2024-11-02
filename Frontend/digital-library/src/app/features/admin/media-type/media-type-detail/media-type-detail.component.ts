@@ -4,6 +4,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { MediaTypeService } from '../services/media-type.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { HttpErrorResponse } from '@angular/common/http';
+import { LoaderService } from '../../../../shared/services/loader.service';
 
 @Component({
   selector: 'app-media-type-detail',
@@ -13,19 +14,22 @@ export class MediaTypeDetailComponent implements OnInit {
   mediaType: MediaType | null = null;
 
   constructor(
-    private route: ActivatedRoute,
-    private mediaTypeService: MediaTypeService,
-    private router: Router,
-    private _snackBar: MatSnackBar
+    private readonly route: ActivatedRoute,
+    private readonly mediaTypeService: MediaTypeService,
+    private readonly router: Router,
+    private readonly _snackBar: MatSnackBar,
+    private readonly loaderService: LoaderService
   ) {}
 
   ngOnInit(): void {
+    this.loaderService.show();
     const idParam = this.route.snapshot.paramMap.get('mediaTypeId');
     if (idParam) {
       const mediaTypeId = parseInt(idParam, 10);
       this.mediaTypeService.getMediaTypeById(mediaTypeId).subscribe({
         next: (mediaType: MediaType) => {
           this.mediaType = mediaType;
+          this.loaderService.hide();
         },
         error: (error: HttpErrorResponse) => {
           if (error.status === 404) {
@@ -40,6 +44,7 @@ export class MediaTypeDetailComponent implements OnInit {
   }
 
   goBack(): void {
+    this.loaderService.hide();
     this.router.navigate(['admin/media-type']);
   }
 }

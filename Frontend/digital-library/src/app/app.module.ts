@@ -18,6 +18,7 @@ import { provideHttpClient, withInterceptors } from '@angular/common/http';
 import { httpInterceptor } from './shared/interceptors/http.interceptor';
 import { MatButtonModule } from '@angular/material/button';
 import { JWT_OPTIONS, JwtHelperService, JwtModule } from '@auth0/angular-jwt';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
 @NgModule({
   declarations: [AppComponent, HomeComponent, NavbarComponent, FooterComponent],
@@ -32,6 +33,7 @@ import { JWT_OPTIONS, JwtHelperService, JwtModule } from '@auth0/angular-jwt';
     MatGridListModule,
     MatButtonModule,
     JwtModule,
+    MatProgressSpinnerModule
   ],
   providers: [
     provideAnimationsAsync(),

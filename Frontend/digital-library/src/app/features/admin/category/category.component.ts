@@ -4,6 +4,7 @@ import { Category } from '../../../api-client/api-client';
 import { MatDialog } from '@angular/material/dialog';
 import { CategoryService } from './services/category.service';
 import { CategoryDeleteComponent } from './category-delete/category-delete.component';
+import { LoaderService } from '../../../shared/services/loader.service';
 
 @Component({
   selector: 'app-category',
@@ -16,10 +17,12 @@ export class CategoryComponent implements OnInit {
   constructor(
     private readonly categoryService: CategoryService,
     private readonly _snackBar: MatSnackBar,
-    public dialog: MatDialog
+    public dialog: MatDialog,
+    private readonly loaderService: LoaderService
   ) {}
 
   ngOnInit(): void {
+    this.loaderService.show();
     this.loadCategories();
   }
 
@@ -27,9 +30,11 @@ export class CategoryComponent implements OnInit {
     this.categoryService.getCategories().subscribe({
       next: (res: Category[]) => {
         this.categories = res;
+        this.loaderService.hide();
       },
       error: (error) => {
         this._snackBar.open(error, 'OK');
+        this.loaderService.hide();
       },
     });
   }
