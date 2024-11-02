@@ -29,6 +29,7 @@ export class AccountService {
     private readonly jwtService: JwtHelperService
   ) {
     this.apiClient = new ApiClient(http, environment.baseUrl);
+    this.isAdminUser();
   }
 
   register(model: RegisterModel): Observable<string> {

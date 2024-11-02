@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 namespace DigitalLibrary.Areas.Admin.Controllers
 {
     [Route("api/admin/[controller]")]
-    [Authorize(Roles = "Admin")]
+    [Authorize(Policy = "AdminPolicy")]
     [ApiController]
     public class ContentController : ControllerBase
     {

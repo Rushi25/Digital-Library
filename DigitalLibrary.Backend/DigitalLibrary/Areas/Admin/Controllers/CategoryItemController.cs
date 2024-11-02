@@ -12,7 +12,7 @@ using Microsoft.AspNetCore.Authorization;
 namespace DigitalLibrary.Areas.Admin.Controllers
 {
     [Route("api/admin/[controller]")]
-    [Authorize(Roles = "Admin")]
+    [Authorize(Policy = "AdminPolicy")]
     [ApiController]
     public class CategoryItemController : ControllerBase
     {

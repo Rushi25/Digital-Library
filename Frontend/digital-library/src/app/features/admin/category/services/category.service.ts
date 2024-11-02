@@ -8,7 +8,7 @@ import { ApiClient, Category } from '../../../../api-client/api-client';
   providedIn: 'root',
 })
 export class CategoryService {
-  private apiClient: ApiClient;
+  private readonly apiClient: ApiClient;
 
   constructor(private readonly httpCLient: HttpClient) {
     this.apiClient = new ApiClient(httpCLient, environment.baseUrl);

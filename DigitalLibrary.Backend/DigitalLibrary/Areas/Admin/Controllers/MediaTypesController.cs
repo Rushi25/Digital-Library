@@ -1,18 +1,16 @@
-﻿using System;
+﻿using DigitalLibrary.Context;
+using DigitalLibrary.Context.Entities;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using DigitalLibrary.Context;
-using DigitalLibrary.Context.Entities;
-using Microsoft.AspNetCore.Authorization;
 
 namespace DigitalLibrary.Areas.Admin.Controllers
 {
     [Route("api/[controller]")]
-    [Authorize(Roles = "Admin")]
+    [Authorize(Policy = "AdminPolicy")]
     [ApiController]
     public class MediaTypesController : ControllerBase
     {

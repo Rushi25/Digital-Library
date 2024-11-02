@@ -1,0 +1,34 @@
+<div class="wrapper app">
+  <h4>Add Members to Category</h4>
+  <mat-divider></mat-divider>
+  <h5 style="margin-top: 0.5em">Category</h5>
+  <div>
+    <mat-form-field appearance="outline" style="min-width: 330px;">
+      <mat-label>Select Category</mat-label>
+      <mat-select (selectionChange)="onCategoryChange($event.value)" [value]="selectedCategoryId">
+        <mat-option
+          *ngFor="let category of categories"
+          [value]="category.categoryId"
+        >
+          {{ category.categoryTitle }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+  </div>
+  <mat-divider></mat-divider>
+  <div *ngIf="users.length > 0">
+    <h5 style="margin-top: 0.5em">Members</h5>
+    <mat-selection-list (selectionChange)="onUserCheckboxChange($event)">
+      @for (user of users; track user) {
+      <mat-list-option
+        [selected]="selectedUserIds.has(user.userId)"
+        togglePosition="before"
+        [value]="user.userId"
+        >{{ user.name }}
+      </mat-list-option>
+      <mat-divider></mat-divider>
+      }
+    </mat-selection-list>
+    <button style="margin-top: 1em;" mat-raised-button color="primary" (click)="save()">Save</button>
+  </div>
+</div>

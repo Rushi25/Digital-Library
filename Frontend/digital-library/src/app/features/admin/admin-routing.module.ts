@@ -32,6 +32,14 @@ const routes: Routes = [
       ),
     title: 'Content',
   },
+  {
+    path: 'users-to-category',
+    loadChildren: () =>
+      import('./users-to-category/users-to-category.module').then(
+        (m) => m.UsersToCategoryModule
+      ),
+      title: 'Users to Category',
+  },
 ];
 
 @NgModule({
