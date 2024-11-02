@@ -32,7 +32,7 @@ namespace DigitalLibrary.Areas.Admin.Controllers
         [ProducesResponseType(404)]
         public async Task<ActionResult<Content>> GetContent(int id)
         {
-            var content = await _context.Content.FindAsync(id);
+            var content = await _context.Contents.FindAsync(id);
 
             if (content == null)
             {
@@ -61,7 +61,7 @@ namespace DigitalLibrary.Areas.Admin.Controllers
             {
                 return BadRequest();
             }
-            content.CategoryItem = await _context.CategoryItem.FindAsync(content.CatItemId);
+            content.CategoryItem = await _context.CategoryItems.FindAsync(content.CatItemId);
             _context.Entry(content).State = EntityState.Modified;
 
             try
@@ -96,8 +96,8 @@ namespace DigitalLibrary.Areas.Admin.Controllers
         [ProducesResponseType(400)]
         public async Task<ActionResult<Content>> PostContent(Content content)
         {
-            content.CategoryItem = await _context.CategoryItem.FindAsync(content.CatItemId);
-            await _context.Content.AddAsync(content);
+            content.CategoryItem = await _context.CategoryItems.FindAsync(content.CatItemId);
+            await _context.Contents.AddAsync(content);
             await _context.SaveChangesAsync();
 
             return CreatedAtAction("GetContent", new { id = content.Id }, content);
@@ -105,7 +105,7 @@ namespace DigitalLibrary.Areas.Admin.Controllers
 
         private bool ContentExists(int id)
         {
-            return _context.Content.Any(e => e.Id == id);
+            return _context.Contents.Any(e => e.Id == id);
         }
     }
 }

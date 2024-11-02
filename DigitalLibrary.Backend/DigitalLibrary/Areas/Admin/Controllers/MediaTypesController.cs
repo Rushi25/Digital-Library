@@ -31,7 +31,7 @@ namespace DigitalLibrary.Areas.Admin.Controllers
         [ProducesResponseType(401)]
         public async Task<ActionResult<IEnumerable<MediaType>>> GetMediaType()
         {
-            return await _context.MediaType.ToListAsync();
+            return await _context.MediaTypes.ToListAsync();
         }
 
         // GET: api/MediaTypes/5
@@ -46,7 +46,7 @@ namespace DigitalLibrary.Areas.Admin.Controllers
         [ProducesResponseType(401)]
         public async Task<ActionResult<MediaType>> GetMediaType(int id)
         {
-            var mediaType = await _context.MediaType.FindAsync(id);
+            var mediaType = await _context.MediaTypes.FindAsync(id);
 
             if (mediaType == null)
             {
@@ -110,7 +110,7 @@ namespace DigitalLibrary.Areas.Admin.Controllers
         [ProducesResponseType(400)]
         public async Task<ActionResult<MediaType>> PostMediaType(MediaType mediaType)
         {
-            await _context.MediaType.AddAsync(mediaType);
+            await _context.MediaTypes.AddAsync(mediaType);
             await _context.SaveChangesAsync();
 
             return CreatedAtAction("GetMediaType", new { id = mediaType.Id }, mediaType);
@@ -128,13 +128,13 @@ namespace DigitalLibrary.Areas.Admin.Controllers
         [ProducesResponseType(404)]
         public async Task<IActionResult> DeleteMediaType(int id)
         {
-            var mediaType = await _context.MediaType.FindAsync(id);
+            var mediaType = await _context.MediaTypes.FindAsync(id);
             if (mediaType == null)
             {
                 return NotFound();
             }
 
-            _context.MediaType.Remove(mediaType);
+            _context.MediaTypes.Remove(mediaType);
             await _context.SaveChangesAsync();
 
             return NoContent();
@@ -142,7 +142,7 @@ namespace DigitalLibrary.Areas.Admin.Controllers
 
         private bool MediaTypeExists(int id)
         {
-            return _context.MediaType.Any(e => e.Id == id);
+            return _context.MediaTypes.Any(e => e.Id == id);
         }
     }
 }

@@ -1,0 +1,8 @@
+.heading{
+    display: flex;
+    justify-content: space-between;
+}
+
+::ng-deep .mat-expansion-panel-header-title{
+    flex-grow: 0 !important;
+}

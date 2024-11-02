@@ -1,5 +1,5 @@
 import { HttpClient } from '@angular/common/http';
-import { Injectable } from '@angular/core';
+import { Injectable, signal } from '@angular/core';
 import { ReplaySubject, Observable, of, map, BehaviorSubject} from 'rxjs';
 import {
   ApiClient,
@@ -23,6 +23,8 @@ export class AccountService {
   private readonly isAdminSubject = new BehaviorSubject<boolean>(false);
   isAdmin$ = this.isAdminSubject.asObservable();
 
+  isLoggedIn = signal(false);
+
   constructor(
     http: HttpClient,
     private readonly router: Router,
@@ -30,6 +32,10 @@ export class AccountService {
   ) {
     this.apiClient = new ApiClient(http, environment.baseUrl);
     this.isAdminUser();
+    const userJson = localStorage.getItem(environment.userKey)
+    if(userJson){
+      this.isLoggedIn.set(true);
+    }
   }
 
   register(model: RegisterModel): Observable<string> {
@@ -44,6 +50,7 @@ export class AccountService {
     localStorage.setItem(environment.userKey, JSON.stringify(user));
     this.userSource.next(user);
     this.isAdminUser();
+    this.isLoggedIn.set(true);
   }
 
   isAdminUser() {
@@ -86,20 +93,9 @@ export class AccountService {
     );
   }
 
-  isLoggedIn(): boolean {
-    this.user$.subscribe({
-      next: (res) => {
-        if (res !== null) {
-          return true;
-        }
-        return false;
-      },
-    });
-    return false;
-  }
-
   logout() {
     localStorage.clear();
+    this.isLoggedIn.set(false);
     this.userSource.next(null);
     this.isAdminSubject.next(false);
     this.router.navigate(['/login']);

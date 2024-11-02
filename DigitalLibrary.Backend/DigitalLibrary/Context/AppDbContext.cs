@@ -11,10 +11,10 @@ namespace DigitalLibrary.Context
 
         }
 
-        public DbSet<Category> Category { get; set; }
-        public DbSet<CategoryItem> CategoryItem { get; set; }
-        public DbSet<MediaType> MediaType { get; set; }
-        public DbSet<UserCategory> UserCategory { get; set; }
-        public DbSet<Content> Content { get; set; }
+        public DbSet<Category> Categories { get; set; }
+        public DbSet<CategoryItem> CategoryItems { get; set; }
+        public DbSet<MediaType> MediaTypes { get; set; }
+        public DbSet<UserCategory> UserCategories { get; set; }
+        public DbSet<Content> Contents { get; set; }
     }
 }

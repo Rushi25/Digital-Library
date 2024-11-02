@@ -1120,6 +1120,78 @@ export class ApiClient {
     /**
      * @return Success
      */
+    dashboard(): Observable<GroupedCategoryItemsByCategoryModel[]> {
+        let url_ = this.baseUrl + "/api/Dashboard";
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ : any = {
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Accept": "application/json"
+            })
+        };
+
+        return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processDashboard(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processDashboard(response_ as any);
+                } catch (e) {
+                    return _observableThrow(e) as any as Observable<GroupedCategoryItemsByCategoryModel[]>;
+                }
+            } else
+                return _observableThrow(response_) as any as Observable<GroupedCategoryItemsByCategoryModel[]>;
+        }));
+    }
+
+    protected processDashboard(response: HttpResponseBase): Observable<GroupedCategoryItemsByCategoryModel[]> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (response as any).error instanceof Blob ? (response as any).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            if (Array.isArray(resultData200)) {
+                result200 = [] as any;
+                for (let item of resultData200)
+                    result200!.push(GroupedCategoryItemsByCategoryModel.fromJS(item));
+            }
+            else {
+                result200 = <any>null;
+            }
+            return _observableOf(result200);
+            }));
+        } else if (status === 401) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            let result401: any = null;
+            let resultData401 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result401 = ProblemDetails.fromJS(resultData401);
+            return throwException("Unauthorized", status, _responseText, _headers, result401);
+            }));
+        } else if (status === 403) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            let result403: any = null;
+            let resultData403 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result403 = ProblemDetails.fromJS(resultData403);
+            return throwException("Forbidden", status, _responseText, _headers, result403);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf(null as any);
+    }
+
+    /**
+     * @return Success
+     */
     mediaTypesAll(): Observable<MediaType[]> {
         let url_ = this.baseUrl + "/api/MediaTypes";
         url_ = url_.replace(/[?&]$/, "");
@@ -1790,6 +1862,62 @@ export interface ICategoryItem {
     contentId?: number;
 }
 
+export class CategoryItemDetailsModel implements ICategoryItemDetailsModel {
+    categoryId?: number;
+    categoryTitle?: string | undefined;
+    categoryItemId?: number;
+    categoryItemTitle?: string | undefined;
+    categoryItemDescription?: string | undefined;
+    mediaImagePath?: string | undefined;
+
+    constructor(data?: ICategoryItemDetailsModel) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.categoryId = _data["categoryId"];
+            this.categoryTitle = _data["categoryTitle"];
+            this.categoryItemId = _data["categoryItemId"];
+            this.categoryItemTitle = _data["categoryItemTitle"];
+            this.categoryItemDescription = _data["categoryItemDescription"];
+            this.mediaImagePath = _data["mediaImagePath"];
+        }
+    }
+
+    static fromJS(data: any): CategoryItemDetailsModel {
+        data = typeof data === 'object' ? data : {};
+        let result = new CategoryItemDetailsModel();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["categoryId"] = this.categoryId;
+        data["categoryTitle"] = this.categoryTitle;
+        data["categoryItemId"] = this.categoryItemId;
+        data["categoryItemTitle"] = this.categoryItemTitle;
+        data["categoryItemDescription"] = this.categoryItemDescription;
+        data["mediaImagePath"] = this.mediaImagePath;
+        return data;
+    }
+}
+
+export interface ICategoryItemDetailsModel {
+    categoryId?: number;
+    categoryTitle?: string | undefined;
+    categoryItemId?: number;
+    categoryItemTitle?: string | undefined;
+    categoryItemDescription?: string | undefined;
+    mediaImagePath?: string | undefined;
+}
+
 export class Content implements IContent {
     id?: number;
     title!: string;
@@ -1848,6 +1976,58 @@ export interface IContent {
     categoryItem?: CategoryItem;
     catItemId?: number;
     categoryId?: number;
+}
+
+export class GroupedCategoryItemsByCategoryModel implements IGroupedCategoryItemsByCategoryModel {
+    id?: number;
+    title?: string | undefined;
+    items?: CategoryItemDetailsModel[] | undefined;
+
+    constructor(data?: IGroupedCategoryItemsByCategoryModel) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.id = _data["id"];
+            this.title = _data["title"];
+            if (Array.isArray(_data["items"])) {
+                this.items = [] as any;
+                for (let item of _data["items"])
+                    this.items!.push(CategoryItemDetailsModel.fromJS(item));
+            }
+        }
+    }
+
+    static fromJS(data: any): GroupedCategoryItemsByCategoryModel {
+        data = typeof data === 'object' ? data : {};
+        let result = new GroupedCategoryItemsByCategoryModel();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["id"] = this.id;
+        data["title"] = this.title;
+        if (Array.isArray(this.items)) {
+            data["items"] = [];
+            for (let item of this.items)
+                data["items"].push(item.toJSON());
+        }
+        return data;
+    }
+}
+
+export interface IGroupedCategoryItemsByCategoryModel {
+    id?: number;
+    title?: string | undefined;
+    items?: CategoryItemDetailsModel[] | undefined;
 }
 
 export class LoginModel implements ILoginModel {

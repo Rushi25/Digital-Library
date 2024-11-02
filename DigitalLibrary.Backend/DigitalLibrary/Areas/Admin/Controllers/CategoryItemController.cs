@@ -33,8 +33,8 @@ namespace DigitalLibrary.Areas.Admin.Controllers
         [ProducesResponseType<IEnumerable<CategoryItem>>(200)]
         public async Task<ActionResult<IEnumerable<CategoryItem>>> Get(int categoryId)
         {
-            return await (from categoryItems in _context.CategoryItem
-                     join contents in _context.Content
+            return await (from categoryItems in _context.CategoryItems
+                     join contents in _context.Contents
                      on categoryItems.Id equals contents.CategoryItem.Id
                      into groupedItems
                      from sub in groupedItems.DefaultIfEmpty()
@@ -62,7 +62,7 @@ namespace DigitalLibrary.Areas.Admin.Controllers
         [ProducesResponseType(404)]
         public async Task<ActionResult<CategoryItem>> GetCategoryItem(int id)
         {
-            var categoryItem = await _context.CategoryItem.FindAsync(id);
+            var categoryItem = await _context.CategoryItems.FindAsync(id);
 
             if (categoryItem == null)
             {
@@ -122,7 +122,7 @@ namespace DigitalLibrary.Areas.Admin.Controllers
         [ProducesResponseType(400)]
         public async Task<ActionResult<CategoryItem>> PostCategoryItem(CategoryItem categoryItem)
         {
-            await _context.CategoryItem.AddAsync(categoryItem);
+            await _context.CategoryItems.AddAsync(categoryItem);
             await _context.SaveChangesAsync();
 
             return CreatedAtAction("GetCategoryItem", new { id = categoryItem.Id }, categoryItem);
@@ -139,13 +139,13 @@ namespace DigitalLibrary.Areas.Admin.Controllers
         [ProducesResponseType(404)]
         public async Task<IActionResult> DeleteCategoryItem(int id)
         {
-            var categoryItem = await _context.CategoryItem.FindAsync(id);
+            var categoryItem = await _context.CategoryItems.FindAsync(id);
             if (categoryItem == null)
             {
                 return NotFound();
             }
 
-            _context.CategoryItem.Remove(categoryItem);
+            _context.CategoryItems.Remove(categoryItem);
             await _context.SaveChangesAsync();
 
             return NoContent();
@@ -153,7 +153,7 @@ namespace DigitalLibrary.Areas.Admin.Controllers
 
         private bool CategoryItemExists(int id)
         {
-            return _context.CategoryItem.Any(e => e.Id == id);
+            return _context.CategoryItems.Any(e => e.Id == id);
         }
     }
 }

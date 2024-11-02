@@ -32,12 +32,12 @@ namespace DigitalLibrary.Areas.Admin.Controllers
         [ProducesResponseType(401)]
         public async Task<ActionResult<IEnumerable<UsersToCategoryModel>>> GetUsersToCategory()
         {
-            var usersToCategory = await (from category in _dbContext.Category
+            var usersToCategory = await (from category in _dbContext.Categories
                                   select new UsersToCategoryModel
                                   {
                                       CategoryId = category.Id,
                                       CategoryTitle = category.Title,
-                                      Users = (from uc in _dbContext.UserCategory
+                                      Users = (from uc in _dbContext.UserCategories
                                                join user in _dbContext.Users
                                                on uc.UserId equals user.Id
                                                where uc.CategoryId == category.Id
@@ -64,7 +64,7 @@ namespace DigitalLibrary.Areas.Admin.Controllers
             if (ModelState.IsValid)
             {
                 var userIds = usersToCategory.Users.Select(u => u.UserId.ToString()).ToHashSet();
-                var categories = await _dbContext.UserCategory.Where(a => a.CategoryId == usersToCategory.CategoryId).ToListAsync();
+                var categories = await _dbContext.UserCategories.Where(a => a.CategoryId == usersToCategory.CategoryId).ToListAsync();
 
                 if (userIds.Count != 0)
                 {
@@ -94,7 +94,7 @@ namespace DigitalLibrary.Areas.Admin.Controllers
 
                     if(usersCategory.Count > 0)
                     {
-                        await _dbContext.UserCategory.AddRangeAsync(usersCategory);
+                        await _dbContext.UserCategories.AddRangeAsync(usersCategory);
                     }
                     await _dbContext.SaveChangesAsync();
 

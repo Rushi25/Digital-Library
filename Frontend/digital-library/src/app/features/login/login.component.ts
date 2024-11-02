@@ -71,7 +71,7 @@ export class LoginComponent implements OnInit {
         if (res != null) {
           this.loginForm.reset();
           this.authService.setUser(res);
-          this.router.navigate(['home']);
+          this.router.navigate(['dashboard']);
           this.loaderService.hide();
         }
       },
