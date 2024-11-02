@@ -1,30 +1,40 @@
 <mat-toolbar color="primary">
+  <!-- App name -->
   <button mat-button [routerLink]="['']" class="app-title">
     <mat-icon fontIcon="book"></mat-icon>Digital Library
   </button>
+
   <span class="spacer"></span>
-  <button
-    mat-button
-    [routerLink]="['']"
-    routerLinkActive="active"
-    class="nav-link"
-  >
+
+  <!-- Home -->
+  <button mat-button [routerLink]="['']" routerLinkActive="active" class="nav-link">
     <mat-icon fontIcon="home"></mat-icon>Home
+  </button>
+
+  @if((authService.user$ | async) === null) {
+  <!-- User not logged in -->
+  <ng-container *ngTemplateOutlet="menu"></ng-container>
+  } @else{
+  <!-- Dashboard -->
+  <button mat-button class="nav-link" [routerLink]="['dashboard']">
+    <mat-icon fontIcon="dashboard"></mat-icon>Dashboard
   </button>
 
   <!--If logged in user is admin-->
   @if(authService.isAdmin$ | async){
+    <!-- Admin menus -->
   <ng-container *ngTemplateOutlet="adminMenu"></ng-container>
-  } 
-  
-  @if((authService.user$ | async) === null) {
-  <ng-container *ngTemplateOutlet="menu"></ng-container>
-  } @else{
+  }
+
+  <!-- User name -->
   <button mat-button class="nav-link">
-    <mat-icon fontIcon="account_circle"></mat-icon
-    >{{ (authService.user$ | async)?.firstname }}
+    <mat-icon fontIcon="account_circle"></mat-icon>{{ (authService.user$ | async)?.firstname }}
   </button>
-  <button mat-button class="nav-link" (click)="logout()">Logout</button>
+
+  <!-- Log out -->
+  <button mat-button class="nav-link" (click)="logout()">
+    <mat-icon>logout</mat-icon>Logout
+  </button>
   }
 </mat-toolbar>
 
@@ -33,28 +43,16 @@
     <mat-icon>settings</mat-icon>Admin
   </button>
   <mat-menu #menu="matMenu">
-    <button
-      mat-menu-item
-      [routerLink]="['admin/category']"
-      routerLinkActive="active"
-    >
+    <button mat-menu-item [routerLink]="['admin/category']" routerLinkActive="active">
       <mat-icon>category</mat-icon>
       <span>Categories</span>
     </button>
-    <button
-      mat-menu-item
-      [routerLink]="['/admin/users-to-category']"
-      routerLinkActive="active"
-    >
+    <button mat-menu-item [routerLink]="['/admin/users-to-category']" routerLinkActive="active">
       <mat-icon>group</mat-icon>
       <span>Users to Category</span>
     </button>
     <mat-divider></mat-divider>
-    <button
-      mat-menu-item
-      [routerLink]="['/admin/media-type']"
-      routerLinkActive="active"
-    >
+    <button mat-menu-item [routerLink]="['/admin/media-type']" routerLinkActive="active">
       <mat-icon>perm_media</mat-icon>
       <span>Media types</span>
     </button>
@@ -62,20 +60,12 @@
 </ng-template>
 
 <ng-template #menu>
-  <button
-    mat-button
-    [routerLink]="['/login']"
-    routerLinkActive="active"
-    class="nav-link"
-  >
+  <button mat-button [routerLink]="['/login']" routerLinkActive="active" class="nav-link">
+    <mat-icon>login</mat-icon>
     Login
   </button>
-  <button
-    mat-button
-    [routerLink]="['login/register']"
-    routerLinkActive="active"
-    class="nav-link"
-  >
+  <button mat-button [routerLink]="['login/register']" routerLinkActive="active" class="nav-link">
+    <mat-icon>person_add</mat-icon>
     Register
   </button>
 </ng-template>
