@@ -33,9 +33,9 @@ export class MediaTypeDetailComponent implements OnInit {
         },
         error: (error: HttpErrorResponse) => {
           if (error.status === 404) {
-            this._snackBar.open('Media type with given id not found.', 'OK');
+            this._snackBar.open('Media type with given id not found.', 'OK', {duration:3000});
           } else {
-            this._snackBar.open('Something went wrong.', 'OK');
+            this._snackBar.open('Something went wrong.', 'OK', {duration:3000});
           }
           this.goBack();
         },

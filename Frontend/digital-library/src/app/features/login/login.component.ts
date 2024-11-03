@@ -75,7 +75,7 @@ export class LoginComponent implements OnInit {
         }
       },
       error: (err) => {
-        this._snackBar.open(err, 'OK');
+        this._snackBar.open(err, 'OK', {duration:3000});
         this.loaderService.hide();
       },
     });

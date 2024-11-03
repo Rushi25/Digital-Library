@@ -51,9 +51,9 @@ export class CategoryAddEditComponent implements OnInit {
         },
         error: (err: HttpErrorResponse) => {
           if (err.status === 404) {
-            this._snackBar.open('Category with given id not found.', 'OK');
+            this._snackBar.open('Category with given id not found.', 'OK', {duration: 3000});
           } else {
-            this._snackBar.open('Something went wrong.', 'OK');
+            this._snackBar.open('Something went wrong.', 'OK', {duration: 3000});
           }
           this.goBack();
         },
@@ -71,19 +71,20 @@ export class CategoryAddEditComponent implements OnInit {
           .updateCategory(this.categoryId, category)
           .subscribe({
             next: () => {
-              this._snackBar.open('Category edited succesfully.', 'OK');
+              this._snackBar.open('Category edited succesfully.', 'OK', {duration:3000});
               this.goBack();
             },
             error: (error: HttpErrorResponse) => {
               if (error.status === 404) {
-                this._snackBar.open('Category with given id not found.', 'OK');
+                this._snackBar.open('Category with given id not found.', 'OK', {duration:3000});
               } else if (error.status === 400) {
                 this._snackBar.open(
                   'Please add correct category details',
-                  'OK'
+                  'OK',
+                  {duration:3000}
                 );
               } else {
-                this._snackBar.open('Something went wrong.', 'OK');
+                this._snackBar.open('Something went wrong.', 'OK', {duration:3000});
               }
               this.goBack();
             },
@@ -91,14 +92,14 @@ export class CategoryAddEditComponent implements OnInit {
       } else {
         this.categoryService.createCategory(category).subscribe({
           next: () => {
-            this._snackBar.open('Category added succesfully.', 'OK');
+            this._snackBar.open('Category added succesfully.', 'OK', {duration:3000});
             this.goBack();
           },
           error: (error: HttpErrorResponse) => {
             if (error.status === 400) {
-              this._snackBar.open('Please add correct category details', 'OK');
+              this._snackBar.open('Please add correct category details', 'OK', {duration:3000});
             } else {
-              this._snackBar.open('Something went wrong.', 'OK');
+              this._snackBar.open('Something went wrong.', 'OK', {duration:3000});
             }
             this.goBack();
           },

@@ -25,7 +25,7 @@ export class AppComponent implements OnInit {
       this.authService.refreshUser(jwt).subscribe({
         error: () => {
           this.authService.logout();
-          this._snackBar.open('Session expired please login again.', 'OK');
+          this._snackBar.open('Session expired please login again.', 'OK', {duration: 3000});
         },
       });
     } else {

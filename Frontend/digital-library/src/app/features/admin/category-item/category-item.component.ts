@@ -55,7 +55,7 @@ export class CategoryItemComponent implements OnInit {
         this.category = category;
       },
       error: () => {
-        this._snackBar.open('Error while fetching category.','OK')
+        this._snackBar.open('Error while fetching category.','OK', {duration:3000})
         this.goBack();
       }
     })
@@ -68,7 +68,7 @@ export class CategoryItemComponent implements OnInit {
         this.loaderService.hide();
       },
       error: (error) => {
-        this._snackBar.open(error, 'OK');
+        this._snackBar.open(error, 'OK', {duration:3000});
         this.goBack();
       },
     });
@@ -92,7 +92,7 @@ export class CategoryItemComponent implements OnInit {
         this.mediaTypes = mediaTypes;
       },
       error: () => {
-        this._snackBar.open('Something went wrong while fecting media types.', 'OK');
+        this._snackBar.open('Something went wrong while fecting media types.', 'OK', {duration:3000});
         this.goBack();
       }
     })

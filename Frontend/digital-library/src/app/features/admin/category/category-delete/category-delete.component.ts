@@ -22,15 +22,15 @@ export class CategoryDeleteComponent {
     this.loaderService.show();
     this.categoryService.deleteCategory(this.data.id).subscribe({
       next: () => {
-        this._snackBar.open('Category deleted successfully.', 'OK');
+        this._snackBar.open('Category deleted successfully.', 'OK', {duration:3000});
         this.dialogRef.close(true);
         this.loaderService.hide();
       },
       error: (error: HttpErrorResponse) => {
         if (error.status === 404) {
-          this._snackBar.open('Category with given id not found.', 'OK');
+          this._snackBar.open('Category with given id not found.', 'OK', {duration:3000});
         } else {
-          this._snackBar.open('Something went wrong.', 'OK');
+          this._snackBar.open('Something went wrong.', 'OK', {duration:3000});
         }
         this.loaderService.hide();
       },

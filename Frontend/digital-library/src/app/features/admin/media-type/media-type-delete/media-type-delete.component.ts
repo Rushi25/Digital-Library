@@ -22,15 +22,15 @@ export class MediaTypeDeleteComponent {
     this.loaderService.show();
     this.mediaTypeService.deleteMediaType(this.data.id).subscribe({
       next: () => {
-        this._snackBar.open('Media type deleted successfully.', 'OK');
+        this._snackBar.open('Media type deleted successfully.', 'OK', {duration:3000});
         this.dialogRef.close(true);
         this.loaderService.hide();
       },
       error: (error: HttpErrorResponse) => {
         if (error.status === 404) {
-          this._snackBar.open('Media type with given id not found.', 'OK');
+          this._snackBar.open('Media type with given id not found.', 'OK', {duration:3000});
         } else {
-          this._snackBar.open('Something went wrong.', 'OK');
+          this._snackBar.open('Something went wrong.', 'OK', {duration:3000});
         }
         this.loaderService.hide();
       },

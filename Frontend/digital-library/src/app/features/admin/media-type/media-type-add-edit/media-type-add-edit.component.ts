@@ -50,9 +50,9 @@ export class MediaTypeAddEditComponent implements OnInit {
         },
         error: (err: HttpErrorResponse) => {
           if (err.status === 404) {
-            this._snackBar.open('Media type with given id not found.', 'OK');
+            this._snackBar.open('Media type with given id not found.', 'OK', {duration:3000});
           } else {
-            this._snackBar.open('Something went wrong.', 'OK');
+            this._snackBar.open('Something went wrong.', 'OK', {duration:3000});
           }
           this.goBack();
         },
@@ -69,19 +69,20 @@ export class MediaTypeAddEditComponent implements OnInit {
           .updateMediaType(this.mediaTypeId, mediaType)
           .subscribe({
             next: () => {
-              this._snackBar.open('Media type edited succesfully.', 'OK');
+              this._snackBar.open('Media type edited succesfully.', 'OK', {duration:3000});
               this.goBack();
             },
             error: (error: HttpErrorResponse) => {
               if (error.status === 404) {
-                this._snackBar.open('Media type with given id not found.', 'OK');
+                this._snackBar.open('Media type with given id not found.', 'OK', {duration:3000});
               } else if (error.status === 400) {
                 this._snackBar.open(
                   'Please add correct media type details',
                   'OK'
+                  , {duration:3000}
                 );
               } else {
-                this._snackBar.open('Something went wrong.', 'OK');
+                this._snackBar.open('Something went wrong.', 'OK', {duration:3000});
               }
               this.loaderService.hide();
             },
@@ -89,14 +90,14 @@ export class MediaTypeAddEditComponent implements OnInit {
       } else {
         this.mediaTypeService.createMediaType(mediaType).subscribe({
           next: () => {
-            this._snackBar.open('Media type added succesfully.', 'OK');
+            this._snackBar.open('Media type added succesfully.', 'OK', {duration:3000});
             this.goBack();
           },
           error: (error: HttpErrorResponse) => {
             if (error.status === 400) {
-              this._snackBar.open('Please add correct media type details', 'OK');
+              this._snackBar.open('Please add correct media type details', 'OK', {duration:3000});
             } else {
-              this._snackBar.open('Something went wrong.', 'OK');
+              this._snackBar.open('Something went wrong.', 'OK', {duration:3000});
             }
             this.loaderService.hide();
           },

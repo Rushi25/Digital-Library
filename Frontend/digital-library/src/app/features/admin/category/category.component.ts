@@ -33,7 +33,7 @@ export class CategoryComponent implements OnInit {
         this.loaderService.hide();
       },
       error: (error) => {
-        this._snackBar.open(error, 'OK');
+        this._snackBar.open(error, 'OK', {duration:3000});
         this.loaderService.hide();
       },
     });

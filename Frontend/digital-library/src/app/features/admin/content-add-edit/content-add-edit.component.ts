@@ -69,7 +69,7 @@ export class ContentAddEditComponent implements OnInit {
       this.categoryId = parseInt(categoryIdParam, 10);
       this.categoryItemId = parseInt(categoryItemIdParam, 10);
     } else {
-      this._snackBar.open('Please provide category id or category item id.', 'OK');
+      this._snackBar.open('Please provide category id or category item id.', 'OK', {duration:3000});
       this.router.navigate(['/admin/categories']);
     }
     if (contentIdParam) {
@@ -84,7 +84,7 @@ export class ContentAddEditComponent implements OnInit {
         this.category = category;
       },
       error: () => {
-        this._snackBar.open('Invalid category', 'OK');
+        this._snackBar.open('Invalid category', 'OK', {duration:3000});
         this.goToCategory();
       }
     })
@@ -97,7 +97,7 @@ export class ContentAddEditComponent implements OnInit {
         this.loaderService.hide();
       },
       error: () => {
-        this._snackBar.open('Invalid category item', 'OK');
+        this._snackBar.open('Invalid category item', 'OK', {duration:3000});
         this.goToCategoryItem();
       }
     })
@@ -109,7 +109,7 @@ export class ContentAddEditComponent implements OnInit {
         this.contentForm.patchValue(content);
       },
       error: () => {
-        this._snackBar.open('Invalid content id', 'OK');
+        this._snackBar.open('Invalid content id', 'OK', {duration:3000});
         this.goToCategoryItem()
       }
     })
@@ -129,19 +129,20 @@ export class ContentAddEditComponent implements OnInit {
           .updateContent(this.contentId, content)
           .subscribe({
             next: () => {
-              this._snackBar.open('Content edited succesfully.', 'OK');
+              this._snackBar.open('Content edited succesfully.', 'OK', {duration:3000});
               this.goToCategoryItem();
             },
             error: (error: HttpErrorResponse) => {
               if (error.status === 404) {
-                this._snackBar.open('Content with given id not found.', 'OK');
+                this._snackBar.open('Content with given id not found.', 'OK', {duration:3000});
               } else if (error.status === 400) {
                 this._snackBar.open(
                   'Please add correct content details',
                   'OK'
+                  , {duration:3000}
                 );
               } else {
-                this._snackBar.open('Something went wrong.', 'OK');
+                this._snackBar.open('Something went wrong.', 'OK', {duration:3000});
               }
               this.loaderService.hide();
             },
@@ -151,7 +152,7 @@ export class ContentAddEditComponent implements OnInit {
         content.catItemId = this.categoryItemId;
         this.contentService.createContent(content).subscribe({
           next: () => {
-            this._snackBar.open('Content added succesfully.', 'OK');
+            this._snackBar.open('Content added succesfully.', 'OK', {duration:3000});
             this.goToCategoryItem();
           },
           error: (error: HttpErrorResponse) => {
@@ -159,9 +160,10 @@ export class ContentAddEditComponent implements OnInit {
               this._snackBar.open(
                 'Please add correct Content details',
                 'OK'
+                , {duration:3000}
               );
             } else {
-              this._snackBar.open('Something went wrong.', 'OK');
+              this._snackBar.open('Something went wrong.', 'OK', {duration:3000});
             }
             this.loaderService.hide();
           },
