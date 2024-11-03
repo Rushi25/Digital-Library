@@ -4,7 +4,7 @@ import { Category, CategoryItem, Content } from '../../../api-client/api-client'
 import { CategoryItemService } from '../category-item/services/category-item.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { ContentService } from './content.service';
+import { ContentAddEditService } from './content-add-edit.service';
 import { CategoryService } from '../category/services/category.service';
 import { HttpErrorResponse } from '@angular/common/http';
 import { LoaderService } from '../../../shared/services/loader.service';
@@ -25,7 +25,7 @@ export class ContentAddEditComponent implements OnInit {
   constructor(
     private readonly fb: FormBuilder,
     private readonly categoryItemService: CategoryItemService,
-    private readonly contentService: ContentService,
+    private readonly contentService: ContentAddEditService,
     private readonly categoryService: CategoryService,
     private readonly route: ActivatedRoute,
     private readonly router: Router,

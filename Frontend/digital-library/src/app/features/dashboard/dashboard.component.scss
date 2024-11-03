@@ -6,3 +6,11 @@
 ::ng-deep .mat-expansion-panel-header-title{
     flex-grow: 0 !important;
 }
+
+.category-Item {
+    cursor: pointer !important;
+
+    &:hover{
+        color: blue !important;
+    }
+}

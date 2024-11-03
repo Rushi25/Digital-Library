@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace DigitalLibrary.Areas.Admin.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/admin/[controller]")]
     [Authorize(Policy = "AdminPolicy")]
     [ApiController]
     public class UsersToCategoryController : ControllerBase

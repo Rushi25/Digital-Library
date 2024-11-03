@@ -906,18 +906,18 @@ export class ApiClient {
     /**
      * @return Success
      */
-    contentGET(id: number): Observable<Content> {
-        let url_ = this.baseUrl + "/api/admin/Content/{id}";
-        if (id === undefined || id === null)
-            throw new Error("The parameter 'id' must be defined.");
-        url_ = url_.replace("{id}", encodeURIComponent("" + id));
+    contentGET(categoryItemId: number): Observable<Content> {
+        let url_ = this.baseUrl + "/api/Content/{categoryItemId}";
+        if (categoryItemId === undefined || categoryItemId === null)
+            throw new Error("The parameter 'categoryItemId' must be defined.");
+        url_ = url_.replace("{categoryItemId}", encodeURIComponent("" + categoryItemId));
         url_ = url_.replace(/[?&]$/, "");
 
         let options_ : any = {
             observe: "response",
             responseType: "blob",
             headers: new HttpHeaders({
-                "Accept": "application/json"
+                "Accept": "text/plain"
             })
         };
 
@@ -936,6 +936,60 @@ export class ApiClient {
     }
 
     protected processContentGET(response: HttpResponseBase): Observable<Content> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (response as any).error instanceof Blob ? (response as any).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result200 = Content.fromJS(resultData200);
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf(null as any);
+    }
+
+    /**
+     * @return Success
+     */
+    contentGET2(id: number): Observable<Content> {
+        let url_ = this.baseUrl + "/api/admin/Content/{id}";
+        if (id === undefined || id === null)
+            throw new Error("The parameter 'id' must be defined.");
+        url_ = url_.replace("{id}", encodeURIComponent("" + id));
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ : any = {
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Accept": "application/json"
+            })
+        };
+
+        return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processContentGET2(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processContentGET2(response_ as any);
+                } catch (e) {
+                    return _observableThrow(e) as any as Observable<Content>;
+                }
+            } else
+                return _observableThrow(response_) as any as Observable<Content>;
+        }));
+    }
+
+    protected processContentGET2(response: HttpResponseBase): Observable<Content> {
         const status = response.status;
         const responseBlob =
             response instanceof HttpResponse ? response.body :
@@ -1193,7 +1247,7 @@ export class ApiClient {
      * @return Success
      */
     mediaTypesAll(): Observable<MediaType[]> {
-        let url_ = this.baseUrl + "/api/MediaTypes";
+        let url_ = this.baseUrl + "/api/admin/MediaTypes";
         url_ = url_.replace(/[?&]$/, "");
 
         let options_ : any = {
@@ -1259,7 +1313,7 @@ export class ApiClient {
      * @return Created
      */
     mediaTypesPOST(body?: MediaType | undefined): Observable<MediaType> {
-        let url_ = this.baseUrl + "/api/MediaTypes";
+        let url_ = this.baseUrl + "/api/admin/MediaTypes";
         url_ = url_.replace(/[?&]$/, "");
 
         const content_ = JSON.stringify(body);
@@ -1328,7 +1382,7 @@ export class ApiClient {
      * @return Success
      */
     mediaTypesGET(id: number): Observable<MediaType> {
-        let url_ = this.baseUrl + "/api/MediaTypes/{id}";
+        let url_ = this.baseUrl + "/api/admin/MediaTypes/{id}";
         if (id === undefined || id === null)
             throw new Error("The parameter 'id' must be defined.");
         url_ = url_.replace("{id}", encodeURIComponent("" + id));
@@ -1397,7 +1451,7 @@ export class ApiClient {
      * @return No Content
      */
     mediaTypesPUT(id: number, body?: MediaType | undefined): Observable<void> {
-        let url_ = this.baseUrl + "/api/MediaTypes/{id}";
+        let url_ = this.baseUrl + "/api/admin/MediaTypes/{id}";
         if (id === undefined || id === null)
             throw new Error("The parameter 'id' must be defined.");
         url_ = url_.replace("{id}", encodeURIComponent("" + id));
@@ -1472,7 +1526,7 @@ export class ApiClient {
      * @return No Content
      */
     mediaTypesDELETE(id: number): Observable<void> {
-        let url_ = this.baseUrl + "/api/MediaTypes/{id}";
+        let url_ = this.baseUrl + "/api/admin/MediaTypes/{id}";
         if (id === undefined || id === null)
             throw new Error("The parameter 'id' must be defined.");
         url_ = url_.replace("{id}", encodeURIComponent("" + id));
@@ -1536,7 +1590,7 @@ export class ApiClient {
      * @return Success
      */
     user(): Observable<UserForAdminModel[]> {
-        let url_ = this.baseUrl + "/api/User";
+        let url_ = this.baseUrl + "/api/admin/User";
         url_ = url_.replace(/[?&]$/, "");
 
         let options_ : any = {
@@ -1601,7 +1655,7 @@ export class ApiClient {
      * @return Success
      */
     usersToCategoryAll(): Observable<UsersToCategoryModel[]> {
-        let url_ = this.baseUrl + "/api/UsersToCategory";
+        let url_ = this.baseUrl + "/api/admin/UsersToCategory";
         url_ = url_.replace(/[?&]$/, "");
 
         let options_ : any = {
@@ -1667,7 +1721,7 @@ export class ApiClient {
      * @return Created
      */
     usersToCategory(body?: UsersToCategoryModel | undefined): Observable<void> {
-        let url_ = this.baseUrl + "/api/UsersToCategory";
+        let url_ = this.baseUrl + "/api/admin/UsersToCategory";
         url_ = url_.replace(/[?&]$/, "");
 
         const content_ = JSON.stringify(body);

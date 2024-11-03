@@ -1,13 +1,13 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { environment } from '../../../environments/environment.development';
-import { ApiClient, GroupedCategoryItemsByCategoryModel } from '../../api-client/api-client';
+import { environment } from '../../../../environments/environment.development';
+import { ApiClient, Content } from '../../../api-client/api-client';
 import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
-export class DashboardService {
+export class ContentService {
 
   private readonly apiClient: ApiClient;
 
@@ -15,7 +15,7 @@ export class DashboardService {
     this.apiClient = new ApiClient(httpCLient, environment.baseUrl);
   }
 
-  getCategoryDetailsModel(): Observable<GroupedCategoryItemsByCategoryModel[]> {
-    return this.apiClient.dashboard();
+  getContent(categoryItemId: number): Observable<Content> {
+    return this.apiClient.contentGET(categoryItemId);
   }
 }

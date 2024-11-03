@@ -1,6 +1,7 @@
 ﻿using DigitalLibrary.Areas.Member.Models;
 using DigitalLibrary.Context;
 using DigitalLibrary.Context.Entities;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -10,6 +11,7 @@ using System.Threading.Tasks;
 
 namespace DigitalLibrary.Areas.Member.Controllers
 {
+    [Authorize]
     [Route("api/[controller]")]
     [ApiController]
     public class DashboardController : ControllerBase

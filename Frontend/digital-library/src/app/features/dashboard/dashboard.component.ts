@@ -3,6 +3,7 @@ import { DashboardService } from './dashboard.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { LoaderService } from '../../shared/services/loader.service';
 import { GroupedCategoryItemsByCategoryModel } from '../../api-client/api-client';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-dashboard',
@@ -15,7 +16,8 @@ export class DashboardComponent implements OnInit {
   constructor(
     private readonly dashboardService: DashboardService,
     private readonly _snackBar: MatSnackBar,
-    private readonly loaderService: LoaderService
+    private readonly loaderService: LoaderService,
+    private readonly router: Router
   ) {}
 
   ngOnInit() {
@@ -34,5 +36,9 @@ export class DashboardComponent implements OnInit {
         this.loaderService.hide();
       }
     });
+  }
+
+  showContent(categoryItemId: number) {
+    this.router.navigate(['/dashboard/content/' + categoryItemId]);
   }
 }

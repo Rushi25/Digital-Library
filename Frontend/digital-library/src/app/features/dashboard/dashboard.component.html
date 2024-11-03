@@ -5,33 +5,34 @@
       Choose Courses and Articles
     </button>
   </div>
-  
+
   <mat-accordion>
     @for (category of categoryDetails; track category.id) {
-      <mat-expansion-panel>
-        <mat-expansion-panel-header>
-          <mat-panel-title>
-            <mat-icon>play_lesson</mat-icon>
-          </mat-panel-title>
-          <mat-panel-description>
-            {{category.title}}
-          </mat-panel-description>
-        </mat-expansion-panel-header>
-        <mat-list>
-          @for (categoryItem of category.items; track categoryItem.categoryItemId) {
-            <mat-list-item>
-              <img matListItemAvatar [src]="categoryItem.mediaImagePath" alt="Media"/>
-              <div matListItemTitle>
-                {{categoryItem.categoryItemTitle}}
-              </div>
-              <div matListItemLine>
-                {{categoryItem.categoryItemDescription}}
-              </div>
-            </mat-list-item>
-            <mat-divider></mat-divider>
-          }
-        </mat-list>
-      </mat-expansion-panel>
+    <mat-expansion-panel>
+      <mat-expansion-panel-header>
+        <mat-panel-title>
+          <mat-icon>play_lesson</mat-icon>
+        </mat-panel-title>
+        <mat-panel-description>
+          {{category.title}}
+        </mat-panel-description>
+      </mat-expansion-panel-header>
+      <mat-list>
+        @for (categoryItem of category.items; track categoryItem.categoryItemId) {
+        <mat-list-item>
+          <img matListItemAvatar [src]="categoryItem.mediaImagePath" alt="Media" />
+          <div matListItemTitle class="category-Item" (click)="showContent(categoryItem.categoryItemId ?? 0)" tabindex="0"
+            (keypress)="($event.key === 'Enter') && showContent(categoryItem.categoryItemId ?? 0)">
+            {{categoryItem.categoryItemTitle}}
+          </div>
+          <div matListItemLine>
+            {{categoryItem.categoryItemDescription}}
+          </div>
+        </mat-list-item>
+        <mat-divider></mat-divider>
+        }
+      </mat-list>
+    </mat-expansion-panel>
     }
   </mat-accordion>
 </div>

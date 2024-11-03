@@ -7,15 +7,15 @@ import { environment } from '../../../../environments/environment.development';
 @Injectable({
   providedIn: 'root',
 })
-export class ContentService {
-  private apiClient: ApiClient;
+export class ContentAddEditService {
+  private readonly apiClient: ApiClient;
 
   constructor(private readonly httpCLient: HttpClient) {
     this.apiClient = new ApiClient(httpCLient, environment.baseUrl);
   }
 
   getContentById(contentId: number): Observable<Content> {
-    return this.apiClient.contentGET(contentId);
+    return this.apiClient.contentGET2(contentId);
   }
 
   updateContent(contentId: number, content: Content): Observable<void> {
