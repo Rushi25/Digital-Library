@@ -55,7 +55,6 @@ export class LoginComponent implements OnInit {
 
   loginUser(): void {
     if (this.loginForm.valid) {
-      console.log('Form submitted:', this.loginForm.value);
       this.login();
     } else {
       this.loginForm.markAllAsTouched();

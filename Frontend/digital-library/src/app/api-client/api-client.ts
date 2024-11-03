@@ -907,7 +907,7 @@ export class ApiClient {
      * @return Success
      */
     contentGET(categoryItemId: number): Observable<Content> {
-        let url_ = this.baseUrl + "/api/Content/{categoryItemId}";
+        let url_ = this.baseUrl + "/api/member/Content/{categoryItemId}";
         if (categoryItemId === undefined || categoryItemId === null)
             throw new Error("The parameter 'categoryItemId' must be defined.");
         url_ = url_.replace("{categoryItemId}", encodeURIComponent("" + categoryItemId));
@@ -1175,7 +1175,7 @@ export class ApiClient {
      * @return Success
      */
     dashboard(): Observable<GroupedCategoryItemsByCategoryModel[]> {
-        let url_ = this.baseUrl + "/api/Dashboard";
+        let url_ = this.baseUrl + "/api/member/Dashboard";
         url_ = url_.replace(/[?&]$/, "");
 
         let options_ : any = {
@@ -1234,6 +1234,64 @@ export class ApiClient {
             let resultData403 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
             result403 = ProblemDetails.fromJS(resultData403);
             return throwException("Forbidden", status, _responseText, _headers, result403);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf(null as any);
+    }
+
+    /**
+     * @return Success
+     */
+    home(): Observable<Category[]> {
+        let url_ = this.baseUrl + "/api/Home";
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ : any = {
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Accept": "text/plain"
+            })
+        };
+
+        return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processHome(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processHome(response_ as any);
+                } catch (e) {
+                    return _observableThrow(e) as any as Observable<Category[]>;
+                }
+            } else
+                return _observableThrow(response_) as any as Observable<Category[]>;
+        }));
+    }
+
+    protected processHome(response: HttpResponseBase): Observable<Category[]> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (response as any).error instanceof Blob ? (response as any).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            if (Array.isArray(resultData200)) {
+                result200 = [] as any;
+                for (let item of resultData200)
+                    result200!.push(Category.fromJS(item));
+            }
+            else {
+                result200 = <any>null;
+            }
+            return _observableOf(result200);
             }));
         } else if (status !== 200 && status !== 204) {
             return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {

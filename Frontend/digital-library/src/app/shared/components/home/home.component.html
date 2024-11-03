@@ -2,22 +2,21 @@
     <div class="hero-section">
         <h1>Welcome to Digital Library</h1>
         <p>Explore our vast collection of courses and learning materials.</p>
-        <button mat-raised-button class="explore-button" color="primary" routerLink="/courses">Explore Courses</button>
+        <button mat-raised-button class="explore-button" color="primary" (click)="scrollToFeaturedCourses()">Explore Courses</button>
     </div>
 
-    <div class="courses-section">
-        <h2>Featured Courses</h2>
-        <mat-grid-list cols="3" rowHeight="300px">
+    <div id="featured-courses" class="courses-section">
+        <h2 class="header-title">Featured Courses</h2>
+        <mat-grid-list cols="4" rowHeight="300px" gutterSize="16px" style="margin: 20px 0px;">
             @for (course of courses; track $index) {
-            <mat-grid-tile>
-                <mat-card>
-                    <img mat-card-image [src]="course.image" alt="Course">
-                    <mat-card-content>
-                        <h3>{{ course.title }}</h3>
-                        <p>{{ course.description }}</p>
-                    </mat-card-content>
+            <mat-grid-tile class="grid-tile">
+                <mat-card class="card" appearance="outlined">
+                    <img mat-card-image [src]="course.thumbnailImagePath" [alt]="course.title">
+                    <mat-card-header>
+                        <mat-card-title>{{ course.title }}</mat-card-title>
+                    </mat-card-header>
                     <mat-card-actions>
-                        <button mat-raised-button color="primary">Enroll Now</button>
+                        <button mat-button color="primary" (click)="cardButtonClick()">Register</button>
                     </mat-card-actions>
                 </mat-card>
             </mat-grid-tile>

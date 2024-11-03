@@ -12,7 +12,7 @@ using System.Threading.Tasks;
 namespace DigitalLibrary.Areas.Member.Controllers
 {
     [Authorize]
-    [Route("api/[controller]")]
+    [Route("api/member/[controller]")]
     [ApiController]
     public class DashboardController : ControllerBase
     {

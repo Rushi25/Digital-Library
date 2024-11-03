@@ -3,7 +3,7 @@ import { ContentService } from './content.service';
 import { Content } from '../../../api-client/api-client';
 import { ActivatedRoute, Router } from '@angular/router';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
+import { DomSanitizer, SafeHtml, SafeResourceUrl } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-content',
@@ -14,6 +14,7 @@ export class ContentComponent implements OnInit {
   content!: Content;
   categoryItemId = 0;
   htmlContent!: SafeHtml;
+  videoLink!: SafeResourceUrl;
 
   constructor(
     private readonly contentService: ContentService,
@@ -41,6 +42,9 @@ export class ContentComponent implements OnInit {
           this.content = rsp;
           if (rsp?.htmlContent) {
             this.htmlContent = this.sanitizer.bypassSecurityTrustHtml(rsp?.htmlContent);
+          }
+          if(rsp?.videoLink) {
+            this.videoLink = this.sanitizer.bypassSecurityTrustResourceUrl(rsp?.videoLink);
           }
         } else {
           this._snackBar.open('Content for this category item not present.', 'Ok', {duration: 3000});

@@ -9,7 +9,6 @@ export const adminGuard: CanActivateChildFn = (): Observable<boolean> => {
   const _router = inject(Router)
   return inject(AccountService).isAdmin$.pipe(
     map(isAdmin => {
-      console.log('Admin guard triggered, idAdmin = ' + isAdmin);
       if(!isAdmin){
         _snackBar.open('You will need to login as Admin to access this resources', 'OK', { duration: 3000 })
         _router.navigate(['home'])

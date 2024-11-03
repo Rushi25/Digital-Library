@@ -66,7 +66,6 @@ export class RegisterComponent implements OnInit {
 
   registerUser(): void {
     if (this.registerForm.valid) {
-      console.log('Form submitted:', this.registerForm.value);
       this.register();
     } else {
       this.registerForm.markAllAsTouched();

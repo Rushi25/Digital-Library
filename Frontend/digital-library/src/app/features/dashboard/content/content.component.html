@@ -1,17 +1,16 @@
 <div class="wrapper app">
     @if (content) {
-    <h3 class="header-title">{{ content.title }}</h3>
     <div class="content-wrapper">
         <div class="text">
             <div [innerHTML]="htmlContent"></div>
         </div>
     </div>
-    } @if (content.videoLink) {
+    @if (content.videoLink) {
     <div class="video-wrapper">
-        <iframe src="https://www.youtube.com/embed/5nftPpufUl4"
+        <iframe [src]="videoLink"
             title="What is Open closed Principle ?"
             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
             referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
     </div>
-    }
+    }}
 </div>
