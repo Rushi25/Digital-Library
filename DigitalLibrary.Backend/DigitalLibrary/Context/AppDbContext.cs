@@ -16,5 +16,6 @@ namespace DigitalLibrary.Context
         public DbSet<MediaType> MediaTypes { get; set; }
         public DbSet<UserCategory> UserCategories { get; set; }
         public DbSet<Content> Contents { get; set; }
+        public DbSet<Feedback> Feedbacks { get; set; }
     }
 }

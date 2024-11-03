@@ -19,9 +19,12 @@ import { httpInterceptor } from './shared/interceptors/http.interceptor';
 import { MatButtonModule } from '@angular/material/button';
 import { JWT_OPTIONS, JwtHelperService, JwtModule } from '@auth0/angular-jwt';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { ContactUsComponent } from './shared/components/contact-us/contact-us.component';
+import { MatInputModule } from '@angular/material/input';
+import { ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
-  declarations: [AppComponent, HomeComponent, NavbarComponent, FooterComponent],
+  declarations: [AppComponent, HomeComponent, NavbarComponent, FooterComponent, ContactUsComponent],
   imports: [
     BrowserModule,
     AppRoutingModule,
@@ -33,7 +36,9 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
     MatGridListModule,
     MatButtonModule,
     JwtModule,
-    MatProgressSpinnerModule
+    MatProgressSpinnerModule,
+    ReactiveFormsModule,
+    MatInputModule
   ],
   providers: [
     provideAnimationsAsync(),

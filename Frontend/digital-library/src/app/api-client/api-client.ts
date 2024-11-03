@@ -28,7 +28,7 @@ export class ApiClient {
 
     /**
      * @param body (optional) 
-     * @return Success
+     * @return OK
      */
     login(body?: LoginModel | undefined): Observable<UserModel> {
         let url_ = this.baseUrl + "/api/Account/login";
@@ -92,7 +92,7 @@ export class ApiClient {
 
     /**
      * @param body (optional) 
-     * @return Success
+     * @return OK
      */
     register(body?: RegisterModel | undefined): Observable<string> {
         let url_ = this.baseUrl + "/api/Account/register";
@@ -156,7 +156,7 @@ export class ApiClient {
     }
 
     /**
-     * @return Success
+     * @return OK
      */
     refresh(): Observable<UserModel> {
         let url_ = this.baseUrl + "/api/Account/refresh";
@@ -215,7 +215,7 @@ export class ApiClient {
     }
 
     /**
-     * @return Success
+     * @return OK
      */
     categoryAll(): Observable<Category[]> {
         let url_ = this.baseUrl + "/api/admin/Category";
@@ -350,7 +350,7 @@ export class ApiClient {
     }
 
     /**
-     * @return Success
+     * @return OK
      */
     categoryGET(id: number): Observable<Category> {
         let url_ = this.baseUrl + "/api/admin/Category/{id}";
@@ -558,7 +558,7 @@ export class ApiClient {
     }
 
     /**
-     * @return Success
+     * @return OK
      */
     items(categoryId: number): Observable<CategoryItem[]> {
         let url_ = this.baseUrl + "/api/admin/CategoryItem/items/{categoryId}";
@@ -626,7 +626,7 @@ export class ApiClient {
     }
 
     /**
-     * @return Success
+     * @return OK
      */
     categoryItemGET(id: number): Observable<CategoryItem> {
         let url_ = this.baseUrl + "/api/admin/CategoryItem/{id}";
@@ -904,7 +904,7 @@ export class ApiClient {
     }
 
     /**
-     * @return Success
+     * @return OK
      */
     contentGET(categoryItemId: number): Observable<Content> {
         let url_ = this.baseUrl + "/api/member/Content/{categoryItemId}";
@@ -958,7 +958,7 @@ export class ApiClient {
     }
 
     /**
-     * @return Success
+     * @return OK
      */
     contentGET2(id: number): Observable<Content> {
         let url_ = this.baseUrl + "/api/admin/Content/{id}";
@@ -1172,7 +1172,7 @@ export class ApiClient {
     }
 
     /**
-     * @return Success
+     * @return OK
      */
     dashboard(): Observable<GroupedCategoryItemsByCategoryModel[]> {
         let url_ = this.baseUrl + "/api/member/Dashboard";
@@ -1244,7 +1244,280 @@ export class ApiClient {
     }
 
     /**
-     * @return Success
+     * @return OK
+     */
+    feedbacksAll(): Observable<Feedback[]> {
+        let url_ = this.baseUrl + "/api/Feedbacks";
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ : any = {
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Accept": "text/plain"
+            })
+        };
+
+        return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processFeedbacksAll(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processFeedbacksAll(response_ as any);
+                } catch (e) {
+                    return _observableThrow(e) as any as Observable<Feedback[]>;
+                }
+            } else
+                return _observableThrow(response_) as any as Observable<Feedback[]>;
+        }));
+    }
+
+    protected processFeedbacksAll(response: HttpResponseBase): Observable<Feedback[]> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (response as any).error instanceof Blob ? (response as any).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            if (Array.isArray(resultData200)) {
+                result200 = [] as any;
+                for (let item of resultData200)
+                    result200!.push(Feedback.fromJS(item));
+            }
+            else {
+                result200 = <any>null;
+            }
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf(null as any);
+    }
+
+    /**
+     * @param body (optional) 
+     * @return Created
+     */
+    feedbacksPOST(body?: Feedback | undefined): Observable<Feedback> {
+        let url_ = this.baseUrl + "/api/Feedbacks";
+        url_ = url_.replace(/[?&]$/, "");
+
+        const content_ = JSON.stringify(body);
+
+        let options_ : any = {
+            body: content_,
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Content-Type": "application/json",
+                "Accept": "application/json"
+            })
+        };
+
+        return this.http.request("post", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processFeedbacksPOST(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processFeedbacksPOST(response_ as any);
+                } catch (e) {
+                    return _observableThrow(e) as any as Observable<Feedback>;
+                }
+            } else
+                return _observableThrow(response_) as any as Observable<Feedback>;
+        }));
+    }
+
+    protected processFeedbacksPOST(response: HttpResponseBase): Observable<Feedback> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (response as any).error instanceof Blob ? (response as any).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 201) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            let result201: any = null;
+            let resultData201 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result201 = Feedback.fromJS(resultData201);
+            return _observableOf(result201);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf(null as any);
+    }
+
+    /**
+     * @return OK
+     */
+    feedbacksGET(id: number): Observable<Feedback> {
+        let url_ = this.baseUrl + "/api/Feedbacks/{id}";
+        if (id === undefined || id === null)
+            throw new Error("The parameter 'id' must be defined.");
+        url_ = url_.replace("{id}", encodeURIComponent("" + id));
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ : any = {
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Accept": "text/plain"
+            })
+        };
+
+        return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processFeedbacksGET(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processFeedbacksGET(response_ as any);
+                } catch (e) {
+                    return _observableThrow(e) as any as Observable<Feedback>;
+                }
+            } else
+                return _observableThrow(response_) as any as Observable<Feedback>;
+        }));
+    }
+
+    protected processFeedbacksGET(response: HttpResponseBase): Observable<Feedback> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (response as any).error instanceof Blob ? (response as any).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result200 = Feedback.fromJS(resultData200);
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf(null as any);
+    }
+
+    /**
+     * @param body (optional) 
+     * @return OK
+     */
+    feedbacksPUT(id: number, body?: Feedback | undefined): Observable<void> {
+        let url_ = this.baseUrl + "/api/Feedbacks/{id}";
+        if (id === undefined || id === null)
+            throw new Error("The parameter 'id' must be defined.");
+        url_ = url_.replace("{id}", encodeURIComponent("" + id));
+        url_ = url_.replace(/[?&]$/, "");
+
+        const content_ = JSON.stringify(body);
+
+        let options_ : any = {
+            body: content_,
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Content-Type": "application/json",
+            })
+        };
+
+        return this.http.request("put", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processFeedbacksPUT(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processFeedbacksPUT(response_ as any);
+                } catch (e) {
+                    return _observableThrow(e) as any as Observable<void>;
+                }
+            } else
+                return _observableThrow(response_) as any as Observable<void>;
+        }));
+    }
+
+    protected processFeedbacksPUT(response: HttpResponseBase): Observable<void> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (response as any).error instanceof Blob ? (response as any).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            return _observableOf(null as any);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf(null as any);
+    }
+
+    /**
+     * @return OK
+     */
+    feedbacksDELETE(id: number): Observable<void> {
+        let url_ = this.baseUrl + "/api/Feedbacks/{id}";
+        if (id === undefined || id === null)
+            throw new Error("The parameter 'id' must be defined.");
+        url_ = url_.replace("{id}", encodeURIComponent("" + id));
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ : any = {
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+            })
+        };
+
+        return this.http.request("delete", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processFeedbacksDELETE(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processFeedbacksDELETE(response_ as any);
+                } catch (e) {
+                    return _observableThrow(e) as any as Observable<void>;
+                }
+            } else
+                return _observableThrow(response_) as any as Observable<void>;
+        }));
+    }
+
+    protected processFeedbacksDELETE(response: HttpResponseBase): Observable<void> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (response as any).error instanceof Blob ? (response as any).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            return _observableOf(null as any);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf(null as any);
+    }
+
+    /**
+     * @return OK
      */
     home(): Observable<Category[]> {
         let url_ = this.baseUrl + "/api/Home";
@@ -1302,7 +1575,7 @@ export class ApiClient {
     }
 
     /**
-     * @return Success
+     * @return OK
      */
     mediaTypesAll(): Observable<MediaType[]> {
         let url_ = this.baseUrl + "/api/admin/MediaTypes";
@@ -1437,7 +1710,7 @@ export class ApiClient {
     }
 
     /**
-     * @return Success
+     * @return OK
      */
     mediaTypesGET(id: number): Observable<MediaType> {
         let url_ = this.baseUrl + "/api/admin/MediaTypes/{id}";
@@ -1645,7 +1918,7 @@ export class ApiClient {
     }
 
     /**
-     * @return Success
+     * @return OK
      */
     user(): Observable<UserForAdminModel[]> {
         let url_ = this.baseUrl + "/api/admin/User";
@@ -1710,7 +1983,7 @@ export class ApiClient {
     }
 
     /**
-     * @return Success
+     * @return OK
      */
     usersToCategoryAll(): Observable<UsersToCategoryModel[]> {
         let url_ = this.baseUrl + "/api/admin/UsersToCategory";
@@ -2088,6 +2361,62 @@ export interface IContent {
     categoryItem?: CategoryItem;
     catItemId?: number;
     categoryId?: number;
+}
+
+export class Feedback implements IFeedback {
+    id?: number;
+    name!: string;
+    email!: string;
+    subject!: string;
+    message!: string;
+    createdDate!: Date;
+
+    constructor(data?: IFeedback) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.id = _data["id"];
+            this.name = _data["name"];
+            this.email = _data["email"];
+            this.subject = _data["subject"];
+            this.message = _data["message"];
+            this.createdDate = _data["createdDate"] ? new Date(_data["createdDate"].toString()) : <any>undefined;
+        }
+    }
+
+    static fromJS(data: any): Feedback {
+        data = typeof data === 'object' ? data : {};
+        let result = new Feedback();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["id"] = this.id;
+        data["name"] = this.name;
+        data["email"] = this.email;
+        data["subject"] = this.subject;
+        data["message"] = this.message;
+        data["createdDate"] = this.createdDate ? this.createdDate.toISOString() : <any>undefined;
+        return data;
+    }
+}
+
+export interface IFeedback {
+    id?: number;
+    name: string;
+    email: string;
+    subject: string;
+    message: string;
+    createdDate: Date;
 }
 
 export class GroupedCategoryItemsByCategoryModel implements IGroupedCategoryItemsByCategoryModel {

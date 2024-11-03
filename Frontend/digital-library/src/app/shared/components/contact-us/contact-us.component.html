@@ -1,0 +1,92 @@
+<!-- Contact Us Section -->
+<div class="contact-us-section form-container">
+  <h2 class="header-title">Contact Us</h2>
+  <div class="form-card contact-us-form">
+    <p>
+      If you have any questions, feedback, or inquiries about our digital
+      library, please feel free to reach out to us. We're here to help!
+    </p>
+    <form class="form" [formGroup]="contactForm" (ngSubmit)="onSubmit()">
+      <mat-form-field
+        appearance="outline"
+        hideRequiredMarker="false"
+        class="full-width"
+      >
+        <mat-label>Name</mat-label>
+        <input matInput formControlName="name" required />
+        <mat-error
+          *ngIf="
+            contactForm.get('name')?.invalid && contactForm.get('name')?.touched
+          "
+        >
+          Name is required
+        </mat-error>
+      </mat-form-field>
+
+      <mat-form-field
+        appearance="outline"
+        hideRequiredMarker="false"
+        class="full-width"
+      >
+        <mat-label>Email</mat-label>
+        <input matInput formControlName="email" required />
+        <mat-error
+          *ngIf="
+            contactForm.get('email')?.invalid &&
+            contactForm.get('email')?.touched
+          "
+        >
+          Valid email is required
+        </mat-error>
+      </mat-form-field>
+
+      <mat-form-field
+        appearance="outline"
+        hideRequiredMarker="false"
+        class="full-width"
+      >
+        <mat-label>Subject</mat-label>
+        <input matInput formControlName="subject" required />
+        <mat-error
+          *ngIf="
+            contactForm.get('subject')?.invalid &&
+            contactForm.get('subject')?.touched
+          "
+        >
+          Subject is required
+        </mat-error>
+      </mat-form-field>
+
+      <mat-form-field
+        appearance="outline"
+        hideRequiredMarker="false"
+        class="full-width"
+      >
+        <mat-label>Message</mat-label>
+        <textarea
+          matInput
+          formControlName="message"
+          rows="5"
+          required
+        ></textarea>
+        <mat-error
+          *ngIf="
+            contactForm.get('message')?.invalid &&
+            contactForm.get('message')?.touched
+          "
+        >
+          Message is required
+        </mat-error>
+      </mat-form-field>
+
+      <button
+        mat-raised-button
+        color="primary"
+        type="submit"
+        [disabled]="contactForm.invalid"
+      >
+        Submit
+      </button>
+    </form>
+  </div>
+</div>
