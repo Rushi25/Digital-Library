@@ -17,12 +17,10 @@ namespace DigitalLibrary.Areas.Member.Controllers
     public class DashboardController : ControllerBase
     {
         private readonly AppDbContext _dbContext;
-        private readonly SignInManager<User> _signInManager;
         private readonly UserManager<User> _userManager;
-        public DashboardController(AppDbContext dbContext, SignInManager<User> signInManager, UserManager<User> userManager)
+        public DashboardController(AppDbContext dbContext, UserManager<User> userManager)
         {
             _dbContext = dbContext;
-            _signInManager = signInManager;
             _userManager = userManager;
         }
 

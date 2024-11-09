@@ -1,0 +1,14 @@
+@if (userSelectedCategory.length > 0) {
+    <div class="wrapper app">
+        <h3>Choose courses</h3>
+        <mat-selection-list (selectionChange)="onCourseCheckboxChange($event)">
+            @for (course of userSelectedCategory; track $index) {
+                <mat-list-option [selected]="course.isSelected" togglePosition="before" [value]="$index">
+                    {{ course.category.title }}
+                </mat-list-option>
+                <mat-divider></mat-divider>
+            }
+        </mat-selection-list>
+        <button style="margin-top: 1em;" mat-raised-button color="primary" [disabled]="saveDisabled" (click)="save()">Save</button>
+    </div>
+}
