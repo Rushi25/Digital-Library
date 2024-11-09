@@ -45,7 +45,10 @@
             "scripts": [],
             "server": "src/main.server.ts",
             "prerender": false,
-            "ssr": false
+            "ssr": false,
+            "allowedCommonJsDependencies": [
+              "lodash"
+            ]
           },
           "configurations": {
             "production": {
