@@ -96,16 +96,15 @@ How to set up the project on local machine.
 	2. Install Angular dependencies:
 		```bash
 		npm install
-	3. Update environment.development.ts and nswag.json with the backend API URL.
+	3. Update environment.development.ts with the backend API URL.
 		```json
-		environment.development.ts
 		export const environment = {
 			production: false,
 			baseUrl: '<Backend URL>',
 			userKey: 'User_Info'
 		};
-
-		nswag.json
+	4. update nswag.json with the backend API URL.
+		```json
 		{
 			...
 			...
@@ -119,7 +118,7 @@ How to set up the project on local machine.
 			...
 			...
 		 }
-	4. Build and run
+	5. Build and run
 		```bash
 		npm run build
 
