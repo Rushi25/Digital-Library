@@ -97,7 +97,7 @@ How to set up the project on local machine.
 		```bash
 		npm install
 	3. Update environment.development.ts with the backend API URL.
-		```json
+		```ts
 		export const environment = {
 			production: false,
 			baseUrl: '<Backend URL>',
@@ -106,17 +106,13 @@ How to set up the project on local machine.
 	4. update nswag.json with the backend API URL.
 		```json
 		{
-			...
-			...
 			"documentGenerator": {
 				"fromDocument": {
 					"url": "https://<Backend URL>/swagger/v1/swagger.json",
 					"output": null,
 					"newLineBehavior": "Auto"
 				}
-			},
-			...
-			...
+			}
 		 }
 	5. Build and run
 		```bash
