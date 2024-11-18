@@ -1,4 +1,4 @@
-﻿# Digital Library
+# Digital Library
 
 The code is of Digital Library web application created to implement learning about Angular, .NET, SQL, etc
 
@@ -12,7 +12,6 @@ Digital Library is a comprehensive web application that provides a platform for 
   - [Prerequisites](#prerequisites)
   - [Installation](#installation)
   - [Running the Project](#running-the-project)
-- [Debugging Locally](#debugging-locally)
 - [Project Structure](#project-structure)
 
 ---
@@ -122,9 +121,6 @@ How to set up the project on local machine.
 ## Project Structure
 The project is organized into two main folders: `frontend` for the Angular application and `backend` for the .NET Core API. Below is a breakdown of the project structure.
 
-## Project Structure
-
-This project consists of a frontend Angular application and a backend .NET Core API. Below is the complete directory structure, with comments for each significant part.
 
 ```plaintext
 Digital-Library/
